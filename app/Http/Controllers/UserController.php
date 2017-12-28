@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Models\User;
+use App\User;
 
 class UserController extends Controller
 {
@@ -15,10 +15,12 @@ class UserController extends Controller
 
     public function getUser_Add()
     {
+        
     	return view('admin.user.user_add');
     }
     public function postUser_Add(Request $request)
     {
+
     	$this->validate($request,
             [
                 'name' => 'required|min:5',
