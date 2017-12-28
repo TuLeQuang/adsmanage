@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 28, 2017 lúc 03:15 AM
+-- Thời gian đã tạo: Th12 28, 2017 lúc 04:19 AM
 -- Phiên bản máy phục vụ: 10.1.28-MariaDB
 -- Phiên bản PHP: 5.6.32
 
@@ -21,6 +21,23 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `templatemanager`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `templates`
+--
+
+CREATE TABLE `templates` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `config` text COLLATE utf8_unicode_ci NOT NULL,
+  `data` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -46,11 +63,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `level`, `role`, `active`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'kenlyzin', 'minhngocvu1612@gmail.com', '$2y$10$vaThP6zD1vRvjrhdJMx1l.K4Wg8VQ240tiqT6YUqbHo9isJyXPJ9S', 1, NULL, 0, NULL, '2017-12-27 07:57:32', '2017-12-27 08:51:58');
+(2, 'kenlyzin', 'minhngocvu1612@gmail.com', '$2y$10$d/52UR7go0b9Lwe4xhbS0OWDsscn3FQ.3g/gQKZxNc6YGk9HwYSuG', 1, NULL, 0, 'gIzHii3E4EmDJdjTcqz0mHbRKKQjACZTAIVJapxPTkK9JS0kLGoGe5SBGV8E', '2017-12-27 07:57:32', '2017-12-27 19:49:11');
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `templates`
+--
+ALTER TABLE `templates`
+  ADD PRIMARY KEY (`id`,`user_id`);
 
 --
 -- Chỉ mục cho bảng `users`
@@ -63,10 +86,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `templates`
+--
+ALTER TABLE `templates`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
