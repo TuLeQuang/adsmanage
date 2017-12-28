@@ -10,7 +10,7 @@
     <title>Admin</title>
     <base href="{{asset('')}}">
     <!-- Bootstrap Core CSS -->
-    <link href="radmin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -66,16 +66,16 @@
     </div>
 
     <!-- jQuery -->
-    <script src="admin_asset/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{{asset('admin_asset/bower_components/jquery/dist/jquery.min.js')}} "></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="admin_asset/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{{asset('admin_asset/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="admin_asset/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="{{asset('admin_asset/bower_components/metisMenu/dist/metisMenu.min.js')}}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="admin_asset/dist/js/sb-admin-2.js"></script>
+    <script src="{{asset('admin_asset/dist/js/sb-admin-2.js')}}"></script>
 
 </body>
 

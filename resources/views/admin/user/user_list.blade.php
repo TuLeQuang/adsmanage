@@ -6,9 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">User
-                    <small>List</small>
-                </h1>
+                <h1 class="page-header">User</h1>
             </div>
             <!-- /.col-lg-12 -->
                 @if(count($errors) > 0)
@@ -24,6 +22,10 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
+            <div style="float: right;margin-bottom: 5px; display: inline-block">
+                <button class="btn btn-success"><a href="admin/user/user_add/" style="text-decoration: none;color: white">&#43; Add User</a></button>
+            </div>
+
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr align="center" >

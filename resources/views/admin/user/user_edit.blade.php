@@ -63,7 +63,8 @@
                     </div>
                     <button type="submit" class="btn btn-default">Edit</button>
                     <button type="reset" class="btn btn-default">Reset</button>
-                <form>
+                    <button class="btn btn-default"><a href="admin/user/user_list" style="text-decoration: none;color: black">Back</a></button>
+                </form>
             </div>
         </div>
         <!-- /.row -->
