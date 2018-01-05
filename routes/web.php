@@ -31,8 +31,10 @@ Route::get('admin/logout','UserController@getLogout');
 Route::get('/tem/{id}','TemplateController@getTem');
 
 Route::get ( '/vueitems', 'TemplateController@readItems' );
-Route::get ( '/templates', 'TemplateController@index' );
+Route::get ( '/templates', 'TemplateController@getAllTem' );
 
 Route::get('/testVue', function(){
    return view('vue');
 });
+
+Route::resource('template', 'TemplateController');

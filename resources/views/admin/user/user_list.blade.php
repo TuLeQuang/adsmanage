@@ -1,5 +1,7 @@
 @extends('admin.layout.index')
-
+@section('title')
+    <title>List User</title>
+@endsection
 @section('content')
 <!-- Page Content -->
 <div id="page-wrapper">
