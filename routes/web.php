@@ -27,3 +27,5 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
+Route::get('admin/login','UserController@getLogin');
+Route::get('pages/element','PageController@getElement');

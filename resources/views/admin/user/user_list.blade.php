@@ -23,7 +23,7 @@
                     </div>
                 @endif
             <div style="float: right;margin-bottom: 5px; display: inline-block">
-                <button class="btn btn-success"><a href="admin/user/user_add/" style="text-decoration: none;color: white">&#43; Add User</a></button>
+                <button class="btn btn-success"><a href="admin/user/user_add" style="text-decoration: none;color: white">&#43; Add User</a></button>
             </div>
 
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
