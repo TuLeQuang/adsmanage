@@ -27,5 +27,16 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
-Route::get('admin/login','UserController@getLogin');
+
 Route::get('pages/element','PageController@getElement');
+
+
+Route::get('/tem/{id}','TemplateController@getTem');
+
+Route::get ( '/vueitems', 'TemplateController@readItems' );
+Route::get ( '/templates', 'TemplateController@index' );
+
+Route::get('/testVue', function(){
+   return view('vue');
+});
+
