@@ -51,6 +51,10 @@
                 var myJSON = JSON.stringify(data);
                 document.getElementById('script').innerHTML= myJSON;
             }
+        },
+        updated: function () {
+
         }
+
     };
 </script>

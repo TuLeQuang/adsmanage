@@ -17,4 +17,8 @@ class TemplateController extends Controller
         dd(Template::all());
         return Template::all();
     }
+    public function getTem($id){
+        $temData= Template::find($id);
+        return view('temView',compact('temData'));
+    }
 }

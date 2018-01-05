@@ -55,6 +55,7 @@
                     </div>
                     <button type="submit" class="btn btn-default">User Add</button>
                     <button type="reset" class="btn btn-default">Reset</button>
+                    <button class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
                 </form>
             </div>
         </div>

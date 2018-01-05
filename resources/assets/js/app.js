@@ -19,7 +19,7 @@ Vue.component('user-list', require('./components/User.vue'));
 Vue.component('view-tem', require('./components/ViewTem.vue'));
 
 const app = new Vue({
-    el: '#content',
+    el: '#app',
     router
 });
 /*

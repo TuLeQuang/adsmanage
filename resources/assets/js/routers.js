@@ -10,8 +10,6 @@ let routes=[
     {path: '/templates', component: ViewTem},
 ];
 
-
-
 export default new VueRouter({
     mode: 'history',
     linkActiveClass: 'active',

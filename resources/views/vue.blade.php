@@ -6,14 +6,23 @@
     <meta id="csrf-token" name="csrf-token" value="{{ csrf_token() }}">
 </head>
 <body>
-<div id="content">
-    <tem></tem>
-    <user-list></user-list>
-    {{--<view-tem></view-tem>--}}
+<div id="content" onload="create_vue()">
+  <tem></tem>
+   {{-- <user-list></user-list>--}}
 </div>
+<button id="showVue" type="button" onclick="create_vue()">click</button>
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script type="text/javascript">
+    var dem=0;
+    function create_vue() {
+        dem++;
+        var a=[];
+        for(i=1;i<=dem;i++)
+          a+='<tem></tem>';
+        document.getElementById('content').innerHTML=a;
+    };
+
     /*Vue.component('my-component', {
         props: ['tem'],
         template: '<div> <h3>@{{tem.title}}</h3><img v-bind:src="tem.img.url" v-bind:style="tem.img.style"><span id="content">@{{ tem.content }}</span><br><a href="@{{ tem.url }}" style="text-decoration: none">@{{ tem.name }}</a> là website do <span v-bind:style="tem.style">@{{ tem.author }}</span> phát triển.</div>'

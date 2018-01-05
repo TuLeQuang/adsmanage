@@ -3779,7 +3779,7 @@ Vue.component('user-list', __webpack_require__(11));
 Vue.component('view-tem', __webpack_require__(12));
 
 var app = new Vue({
-    el: '#content',
+    el: '#app',
     router: __WEBPACK_IMPORTED_MODULE_0__routers__["a" /* default */]
 });
 /*
@@ -4715,7 +4715,9 @@ var _data = {
             var myJSON = JSON.stringify(_data);
             document.getElementById('script').innerHTML = myJSON;
         }
-    }
+    },
+    updated: function updated() {}
+
 });
 
 /***/ }),
