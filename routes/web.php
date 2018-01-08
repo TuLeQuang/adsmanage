@@ -28,8 +28,6 @@ Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
 
-Route::get('/tem/{id}','TemplateController@getTem');
-
 Route::get ( '/vueitems', 'TemplateController@readItems' );
 Route::get ( '/templates', 'TemplateController@getAllTem' );
 
