@@ -21,4 +21,8 @@ class TemplateController extends Controller
         $temData= Template::find($id);
         return view('temView',compact('temData'));
     }
+    public function test()
+    {
+        return view('template_elements.logo');
+    }
 }

@@ -39,4 +39,5 @@ Route::get ( '/templates', 'TemplateController@index' );
 Route::get('/testVue', function(){
    return view('vue');
 });
+Route::get ( '/test', 'TemplateController@test' );
 
