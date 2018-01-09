@@ -6,7 +6,7 @@
     <meta id="csrf-token" name="csrf-token" value="{{ csrf_token() }}">
 </head>
 <body>
-<div id="content" onload="create_vue()">
+<div id="app" >
   <tem></tem>
    {{-- <user-list></user-list>--}}
 </div>

@@ -14,12 +14,13 @@
     #items-list table tr td{
         padding: 5px;
     }
-    #items{
+    #items, #title{
         border-radius: 10px;
         border:solid 1px #cdcdcd;
         box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
         width: 352px;
         padding: 10px;
+        margin-top: 5px;
     }
 
     .box {
@@ -59,7 +60,7 @@
         display: none;
     }
 
-    #items-ele:hover .crud{
+    .items-class:hover .crud{
           display: block;
       }
   </style>
@@ -71,7 +72,7 @@
       <div class="row">
           <div style="margin-top: 10px">
               <div id="template-layout" style="width: 59%;height: 100%;height-max: auto;float: left;display: block;border:dotted 3px #cdcdcd;">
-                  <div id="template"></div>
+                  <div id="app"><div id="template"></div></div>
                   <div id="items" style="display: none;width: 100%">
                       <table>
                           <tr>
@@ -98,9 +99,22 @@
                       <button class="btn btn-success" type="button" id="btn-save-items" onclick="itemsBuilder()" style="margin: 15px 0px 0px 100px;">Save</button>
                       <button class="btn btn-danger" id="btn-close-items" onclick="hideView('items')" style="margin: 15px 0px 0px 15px">Close</button>
                   </div>
+                  <div id="title" style="display: none;width: 100%">
+                      <table>
+                          <tr>
+                              <td><label>Title:</label></td>
+                              <td><input id="txtTitle" type="text" class="input-item"/></td>
+                          </tr>
+                      </table>
+                      <div id="items-list"></div>
+                      <button class="btn btn-success" type="button" id="btn-save-items" onclick="titleBuilder()" style="margin: 15px 0px 0px 100px;">Save</button>
+                      <button class="btn btn-danger" id="btn-close-items" onclick="hideView('title')" style="margin: 15px 0px 0px 15px">Close</button>
+                  </div>
               </div>
               <div id="elements" style="width: 29%;float: right;">
                   <button class="btn btn-toolbar" type="button" id="btn-items" onclick="showView('items')">Items</button>
+                  <br>
+                  <button class="btn btn-toolbar" type="button" id="btn-items" onclick="showView('title')">Title</button>
               </div>
           </div>
       </div>
@@ -109,8 +123,8 @@
             <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
             <lable>Tên Template: </lable>
             <input type="text" id="txtName" name="txtName" class="input-item" placeholder="Tên Template"/><br>
-            <input type="text" id="txtData" name="txtData" style="display: none"/>
-            <input type="text" id="txtTemplate" name="txtTemplate" style="display: none"/>
+            <input type="text" id="txtData" name="txtData" style="display: none "/>
+            <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
             <button class="btn btn-success" type="submit" onclick="saveTemplate()" style="margin: 15px 0px 0px 100px;">Lưu</button>
             <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
         </form>
@@ -125,133 +139,9 @@
 @endsection
 
 @section('script')
+   {{-- <script src="{{ asset('js/app.js') }}"></script>--}}
+  <script src="{{asset('/js/items.js')}}"></script>
   <script type="text/javascript" language="JavaScript">
-     //Drag Img
-     grid_size = 10;
 
-     $(" .box ")
-         /*.draggable({ grid: [ grid_size, grid_size ] })*/
-
-         .resizable({ grid: grid_size * 2 })
-
-         /*.on("mouseover", function(){
-             $( this ).addClass("move-cursor")
-         })*/
-
-         .on("mousedown", function(){
-             $( this )
-                 .removeClass("move-cursor")
-                 .addClass("grab-cursor")
-                 .addClass("opac");
-         })
-
-         .on("mouseup", function(){
-             $( this )
-                 .removeClass("grab-cursor")
-                 .removeClass("opac")
-                 .addClass("move-cursor");
-         });
-
-     //get items number
-     function itemsNum(num) {
-         var items= "";
-         for(i=1;i<=num;i++){
-             var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px"><tr><td><label for="imgUrl'+i+'">Image Url '+i+':</label></td><td><input id="imgUrl'+i+'" type="text" class="input-sm input-item"/></td><tr><td><label for="linkClick'+i+'">Link Click '+i+':</label></td><td><input id="linkClick'+i+'" type="text" class="input-sm input-item"/></td></tr><tr><td><label for="content'+i+'">Content '+i+':</label></td><td><input type="text" id="content'+i+'" class="input-sm input-item"/></td></tr></table>';
-             items=items+list_item;
-         }
-         document.getElementById('items-list').innerHTML=items;
-     };
-     function changeNum() {
-         var num = document.getElementById('itemNum');
-         itemsNum(num.value);
-     }
-
-     //unEnable and Enable layout
-     function showView(viewId) {
-         var a= document.getElementById(viewId);
-         a.style.display='block';
-     }
-     function hideView(viewId) {
-         var a= document.getElementById(viewId);
-         a.style.display='none';
-     }
-
-     //get data,template from element
-     var template={
-         template_data:" ",
-         template_html:" ",
-         getData : function() {
-             return this.template_data;
-         },
-         getTemplate:function () {
-             return this.template_html;
-         },
-         set:function (data,templateHTML) {
-             this.template_data=this.template_data+data;
-             template.template_html=this.template_html+templateHTML+'<br>';
-         }
-     };
-
-     function itemsBuilder(){
-         var num = document.getElementById('itemNum').value;
-         var data="";
-         var imgSize='width:'+$("#imgSize").css("width")+';height:'+$("#imgSize").css("height")+';';
-         var f = document.createDocumentFragment()
-         var root= document.createElement('div');
-         root.id="items-ele";
-         root.class="ele-class";
-         root.innerHTML = '<div class="crud"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteEle()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></div>';
-         for(var i=1;i<=num;i++){
-             var imgUrlId='imgUrl'+i;
-             var linkClickId='linkClick'+i;
-             var contentId='content'+i;
-             var img=document.createElement('img');
-             var a=document.createElement('a');
-             var content=document.createElement('span');
-             img.src=document.getElementById(imgUrlId).value;
-             img.style=imgSize;
-             content.textContent=document.getElementById(contentId).value;
-             a.href=document.getElementById(linkClickId).value;
-             if(num>=2){
-                 f.appendChild(document.createElement('br'));
-                 f.appendChild(document.createElement('hr'));
-             }
-             f.appendChild(a);
-             a.appendChild(img);
-             f.appendChild(content);
-             data=data+'{imgUrl:"'+document.getElementById(imgUrlId).value+'",linkClick:"'+document.getElementById(linkClickId).value+'",content:"'+document.getElementById(contentId).value+'"},';
-         }
-         var d= document.getElementById('template');
-         root.appendChild(f);
-         d.appendChild(root);
-         hideView("items");
-         var template_html='<div v-for="item in items"><a :href="item.linkClick"><img :src="item.imgUrl" style="'+imgSize+'"></a><span>'+'{'+'{'+'item.content'+'}'+'}'+'</span><br></div>';
-         data='items:['+data+'],';
-         template.set(data,template_html);
-     }
-
-     //save template to db
-     function saveTemplate() {
-         var tem_data='{'+template.getData()+'}';
-         var txtData= document.getElementById('txtData');
-         var txtTemplate= document.getElementById('txtTemplate');
-         txtData.value=tem_data;
-         txtTemplate.value=template.getTemplate();
-     }
-
-
-     function clear() {
-         var items = document.getElementById("template");
-         while (items.hasChildNodes()) {
-             items.removeChild(items.firstChild);
-         }
-     }
-
-     function deleteEle() {
-         var items = document.getElementById("template");
-          if (items.hasChildNodes()) {
-             items.removeChild(items.childNodes.item(0));
-         }
-     }
   </script>
 @endsection
