@@ -29,7 +29,7 @@
         url: 'https://soisodep.com',
         author: 'neko',
         img: {
-            url: '',
+            url: 'http://soisodep.com/images/bai2-1.jpg',
             style: {
                 width: '150px',
                 height: '150px',
