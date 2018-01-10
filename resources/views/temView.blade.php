@@ -8,12 +8,13 @@
 </head>
 <body>
     <div id="app">
-
     </div>
 
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://vuejs.org/js/vue.js"></script>
+  <script src="/templatemanager/node_modules/vee-validate/dist/vee-validate.js"></script>
   <script type="text/javascript">
+      Vue.use(VeeValidate);
           <?php
           $tem_data= json_decode($temData,true);
           echo "var js_data = ".$tem_data['data'].";\n";

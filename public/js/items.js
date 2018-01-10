@@ -101,7 +101,8 @@ function itemsBuilder(){
     root.appendChild(f);
     d.appendChild(root);
     hideView("items");
-    templateArray.push('<div v-for="item in items"><a :href="item.linkClick"><img :src="item.imgUrl" style="'+imgSize+'"></a><span>'+'{'+'{'+'item.content'+'}'+'}'+'</span><br></div>');
+    var config='{required:'+document.getElementById('checkRequired').value+',max:'+document.getElementById('contentLenght').value +',url:true}';
+    templateArray.push('<div v-for="item in items">'+'<input type="text" placeholder="imgUrl" name="imgUrl" v-model="item.imgUrl" v-validate="'+config+'"/><br>'+'<a :href="item.linkClick"><img :src="item.imgUrl" style="'+imgSize+'"></a><span>'+'{'+'{'+'item.content'+'}'+'}'+'</span><br></div>');
     dataArray.push('items:['+data_tg+'],');
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
@@ -165,5 +166,4 @@ function deleteElement(n) {
     dataArray.splice(n, 1,'');templateArray.splice(n, 1,'');
     txtData.value=template.getData();
     txtTemplate.value=template.getTemplate();
-
 }
