@@ -23,7 +23,7 @@ class TemplateController extends Controller
     }
 
     public function index(){
-        return view('template_elements.items');
+        return view('template_elements.element');
     }
 
     public function store(Request $request){

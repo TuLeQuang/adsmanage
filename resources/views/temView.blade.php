@@ -27,7 +27,7 @@
       data() {
          return tem_data;
       },
-      template: "<div>"+js_template+div_script+"</div>",
+      template: '<div><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><br>'+js_template+div_script+'</div>',
       methods:{
         exportScript: function () {
           var myJSON = JSON.stringify(tem_data);

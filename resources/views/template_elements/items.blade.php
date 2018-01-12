@@ -90,7 +90,7 @@
                           </tr>
                           <tr>
                               <td><label for="required">Img Url Required: </label></td>
-                              <td><input type="checkbox" id="checkRequired" style="margin-left: 10px"></td>
+                              <td><input type="checkbox" id="itemsRequired" style="margin-left: 10px"></td>
                               <td><label for="Content">Content max lenght: </label></td>
                               <td><input type="number" style="width: 50px" value="20" id="contentLenght"></td>
                           </tr>
@@ -111,6 +111,12 @@
                           <tr>
                               <td><label>Title:</label></td>
                               <td><input id="txtTitle" type="text" class="input-item"/></td>
+                          </tr>
+                          <tr>
+                              <td><label for="titleRequired">Required: </label></td>
+                              <td><input type="checkbox" id="titleRequired" style="margin-left: 10px"></td>
+                              <td><label for="titleLenght">Title max lenght: </label></td>
+                              <td><input type="number" style="width: 50px" value="20" id="titleLenght"></td>
                           </tr>
                       </table>
                       <div id="items-list"></div>
