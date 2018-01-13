@@ -47,6 +47,11 @@ function showItemsConfig() {
     var d=document.getElementById('template');
     d.appendChild(root);
     showView('items');
+
+    var required= document.getElementById('itemsRequired');
+    var lenght= document.getElementById('contentLenght');
+    required.setAttribute("onchange","itemsChange("+n+")");
+    lenght.setAttribute("onchange","itemsChange("+n+")");
    /* d.appendChild(itemForm);*/
 };
 
@@ -138,7 +143,17 @@ function showTitleConfig() {
     showView('title');
     titleBuilder(n);
     var titleData= document.getElementById('txtTitle');
-    titleData.onchange= function() {titleChange(n)};
+    var color=document.getElementById('titleColor');
+    var fontSizeRange=document.getElementById('titleFontRange');
+    var fontSizeText=document.getElementById('titleFontText');
+    var required= document.getElementById('titleRequired');
+    var lenght= document.getElementById('titleLenght');
+    fontSizeRange.setAttribute("onchange","titleChange("+n+")");
+    color.setAttribute("onchange","titleChange("+n+")");
+    fontSizeText.setAttribute("onchange","titleChange("+n+")");
+    titleData.setAttribute("onchange","titleChange("+n+")");
+    required.setAttribute("onchange","titleChange("+n+")");
+    lenght.setAttribute("onchange","titleChange("+n+")");
 }
 
 //draw title
@@ -169,8 +184,14 @@ function titleChange(n) {
     else
         var titleConfig='{required:true,max:'+document.getElementById('titleLenght').value+'}';
 
+  /*  document.getElementById('titleFontText').value=document.getElementById('titleFontRange').value;
+    document.getElementById('titleFontRange').value= document.getElementById('titleFontText').value;*/
+    title.style.color=document.getElementById('titleColor').value;
+    title.style.fontSize=document.getElementById('titleFontText').value+'px';
+
+    var titleStyle='color:'+document.getElementById('titleColor').value+';font-size:'+document.getElementById('titleFontText').value+'px;';
     dataArray[n]='title:"'+titleData+'",';
-    templateArray[n]='<input type="text" placeholder="Title" name="title" v-model="title" v-validate="'+titleConfig+'"/><br><p>'+'{'+'{'+'title'+'}'+'}'+'</p>';
+    templateArray[n]='<input type="text" placeholder="Title" name="title" v-model="title" v-validate="'+titleConfig+'"/><br><p style="'+titleStyle+'">'+'{'+'{'+'title'+'}'+'}'+'</p>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
@@ -182,7 +203,6 @@ function editTitleElement() {
     showView('title');
 }
 
-
 //save template to db
 function saveTemplate() {
     var tem_data='{'+dataArray.join(" ")+'}';
@@ -191,7 +211,6 @@ function saveTemplate() {
     txtData.value=tem_data;
     txtTemplate.value=templateArray.join(" ");
 };
-
 
 function clear() {
     var items = document.getElementById("template");

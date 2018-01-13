@@ -185,7 +185,7 @@
           });
 
       //range and text
-       range = $('.range-slider > .input-range');
+      range = $('.range-slider > .input-range');
       value = $('.range-slider > .range-value');
 
       value.val(range.attr('value'));
