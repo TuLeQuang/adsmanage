@@ -13,6 +13,7 @@
             <!-- /.col-lg-12 -->
                 
             <div class="col-lg-7" style="padding-bottom:120px">
+                
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
@@ -20,10 +21,10 @@
                         @endforeach
                     </div>
                 @endif
-
-                @if(session('thongbao'))
-                    <div class="alert alert-danger">
-                        {{session('thongbao')}}
+            
+                @if ( Session::has('flash_message') )
+                    <div class="alert alert-danger {{ Session::get('flash_type') }}">
+                        {{ Session::get('flash_message') }}
                     </div>
                 @endif
                 <form action="admin/user/user_edit/{{$user->id}}" method="POST">
@@ -87,6 +88,7 @@
                     $(".password").attr('disabled','');
                 }
             });
-        });    
+        });
+        $("div.alert").delay(3000).slideUp();    
     </script>
 @endsection

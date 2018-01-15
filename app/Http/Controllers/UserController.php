@@ -88,7 +88,7 @@ class UserController extends Controller
     		$user->password=bcrypt($request->password);
     	}
     	$user->save();
-    	return redirect('admin/user/user_edit/'.$id)->with('thongbao','Sửa thông tin thành công');
+    	return redirect('admin/user/user_edit/'.$id)->with(['flash_type'=>'danger','flash_message'=>'Sửa thông tin thành công']);
     }
 
     public function getDelete($id)

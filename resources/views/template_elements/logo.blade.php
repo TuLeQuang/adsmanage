@@ -5,20 +5,52 @@
     .container{
         margin-top: 50px;
         margin-left: 100px;
-        width: 100%
-    }
-    .col-md-4{
-        border: 1px solid #ccc;
+        width: 1000px;
+        margin: 0 auto;
+        
     }
     .contentform{
+        float: left;width: 70%;
+        border: 1px solid #ddd;
         position: relative;
     }
-    .formnhap,
+    .showlogo{
+        display: none;
+    }
     .crud{
     position: absolute;
     top: 0;
-    padding-left: -10px
+    right: 0;
     }
+    .classline{width: 100%;padding-bottom: 10px;float: left;margin:  auto}
+    .classtitle{font-weight: bold;width: 15%;display: inline-block;}
+    .input{width: 30%;}
+    .box 
+    {
+    margin: 0 auto;
+    float: left;
+    margin-top: 50px;
+    width: 301px;
+    height: 101px;
+    background-color: #54cfb3;
+    padding-top: 70px;
+}
+    }
+    .opac
+    {
+    opacity: .8;
+    }
+
+    .move-cursor 
+    {
+    cursor: move;
+    }
+
+    .grab-cursor {
+    cursor: grab;
+    cursor: -webkit-grab;
+    }
+
 </style>
 <div id="page-wrapper">
     <div class=content"container-fluid">
@@ -30,38 +62,35 @@
             </div>
         </div>
         <div class="container">
-            <div class="contentform" style="width: 70%;float: left;background: #ddd">
-                <div id="showlogo" style="display: none;">
-                    <p style="float: left;">Logo</p>
-                    <div class="crud" style="float: right;">
+            <div id="showlogo" class="contentform" style="display: none;" >
+                <div>
+                    <div class="crud"  >
                         <button type="button" class="btn btn-default btn-sm" title="Remove Logo">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
-                        <button onclick="clickedit()" type="button" class="btn btn-default btn-sm" title="Edit">
-                            <span class="glyphicon glyphicon-wrench"></span>
-                        </button>
+                    </div>
+                    <div>
+                        <p style="clear: both;text-align: center;font-size: 16px;"><b>Logo</b></p>
                     </div>
                 </div>
-                <div id="formconfix" style="display: none;">
-                    <form>
-                        <table  style="width:600px;border:1px solid #ddd;border-radius: 10px;">
-                            <tr>
-                                <td>Link Logo:</td>
-                                <td><input type="text" id="logo"></td>
-                            </tr>
-                            <tr>
-                                <td>Logo size:</td>
-                                <td>
-                                    <input type="text">
-                                </td>
-                            </tr>
-                        </table>
-                        <button type="submit" style="text-align: center;" class="btn btn-primary">Save</button>
-                        <button type="reset" style="margin: 0 auto " class="btn btn-danger">Clear</button>
-                    </form>
+                <div id="formconfix" align="center">
+                    <div>
+                        <div>
+                            <div class="classline">
+                                <span class="classtitle">Link logo</span>
+                                <input class="input" type="text" id="logoUrl" onchange="myFunction()" placeholder="http://www.example.com"><br>
+                            </div>
+                            <div class="classline">
+                                <span class="classtitle">Size logo</span>
+                                <<textarea name=""><img id="img" src=""></textarea>
+                            </div>
+                        </div>
+                        <button type="submit"  class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-danger">Clear</button>
+                    </div>
                 </div>
             </div>
-            <div style="width: 20%;float: left; padding-left: 50px">
+            <div style="width: 30%;float: left; padding-left: 50px">
                 <button onclick="clicklogo()">Logo</button>
             </div>
         </div>
@@ -79,15 +108,42 @@
             x.style.display = "none";
         }
     }
-    function clickedit() {
-        var a = document.getElementById("formconfix");
-        if(a.style.display === "none"){
-            a.style.display = "block";  
-        }
-        else {
-            a.style.display = "none";
-        }
-    }
+    function myFunction()
+    {
+        var img=document.createElement('img');
+        img.src= document.getElementById(logoUrl).value;
+        img.style=logosize;
+   }
+   grid_size = 10;
+
+    $(" .box ")
+    .draggable({ grid: [ grid_size, grid_size ] })
+
+    .resizable({ grid: grid_size * 2 })
+
+    .on("mouseover", function(){
+    $( this ).addClass("move-cursor")
+    })
+
+    .on("mousedown", function(){
+    $( this )
+    .removeClass("move-cursor")
+    .addClass("grab-cursor")
+    .addClass("opac");
+
+    $(" .text ").hide();
+
+    })
+
+    .on("mouseup", function(){
+    $( this )
+    .removeClass("grab-cursor")
+    .removeClass("opac")
+    .addClass("move-cursor");
+    });
     </script>
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+
 @endsection

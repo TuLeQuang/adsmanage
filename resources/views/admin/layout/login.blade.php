@@ -76,7 +76,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{{asset('admin_asset/dist/js/sb-admin-2.js')}}"></script>
-
+    <script type="text/javascript" charset="utf-8">
+        $("div.alert").delay(3000).slideUp();    
+    </script>
 </body>
 
 </html>
