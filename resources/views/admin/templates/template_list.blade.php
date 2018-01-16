@@ -42,6 +42,7 @@
             <th style="text-align: center;">Create At</th>
             <th style="text-align: center;">Updated At</th>
             <th style="text-align: center;">Active</th>
+            <th style="text-align: center;" colspan="2">Action</th>
           </tr>
           </thead>
           <tbody>
@@ -53,13 +54,12 @@
               <td>{{$templates[$i]['name']}}</td>
               <td>{{$templates[$i]['created_at']}}</td>
               <td>{{$templates[$i]['updated_at']}}</td>
-              <td>
                 @if($templates[$i]['active']==1)
-                  {{'<span style="'.'color:green;"'.'>Active</span>'}}
+                  <td style="color: green">Active</td>
                 @else
-                  {{'<span style="'.'color:red;"'.'>Un-Active</span>'}}
+                  <td style="color: red">Un-Active</td>
                 @endif
-              </td>
+
               <td class="center"><i class="fa fa-pencil fa-fw"></i>
                 <a href="{{ route('template.show',$templates[$i]['id'])}}">Detail</a></td>
 

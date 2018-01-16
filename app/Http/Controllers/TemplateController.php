@@ -24,7 +24,8 @@ class TemplateController extends Controller
     }
 
     public function index(){
-        $templates= Template::paginate(10);
+        $templates= Template::orderBy('id', 'desc')->paginate(20);
+
         return view('admin.templates.template_list',compact('templates'));
     }
 

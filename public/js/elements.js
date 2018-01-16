@@ -154,6 +154,7 @@ function showTitleConfig() {
     titleData.setAttribute("onchange","titleChange("+n+")");
     required.setAttribute("onchange","titleChange("+n+")");
     lenght.setAttribute("onchange","titleChange("+n+")");
+    titleChange(n);
 }
 
 //draw title
@@ -201,6 +202,10 @@ function titleChange(n) {
 
 function editTitleElement() {
     showView('title');
+}
+
+function LogoConfig(){
+
 }
 
 //save template to db

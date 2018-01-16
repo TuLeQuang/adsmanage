@@ -67,7 +67,7 @@
         });
     });
     </script>
-    <script type="text/javascript" language="javascript" src="{{asset('admin_asset/ckeditor/ckeditor.js')}}" ></script>
+    {{--<script type="text/javascript" language="javascript" src="{{asset('admin_asset/ckeditor/ckeditor.js')}}" ></script>--}}
     @yield('script')
 </body>
 

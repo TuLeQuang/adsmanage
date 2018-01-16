@@ -1,8 +1,8 @@
 @extends('admin.layout.index')
 @section('title')
   <title>Create Template Element v2</title>
-  <link href="css/jquery-ui/jquery-ui.css" rel="stylesheet">
-  <link href="css/jquery-ui/jquery-ui.theme.css" rel="stylesheet">
+  <link href="{{asset('css/jquery-ui/jquery-ui.css')}}" rel="stylesheet">
+  <link href="{{asset('css/jquery-ui/jquery-ui.theme.css')}}" rel="stylesheet">
 @endsection
 @section('style')
   <style type="text/css">
@@ -111,13 +111,13 @@
               <table>
                 <tr>
                   <td><label>Title:</label></td>
-                  <td><input id="txtTitle" type="text" class="input-item" /></td>
+                  <td><input id="txtTitle" type="text" class="input-item" value="Title Demo" /></td>
                 </tr>
                 <tr>
                   <td><label for="titleRequired">Required: </label></td>
                   <td><input type="checkbox" id="titleRequired" style="margin-left: 10px"></td>
                   <td><label for="titleLenght">Title max lenght: </label></td>
-                  <td><input type="number" style="width: 50px" value="20" id="titleLenght"></td>
+                  <td><input type="number" style="width: 50px" value="50" id="titleLenght"></td>
                 </tr>
                 <tr>
                   <td>Titlecolor:</td>
