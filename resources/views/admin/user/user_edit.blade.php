@@ -28,6 +28,11 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
+                @if(session('thongbao1'))
+                    <div class="alert alert-success">
+                        {{session('thongbao1')}}
+                    </div>
+                @endif
                 <form action="admin/user/user_edit/{{$user->id}}" method="POST">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
@@ -53,8 +58,7 @@
                             <input name="level" value="1" checked="" type="radio"
                             @if($user->level==1)
                                 {{"checked"}}
-                            @endif>
-                            Admin
+                            @endif>Admin
                         </label>
                         <label class="radio-inline">
                             <input name="level" value="0" type="radio"
@@ -65,7 +69,7 @@
                     </div>
                     <button type="submit" class="btn btn-default">Edit</button>
                     <button type="reset" class="btn btn-default">Reset</button>
-                    <button class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
+                    <button type="button" class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
                 </form>
             </div>
         </div>
@@ -89,6 +93,7 @@
                     $(".password").attr('disabled','');
                 }
             });
-        });    
+        });  
+    $("div.alert").delay(2000).slideUp();
     </script>
 @endsection

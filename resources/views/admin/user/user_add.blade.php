@@ -28,6 +28,11 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
+                @if(session('thongbao1'))
+                    <div class="alert alert-success">
+                        {{session('thongbao1')}}
+                    </div>
+                @endif
                 <form action="admin/user/user_add" method="POST">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
@@ -57,7 +62,7 @@
                     </div>
                     <button type="submit" class="btn btn-default">User Add</button>
                     <button type="reset" class="btn btn-default">Reset</button>
-                    <button class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
+                    <button type="button" class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
                 </form>
             </div>
         </div>
@@ -66,4 +71,11 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+@endsection
+
+
+@section('script')
+    <script>
+        $("div.alert").delay(2000).slideUp();
+    </script>
 @endsection

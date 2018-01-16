@@ -1,21 +1,16 @@
 @extends('admin.layout.index')
-@section('title')
-    <title>List User</title>
-@endsection
+
 @section('content')
 <!-- Page Content -->
 <div id="page-wrapper">
-    <div class="container-fluid">
+    
         
             <div class="col-lg-12">
-                <h1 class="page-header">Hello @if(Auth::user()->id==1){{"Admin"}}@else{{Auth::user()->name}}@endif          
+                <h1 class="page-header">
+
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-             
-            <div style="float: right;margin-bottom: 5px; display: inline-block">
-                <button type="button" class="btn btn-success"><a href="{{asset('admin/user/user_add/')}}" style="text-decoration: none;color: white">&#43; Add User</a></button>
-            </div>
             <div style="clear: both;">
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
@@ -43,12 +38,10 @@
                         <th style="text-align: center;">Name</th>
                         <th style="text-align: center;">Email</th>
                         <th style="text-align: center;">Level</th>
-                        <th style="text-align: center;">Delete</th>
                         <th style="text-align: center;">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($user as $us)
                     <tr class="odd gradeX" align="center">
                         <td>{{$us->id}}</td>
                         <td>{{$us->name}}</td>
@@ -59,17 +52,14 @@
                             @else
                                 {{"Member"}}
                             @endif
-                        </td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/user/delete/{{$us->id}}" onclick="return xacnhanxoa('Bạn có muốn xóa không ?')">Delete</a></td>
-                        
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/user/user_edit/{{$us->id}}">Edit</a></td>
+                        </td>           
+                        <td class="center"><i class="fa fa-pencil fa-fw"></i><a href="admin/user/user_edit/{{$us->id}}">Edit</a></td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
         
         <!-- /.row -->
-    </div>
+    
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->

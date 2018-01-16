@@ -9,13 +9,23 @@ class UserController extends Controller
 {
     public function getUser_List()
     {
-    	$user=User::all();
-    	return view('admin.user.user_list',['user'=>$user]);
+    	if(Auth::user()->level==1)
+        {
+            $user=User::all();
+            return view('admin.user.user_list',['user'=>$user]);
+        }
+        
+    }
+    public function getListMember($id)
+    {
+        $us=User::find($id);
+        return view('admin.user.user_list_member',['us'=>$us]);
     }
 
     public function getUser_Add()
     {
-        
+        if(Auth::user()->level!=1)
+            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền thêm tài khoản');
     	return view('admin.user.user_add');
     }
     public function postUser_Add(Request $request)
@@ -51,8 +61,12 @@ class UserController extends Controller
     }
 
     public function getEdit($id)
-    {
-    	$user=User::find($id);
+    {   
+        $user=User::find($id);
+        if(Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id)))
+        {
+            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền sửa tài khoản'); 
+        }
     	return view('admin.user.user_edit',['user'=>$user]);
     }
 
@@ -69,7 +83,10 @@ class UserController extends Controller
     	$user=User::find($id);
     	$user->name=$request->name;
     	$user->level=$request->level;
-
+        if(Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id)))
+        {
+            return redirect('admin/user/user_edit/'.$id)->with('thongbao','Bạn không được cấp quyền'); 
+        }
     	if($request->changePassword == "on")
     	{
     		$this->validate($request,
@@ -93,8 +110,12 @@ class UserController extends Controller
 
     public function getDelete($id)
     {
-    	$user=User::find($id);
-    	$user->delete($id);
+    	$delete=User::find($id);
+    	if(Auth::user()->level!=1 && ($delete['level'] == 1 || ($delete['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $delete['level']==1 &&(Auth::user()->id!=$id) || (Auth::user()->id==$id)) )
+        {
+            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền xóa tài khoản'); 
+        }
+        $delete->delete($id);
     	return redirect('admin/user/user_list')->with('thongbao','Xóa tài khoản thành công');
     }
 
@@ -118,11 +139,15 @@ class UserController extends Controller
 
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password]))
         {
+            if (Auth::user()->level!=1) 
+            {
+                return redirect('admin/template');
+            }
             return redirect('admin/user/user_list');
         }
         else
         {
-            return redirect('admin/login')->with('thongbao','Đăng nhập không thành công');
+            return redirect('admin/login')->with('thongbao','Email hoặc Password không đúng');
         }
     }
 

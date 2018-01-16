@@ -19,6 +19,7 @@
             <ul class="dropdown-menu dropdown-user">
                 @if(Auth::check())
                 <li><a><i class="fa fa-user fa-fw"></i>{{Auth::user()->name}}</a>
+                <li><a><i class="fa fa-user fa-fw"></i>ID:{{Auth::user()->id}}</a>
                 </li>
                 <li><a href="admin/user/user_edit/{{Auth::user()->id}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
