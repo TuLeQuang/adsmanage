@@ -101,7 +101,9 @@ function itemsBuilder(){
     root.appendChild(f);
     d.appendChild(root);
     hideView("items");
-    templateArray.push('<div v-for="item in items"><a :href="item.linkClick"><img :src="item.imgUrl" style="'+imgSize+'"></a><span>'+'{'+'{'+'item.content'+'}'+'}'+'</span><br></div>');
+    var imgUrlConfig='{required:'+document.getElementById('itemsRequired').value+',url:true}',
+        contentConfig='{max:'+document.getElementById('contentLenght').value+'}';
+    templateArray.push('<div v-for="item in items">'+'<input type="text" placeholder="imgUrl" name="imgUrl" v-model="item.imgUrl" v-validate="'+imgUrlConfig+'"/><br>'+'<a :href="item.linkClick"><img :src="item.imgUrl" style="'+imgSize+'"></a><input type="text" placeholder="Content" name="content" v-model="item.content" v-validate="'+contentConfig+'"/><br><span>'+'{'+'{'+'item.content'+'}'+'}'+'</span><br></div>');
     dataArray.push('items:['+data_tg+'],');
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
@@ -121,8 +123,9 @@ function titleBuilder(){
     var titleData= document.getElementById('txtTitle').value;
     title.textContent=titleData;
     f.appendChild(title);
+    var titleConfig='{required:'+document.getElementById('titleRequired').value+',max:+'+document.getElementById('titleLenght').value+'}';
     dataArray.push('title:"'+titleData+'",');
-    templateArray.push('<p>'+'{'+'{'+'title'+'}'+'}'+'</p>');
+    templateArray.push('<input type="text" placeholder="Title" name="title" v-model="title" v-validate="'+titleConfig+'"/><br><p>'+'{'+'{'+'title'+'}'+'}'+'</p>');
     var d= document.getElementById('template');
     root.appendChild(f);
     d.appendChild(root);
@@ -165,5 +168,4 @@ function deleteElement(n) {
     dataArray.splice(n, 1,'');templateArray.splice(n, 1,'');
     txtData.value=template.getData();
     txtTemplate.value=template.getTemplate();
-
 }

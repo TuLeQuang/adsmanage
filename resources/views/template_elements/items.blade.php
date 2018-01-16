@@ -81,13 +81,20 @@
                                   <select id="itemNum" class="input-sm" style="background: whitesmoke;margin-left: 10px" onchange="changeNum()">
                                       <option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>
                                       <?php
-                                      for($i=1;$i<=7;$i++){
-                                          echo "<option value='".$i."'>".$i."<"."/option>";
-                                      }
+                                          for($i=1;$i<=7;$i++){
+                                              echo "<option value='".$i."'>".$i."<"."/option>";
+                                          }
                                       ?>
                                   </select>
                               </td>
                           </tr>
+                          <tr>
+                              <td><label for="required">Img Url Required: </label></td>
+                              <td><input type="checkbox" id="itemsRequired" style="margin-left: 10px"></td>
+                              <td><label for="Content">Content max lenght: </label></td>
+                              <td><input type="number" style="width: 50px" value="20" id="contentLenght"></td>
+                          </tr>
+
                           <tr>
                               <td><label>Image Size:</label></td>
                               <td>
@@ -104,6 +111,12 @@
                           <tr>
                               <td><label>Title:</label></td>
                               <td><input id="txtTitle" type="text" class="input-item"/></td>
+                          </tr>
+                          <tr>
+                              <td><label for="titleRequired">Required: </label></td>
+                              <td><input type="checkbox" id="titleRequired" style="margin-left: 10px"></td>
+                              <td><label for="titleLenght">Title max lenght: </label></td>
+                              <td><input type="number" style="width: 50px" value="20" id="titleLenght"></td>
                           </tr>
                       </table>
                       <div id="items-list"></div>
@@ -139,7 +152,6 @@
 @endsection
 
 @section('script')
-   {{-- <script src="{{ asset('js/app.js') }}"></script>--}}
   <script src="{{asset('/js/items.js')}}"></script>
   <script type="text/javascript" language="JavaScript">
 
