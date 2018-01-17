@@ -16,7 +16,7 @@
     #items-list table tr td{
       padding: 5px;
     }
-    #items, #title{
+    #items, #title, #sponsor, #image{
       border-radius: 10px;
       border:solid 1px #cdcdcd;
       box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
@@ -26,6 +26,8 @@
     }
 
     .box {
+      max-width: 500px;
+      max-height:500px;
       width: 150px;
       height: 150px;
       border:solid 1px black;
@@ -78,68 +80,21 @@
           <div id="template-layout" style="width: 59%;height: 100%;height-max: auto;float: left;display: block;border:dotted 3px #cdcdcd;">
             <div id="template">
             </div>
-            <div id="items" style="display: none;width: 100%">
-              <table>
-                <tr>
-                  <td><label for="itemNum">Items Number:</label></td>
-                  <td>
-                    <select id="itemNum" class="input-sm" style="background: whitesmoke;margin-left: 10px" onchange="changeNum()">
-                      <option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>
-                        <?php
-                        for($i=1;$i<=7;$i++){
-                            echo "<option value='".$i."'>".$i."<"."/option>";
-                        }
-                        ?>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td><label for="required">Img Url Required: </label></td>
-                  <td><input type="checkbox" id="itemsRequired" style="margin-left: 10px" ></td>
-                  <td><label for="Content">Content max lenght: </label></td>
-                  <td><input type="number" style="width: 50px" value="20" id="contentLenght" ></td>
-                </tr>
-                <tr>
-                  <td><label>Image Size:</label></td>
-                  <td><div id="imgSize" class="box">Kéo để chọn size</div></td>
-                </tr>
-              </table>
-              <div id="items-list"></div>
-              <button class="btn btn-danger" id="btn-close-items" onclick="hideView('items')" style="margin: 15px 0px 0px 15px">Close</button>
-            </div>
-            <div id="title" style="display: none;width: 100%">
-              <table>
-                <tr>
-                  <td><label>Title:</label></td>
-                  <td><input id="txtTitle" type="text" class="input-item" value="Title Demo" /></td>
-                </tr>
-                <tr>
-                  <td><label for="titleRequired">Required: </label></td>
-                  <td><input type="checkbox" id="titleRequired" style="margin-left: 10px"></td>
-                  <td><label for="titleLenght">Title max lenght: </label></td>
-                  <td><input type="number" style="width: 50px" value="50" id="titleLenght"></td>
-                </tr>
-                <tr>
-                  <td>Titlecolor:</td>
-                  <td><input type="color" id="titleColor" value="#000000" name="titleColor"></td>
-                </tr>
-                <tr>
-                  <td>Fontsize:</td>
-                  <td class="range-slider">
-                    <input id="titleFontRange" class="input-range" type="range" min="10" max="50" step="1" value="10" style="width:100px;display: inline-block;" name="titleFont" />
-                    <input type="text" class="range-value" id="titleFontText" style="width:30px"/><span>px</span>
-                  </td>
-                </tr>
-              </table>
-              <div id="items-list"></div>
-              <button class="btn btn-danger" id="btn-close-items" onclick="hideView('title')" style="margin: 15px 0px 0px 15px">Close</button>
-            </div>
+            @include('.template_elements.item')
+            @include('.template_elements.title')
+            @include('template_elements.sponsor')
+            @include('template_elements.image')
           </div>
 
           <div id="btn-elements" style="width: 29%;float: right;">
+            <button class="btn btn-toolbar" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
+            <br>
             <button class="btn btn-toolbar" type="button" id="btn-items" onclick="showItemsConfig()">Items</button>
             <br>
-            <button class="btn btn-toolbar" type="button" id="btn-items" onclick="showTitleConfig()">Title</button>
+            <button class="btn btn-toolbar" type="button" id="btn-image" onclick="showImageConfig()">Image</button>
+            <br>
+            <button class="btn btn-toolbar" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
+            <br>
           </div>
         </div>
       </div>

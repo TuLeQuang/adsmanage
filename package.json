@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "gulp": "^3.9.1",
+    "medium-editor": "^5.23.3",
     "vee-validate": "^2.0.1",
+    "vue-medium": "^5.23.0-1",
     "vue-router": "^3.0.1",
     "webpack": "^2.7.0"
   }
