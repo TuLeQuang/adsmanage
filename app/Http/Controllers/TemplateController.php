@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class TemplateController extends Controller
 {
     public function readItems() {
-        $data = User::all ();
+        $data = User::all();
         return $data;
     }
 

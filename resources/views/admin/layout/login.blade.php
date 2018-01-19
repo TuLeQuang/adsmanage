@@ -34,17 +34,17 @@
                     </div>
                     <div class="panel-body">
                         @if(count($errors) > 0)
-                        
-                            @foreach($errors->all() as $err)
-                                {{$err}}<br>
-                            @endforeach
-                            
+                            <div class="alert alert-danger">
+                                @foreach($errors->all() as $err)
+                                    {{$err}}<br>
+                                @endforeach
+                            </div>
                         @endif
-
+                        
                         @if(session('thongbao'))
-                            
-                            {{session('thongbao')}}
-                            
+                            <div class="alert alert-danger">
+                                {{session('thongbao')}}
+                            </div>
                         @endif
                         <form role="form" action="admin/login" method="POST">
                             
@@ -76,7 +76,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{{asset('admin_asset/dist/js/sb-admin-2.js')}}"></script>
-
+    <script>
+        $("div.alert").delay(2000).slideUp();
+    </script>
 </body>
 
 </html>
