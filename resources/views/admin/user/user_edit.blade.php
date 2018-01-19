@@ -37,31 +37,31 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" name="name" placeholder="Please Enter Name" value="{{$user->name}}"/>
+                        <input class="form-control" name="name" placeholder="Please Enter Name" value="{{$user->name}}" required="" />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" placeholder="Please Enter Email" value="{{$user->email}}" readonly="" />
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" id="changePassword" name="changePassword">
+                        <input type="checkbox" id="changePassword" onchange="enPass()" name="changePassword">
                         <label>Password</label>
-                        <input type="password" class="form-control password" name="password" placeholder="Please Enter Password" disabled=""/>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Password" disabled=""/>
                     </div>
                     <div class="form-group">
                         <label>RePassword</label>
-                        <input type="password" class="form-control password" name="passwordAgain" placeholder="Please Enter RePassword" disabled="" />
+                        <input type="password" class="form-control" id="rePassword" name="passwordAgain" placeholder="Please Enter RePassword" disabled="" />
                     </div>
                     <div class="form-group">
                         <label>User Level</label>
                         <label class="radio-inline">
-                            <input name="level" value="1" checked="" type="radio"
+                            <input name="level" value="1"  type="radio"
                             @if($user->level==1)
                                 {{"checked"}}
                             @endif>Admin
                         </label>
                         <label class="radio-inline">
-                            <input name="level" value="0" type="radio"
+                            <input name="level" value="0" checked="" type="radio"
                             @if($user->level==0)
                                 {{"checked"}}
                             @endif>Member
@@ -69,7 +69,13 @@
                     </div>
                     <button type="submit" class="btn btn-default">Edit</button>
                     <button type="reset" class="btn btn-default">Reset</button>
-                    <button type="button" class="btn btn-default"><a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
+                    <button type="button" class="btn btn-default">
+                        @if(Auth::user()->level==1)
+                        <a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
+                        @else
+                        <a href="admin/user/user_list_member/{{Auth::user()->id}}" style="text-decoration: none;color: black">Back</a></button>
+                        @endif
+                        
                 </form>
             </div>
         </div>
@@ -82,7 +88,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+       /* $(document).ready(function() {
             $('#changePassword').change(function() {
                 if($(this).is(":checked"))
                 {
@@ -93,7 +99,19 @@
                     $(".password").attr('disabled','');
                 }
             });
-        });  
-    $("div.alert").delay(2000).slideUp();
+        });  */
+        $("div.alert").delay(2000).slideUp();
+
+        function enPass(){
+            var passCheck= document.getElementById('changePassword');
+            if(passCheck.checked){
+                document.getElementById('password').disabled=false;
+                document.getElementById('rePassword').disabled=false;
+            }
+            else {
+                document.getElementById('password').disabled=true;
+                document.getElementById('rePassword').disabled=true;
+            }
+        }
     </script>
 @endsection

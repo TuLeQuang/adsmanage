@@ -20,7 +20,7 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 
 			Route::get('user_add','UserController@getUser_Add');
 			Route::post('user_add','UserController@postUser_Add');
-
+			Route::get('active/{id}','UserController@getActive');
 			Route::get('delete/{id}','UserController@getDelete');
 	});
 });

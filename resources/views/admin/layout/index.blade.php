@@ -10,9 +10,6 @@
     <!-- Bootstrap Core CSS -->
     <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    {{-- <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet"> --}}
-
     <!-- Custom CSS -->
     <link href="admin_asset/dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -27,6 +24,9 @@
 
     <link href="css/jquery-ui/jquery-ui.css" rel="stylesheet">
     <link href="css/jquery-ui/jquery-ui.theme.css" rel="stylesheet">
+
+ 
+
     @yield('style')
 </head>
 
@@ -38,7 +38,7 @@
 
         @yield('content')
 
-        <div style="text-align: center;font-size: 18px;">Copyright © Your Website 2018</div>
+        <div style="text-align: center;font-size: 13px;color: black">Copyright © Your Website 2018</div>
 
     </div>
     <!-- /#wrapper -->
@@ -47,13 +47,9 @@
     <script src="{{asset('admin_asset/bower_components/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('admin_asset/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-                responsive: true
-        });
-    });
-    </script>
+    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     @yield('script')
 </body>
 

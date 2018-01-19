@@ -33,31 +33,32 @@
                         {{session('thongbao1')}}
                     </div>
                 @endif
-                <form action="admin/user/user_add" method="POST">
+
+                <form action="admin/user/user_add" method="POST" id="form_input" >
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" name="name" placeholder="Please Enter Name" />
+                        <input class="form-control" name="name" id="name" placeholder="Please Enter Name" required/>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Please Enter Email" />
+                        <input type="email" class="form-control" name="email" placeholder="Please Enter Email" required/>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Please Enter Password" />
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Password" required/>
                     </div>
                     <div class="form-group">
                         <label>RePassword</label>
-                        <input type="password" class="form-control" name="passwordAgain" placeholder="Please Enter RePassword" />
+                        <input type="password" class="form-control" id="passwordAgain" name="passwordAgain" placeholder="Please Enter RePassword" required/>                        
                     </div>
                     <div class="form-group">
                         <label>User Level</label>
                         <label class="radio-inline">
-                            <input name="level" value="1" checked="" type="radio">Admin
+                            <input name="level" value="1"  type="radio">Admin
                         </label>
                         <label class="radio-inline">
-                            <input name="level" value="0" type="radio">Member
+                            <input name="level" value="0" checked="" type="radio">Member
                         </label>
                     </div>
                     <button type="submit" class="btn btn-default">User Add</button>
@@ -77,5 +78,23 @@
 @section('script')
     <script>
         $("div.alert").delay(2000).slideUp();
+
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+        $( "#form_input" ).validate({
+            rules: {
+                password: {required:true, minlength: 5},
+                passwordAgain: {equalTo: "#password"},
+                name: {minlength: 5}
+            },
+            messages :{
+                passwordAgain:{ equalTo:"<p style='color:red'>Mật khẩu nhập lại không khớp</p>" }
+            },
+            submitHandler: function(form_input) {
+                form_input.submit();
+            }
+        });
     </script>
 @endsection

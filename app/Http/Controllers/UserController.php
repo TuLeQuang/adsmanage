@@ -33,7 +33,7 @@ class UserController extends Controller
 
     	$this->validate($request,
             [
-                'name' => 'required|min:5',
+                'name' => 'required|min:5|unique:users,name',
                 'email'=>'required|email|unique:users,email',
                 'password'=>'required|min:5|max:32',
                 'passwordAgain'=>'required|same:password',
@@ -41,6 +41,7 @@ class UserController extends Controller
             [
                 'name.required'=>'Bạn chưa nhập tên người dùng',
                 'name.min'=>'Tên người dùng phải có ít nhất 5 kí tự',
+                'name.unique'=>'Tên người dùng đã tồn tại hãy chọn tên khác',
                 'email.required'=>'Bạn chưa nhập địa chỉ email',
                 'email.email'=>'Bạn chưa nhập đúng định dạng email',
                 'email.unique'=>'Email bạn vừa nhập đã tồn tại',
@@ -56,6 +57,7 @@ class UserController extends Controller
     	$user->email=$request->email;
     	$user->password=bcrypt($request->password);
     	$user->level=$request->level;
+        $user->active  = $request->has('active')? 1 : 0;
     	$user->save();
     	return redirect('admin/user/user_add')->with('thongbao','Thêm tài khoản thành công');
     }
@@ -63,10 +65,6 @@ class UserController extends Controller
     public function getEdit($id)
     {   
         $user=User::find($id);
-        if(Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id)))
-        {
-            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền sửa tài khoản'); 
-        }
     	return view('admin.user.user_edit',['user'=>$user]);
     }
 
@@ -83,10 +81,6 @@ class UserController extends Controller
     	$user=User::find($id);
     	$user->name=$request->name;
     	$user->level=$request->level;
-        if(Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id)))
-        {
-            return redirect('admin/user/user_edit/'.$id)->with('thongbao','Bạn không được cấp quyền'); 
-        }
     	if($request->changePassword == "on")
     	{
     		$this->validate($request,
@@ -107,7 +101,16 @@ class UserController extends Controller
     	$user->save();
     	return redirect('admin/user/user_edit/'.$id)->with('thongbao','Sửa thông tin thành công');
     }
-
+    public function getActive(Request $request,$id)
+    {
+        $user=User::find($id);
+        if($user->active==1)
+            {$user->active=0;}
+        else
+            $user->active=1;
+        $user->save();
+        return redirect('admin/user/user_list');
+    }
     public function getDelete($id)
     {
     	$delete=User::find($id);
@@ -136,11 +139,11 @@ class UserController extends Controller
                 'password.min'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
                 'password.max'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
             ]);
-
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password]))
+        /*Auth::user()->active= $request->active=1;*/
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'active' => $request->active=1]))
         {
             if (Auth::user()->level!=1) 
-            {
+            {   
                 return redirect('admin/template');
             }
             return redirect('admin/user/user_list');
