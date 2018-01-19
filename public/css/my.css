@@ -37,10 +37,6 @@
 	border-right: 1px solid #EEEEEE;
 }
 
-a{
-	color:black;
-}
-
 a:hover{
 	text-decoration: none;
 }
@@ -52,4 +48,40 @@ a:hover{
 
 .clear{
 	clear:both;
+}
+
+#template-layout{
+	width: 59%;
+	height: inherit;
+	height-max: auto;
+	float: left;
+	display: block;
+	border:dotted 3px #cdcdcd;
+}
+
+/*element css*/
+/*Items css*/
+.itemcss{
+	display: list-item;
+	margin-top: 5px;
+	height: auto;
+	overflow: hidden;
+	line-height: 15px;
+	color: #666;
+	font-size: 11px;
+	font-family: tahoma,arial;
+	padding:9px;
+	border-bottom:1px solid #cdcdcd ;
+	vertical-align: middle;
+}
+
+.itemcss a span {
+	color: #0f0f0f;
+	padding-left: 8px ;
+}
+
+.itemcss a div {
+	color: #0f0f0f;
+	padding-left: 10px;
+	display: flex;
 }

@@ -40,19 +40,25 @@ function showItemsConfig() {
     itemForm.id="items";
     itemForm.style.display="block";
     itemForm.style.width='100%';*/
-    n++;
-    var root= document.createElement('div');
-    root.id="element"+n;
-    root.className="items-class";
-    var d=document.getElementById('template');
-    d.appendChild(root);
-    showView('items');
+    if(typeof(document.getElementsByClassName('items-class')[0]) === 'undefined'){
+        n++;
+        var root= document.createElement('div');
+        root.id="element"+n;
+        root.className="items-class";
+        var d=document.getElementById('template');
+        d.appendChild(root);
+        showView('items');
 
-    var required= document.getElementById('itemsRequired');
-    var lenght= document.getElementById('contentLenght');
-    required.setAttribute("onchange","itemsChange("+n+")");
-    lenght.setAttribute("onchange","itemsChange("+n+")");
-   /* d.appendChild(itemForm);*/
+        var required= document.getElementById('itemsRequired');
+        var lenght= document.getElementById('contentLenght');
+        required.setAttribute("onchange","itemsChange("+n+")");
+        lenght.setAttribute("onchange","itemsChange("+n+")");
+        /* d.appendChild(itemForm);*/
+    }
+    else {
+        showView('items');
+    }
+
 };
 
 //draw item with number of items
@@ -72,18 +78,21 @@ function itemsBuilder(num,n,elementConfigId) {
         items=items+list_item;
         var img=document.createElement('img');
         var a=document.createElement('a');
-        var content=document.createElement('span');
+        var div=document.createElement('div');
+       var content= document.createElement('div');
+
         a.id='linkClick'+i;
+        a.target="_blank";
         img.id='imgUrl'+i;
+        img.align="left";
         content.id='content'+i;
-        if(num>=2){
-            f.appendChild(document.createElement('br'));
-            f.appendChild(document.createElement('hr'));
-        }
-        f.appendChild(a);
+        div.className='itemcss';
+
         a.appendChild(img);
-        f.appendChild(content);
-        d.appendChild(f)
+        a.appendChild(content);
+        div.appendChild(a);
+        f.appendChild(div);
+        d.appendChild(f);
     }
     document.getElementById('items-list').innerHTML=items;
 };
@@ -100,15 +109,21 @@ function itemsChange(n) {
     var data_tg="";
     var imgSize='width:'+$("#imgSize").css("width")+';height:'+$("#imgSize").css("height")+';';
     for(var i=1;i<=num.value;i++){
-        var imgUrlId='txtImgUrl'+i,linkClickId='txtLinkClick'+i,contentId='txtContent'+i;
-        var imgId='imgUrl'+i,aId='linkClick'+i,spanId='content'+i;
+        var imgUrlId='txtImgUrl'+i, linkClickId='txtLinkClick'+i, contentId='txtContent'+i;
+        var imgId='imgUrl'+i, aId='linkClick'+i,contentDiv='content'+i;
         var img=document.getElementById(imgId);
         var a=document.getElementById(aId);
-        var span=document.getElementById(spanId);
+        var content=document.getElementById(contentDiv);
+
         img.src=document.getElementById(imgUrlId).value;
         img.style=imgSize;
-        span.textContent=document.getElementById(contentId).value;
+        img.align="left";
+        img.title=document.getElementById(contentId).value;
+
+        content.textContent=document.getElementById(contentId).value;
+
         a.href=document.getElementById(linkClickId).value;
+
         data_tg=data_tg+'{imgUrl:"'+document.getElementById(imgUrlId).value+'",linkClick:"'+document.getElementById(linkClickId).value+'",content:"'+document.getElementById(contentId).value+'"},';
     }
     if(document.getElementById('itemsRequired').checked){
@@ -121,7 +136,7 @@ function itemsChange(n) {
     }
 
     dataArray[n]='items:['+data_tg+'],';
-    templateArray[n]='<div v-for="item in items"><hr><input type="text" placeholder="imgUrl" name="imgUrl" v-model="item.imgUrl" v-validate="'+imgUrlConfig+'"/><br><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="'+imgSize+'"></a><medium name="content" style="display: inline-block;" v-model="item.content" v-validate="'+contentConfig+'"></medium><br></div>';
+    templateArray[n]='<div v-for="item in items"><div class="itemcss"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="'+imgSize+'" align="left"><medium name="content" v-model="item.content" v-validate="'+contentConfig+'" style="padding-left: 10px"></medium></a></div></div>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
@@ -130,27 +145,34 @@ function itemsChange(n) {
 }
 
 function showTitleConfig() {
-    n++;
-    var root= document.createElement('div');
-    root.id="element"+n;
-    root.className="items-class";
-    var d=document.getElementById('template');
-    d.appendChild(root);
-    showView('title');
-    titleBuilder(n,"'title'");
-    var titleData= document.getElementById('txtTitle');
-    var color=document.getElementById('titleColor');
-    var fontSizeRange=document.getElementById('titleFontRange');
-    var fontSizeText=document.getElementById('titleFontText');
-    var required= document.getElementById('titleRequired');
-    var lenght= document.getElementById('titleLenght');
-    fontSizeRange.setAttribute("onchange","titleChange("+n+")");
-    color.setAttribute("onchange","titleChange("+n+")");
-    fontSizeText.setAttribute("onchange","titleChange("+n+")");
-    titleData.setAttribute("onchange","titleChange("+n+")");
-    required.setAttribute("onchange","titleChange("+n+")");
-    lenght.setAttribute("onchange","titleChange("+n+")");
-    titleChange(n);
+    if(typeof(document.getElementsByClassName('title-class')[0]) === 'undefined'){
+        n++;
+        var root= document.createElement('div');
+        root.id="element"+n;
+        root.className="title-class";
+        var d=document.getElementById('template');
+        d.appendChild(root);
+        showView('title');
+        titleBuilder(n,"'title'");
+        var titleData= document.getElementById('txtTitle');
+        var color=document.getElementById('titleColor');
+        var fontSizeRange=document.getElementById('titleFontRange');
+        var fontSizeText=document.getElementById('titleFontText');
+        var required= document.getElementById('titleRequired');
+        var lenght= document.getElementById('titleLenght');
+        var bgColor= document.getElementById('titleBgColor');
+
+        fontSizeRange.setAttribute("onchange","titleChange("+n+")");
+        color.setAttribute("onchange","titleChange("+n+")");
+        fontSizeText.setAttribute("onchange","titleChange("+n+")");
+        titleData.setAttribute("onchange","titleChange("+n+")");
+        required.setAttribute("onchange","titleChange("+n+")");
+        lenght.setAttribute("onchange","titleChange("+n+")");
+        bgColor.setAttribute("onchange","titleChange("+n+")");
+        titleChange(n);
+    }
+    else
+        showView('title');
 }
 
 //draw title
@@ -164,11 +186,11 @@ function titleBuilder(n,elementConfigId){
     crud.className="crud";
     crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
-    var title=document.createElement('p');
+    var title=document.createElement('div');
     title.id="titleElement";
+    title.style.padding="5px 5px 5px 15px";
     f.appendChild(title);
     d.appendChild(f);
-
 };
 
 function titleChange(n) {
@@ -185,8 +207,9 @@ function titleChange(n) {
     document.getElementById('titleFontRange').value= document.getElementById('titleFontText').value;*/
     title.style.color=document.getElementById('titleColor').value;
     title.style.fontSize=document.getElementById('titleFontText').value+'px';
+    title.style.backgroundColor=document.getElementById('titleBgColor').value;
 
-    var titleStyle='color:'+document.getElementById('titleColor').value+';font-size:'+document.getElementById('titleFontText').value+'px;';
+    var titleStyle='color:'+document.getElementById('titleColor').value+';font-size:'+document.getElementById('titleFontText').value+'px;background-color:'+document.getElementById('titleBgColor').value+';padding:5px 5px 5px 10px;';
     dataArray[n]='title:"'+titleData+'",';
     templateArray[n]='<medium style="'+titleStyle+'" name="title" v-model="title" v-validate="'+titleConfig+'"></medium>';
 
@@ -197,23 +220,27 @@ function titleChange(n) {
 }
 
 function showSponsorConfig(){
-    n++;
-    var root= document.createElement('div');
-    root.id="element"+n;
-    root.className="items-class";
-    var d=document.getElementById('template');
-    d.appendChild(root);
-    showView('sponsor');
-    sponsorBuilder(n,"'sponsor'");
+    if(typeof(document.getElementsByClassName('sponsor-class')[0]) === 'undefined'){
+        n++;
+        var root= document.createElement('div');
+        root.id="element"+n;
+        root.className="sponsor-class";
+        var d=document.getElementById('template');
+        d.appendChild(root);
+        showView('sponsor');
+        sponsorBuilder(n,"'sponsor'");
 
-    var color=document.getElementById('sponsorColor');
-    var name=document.getElementById('sponsorName');
-    var maxLenght =document.getElementById('sponsorLenght');
-    color.setAttribute("onchange","sponsorChange("+n+")");
-    name.setAttribute("onchange","sponsorChange("+n+")");
-    maxLenght.setAttribute("onchange","sponsorChange("+n+")");
+        var color=document.getElementById('sponsorColor');
+        var name=document.getElementById('sponsorName');
+        var maxLenght =document.getElementById('sponsorLenght');
+        color.setAttribute("onchange","sponsorChange("+n+")");
+        name.setAttribute("onchange","sponsorChange("+n+")");
+        maxLenght.setAttribute("onchange","sponsorChange("+n+")");
 
-    sponsorChange(n);
+        sponsorChange(n);
+    }
+    else
+        showView('sponsor');
 }
 
 //draw title
@@ -227,14 +254,16 @@ function sponsorBuilder(n,elementConfigId){
     crud.className="crud";
     crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
+    var div= document.createElement('div');
+    div.style.padding="5px 5px 5px 15px";
     var sponsor=document.createElement('span');
     sponsor.id="sponsorElement";
     sponsor.style.fontWeight="bold";
-
     var text=document.createElement('span');
     text.textContent=" tài trợ thông tin.";
-    f.appendChild(sponsor);
-    f.appendChild(text);
+    div.appendChild(sponsor);
+    div.appendChild(text);
+    f.appendChild(div);
     d.appendChild(f);
 };
 
@@ -244,10 +273,10 @@ function sponsorChange(n) {
     sponsor.textContent=sponsorName;
     sponsor.style.color=document.getElementById('sponsorColor').value;
 
-    var sponsorStyle='color:'+document.getElementById('sponsorColor').value+';margin-left: 10px;font-weight:bold;float:left';
+    var sponsorStyle='color:'+document.getElementById('sponsorColor').value+';font-weight:bold;float:left';
     var sponsorConfig='{required:true,max:'+document.getElementById('sponsorLenght').value+'}';
     dataArray[n]='sponsor:"'+sponsorName+'",';
-    templateArray[n]='<medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span>';
+    templateArray[n]='<div style="padding:5px 5px 5px 10px"><medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span></div>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
@@ -256,18 +285,22 @@ function sponsorChange(n) {
 };
 
 function showImageConfig() {
-    n++;
-    var root= document.createElement('div');
-    root.id="element"+n;
-    root.className="items-class";
-    var d=document.getElementById('template');
-    d.appendChild(root);
-    showView('image');
-    imageBuilder(n,"'image'");
-    var imageUrl= document.getElementById('txtImageUrl');
-    var imageLink=document.getElementById('txtImageLink');
-    imageUrl.setAttribute("onchange","imageChange("+n+")");
-    imageLink.setAttribute("onchange","imageChange("+n+")");
+    if(typeof(document.getElementsByClassName('image-class')[0]) === 'undefined'){
+        n++;
+        var root= document.createElement('div');
+        root.id="element"+n;
+        root.className="image-class";
+        var d=document.getElementById('template');
+        d.appendChild(root);
+        showView('image');
+        imageBuilder(n,"'image'");
+        var imageUrl= document.getElementById('txtImageUrl');
+        var imageLink=document.getElementById('txtImageLink');
+        imageUrl.setAttribute("onchange","imageChange("+n+")");
+        imageLink.setAttribute("onchange","imageChange("+n+")");
+    }
+    else
+        showView('image');
 }
 
 // draw image
@@ -311,13 +344,26 @@ function imageChange(n) {
     txtTemplate.value=templateArray.join(" ");
 }
 
+//template config
+function templateChange() {
+    var templateWidth= document.getElementById('txtWidth');
+    var templateHeight= document.getElementById('txtHeight');
+    if(templateWidth.value!=null)
+        document.getElementById('template').style.width=templateWidth.value+'px';
+    else
+        document.getElementById('template').style.width="auto";
+}
+
 //save template to db
 function saveTemplate() {
+    //get style for template
+    var templateStyle= document.getElementById('template').style;
+
     var tem_data='{'+dataArray.join(" ")+'}';
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
     txtData.value=tem_data;
-    txtTemplate.value=templateArray.join(" ");
+    txtTemplate.value='<div style="'+templateStyle.cssText+'">'+templateArray.join(" ")+'</div>';
 };
 
 function clear() {

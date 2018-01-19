@@ -8,7 +8,7 @@
       <td><label for="titleRequired">Required: </label></td>
       <td><input type="checkbox" id="titleRequired" style="margin-left: 10px"></td>
       <td><label for="titleLenght">Title max lenght: </label></td>
-      <td><input type="number" style="width: 50px" value="50" id="titleLenght"></td>
+      <td><input type="number" style="width: 50px" value="40" id="titleLenght"></td>
     </tr>
     <tr>
       <td>Title color:</td>
@@ -18,8 +18,12 @@
       <td>Font size:</td>
       <td class="range-slider">
         <input id="titleFontRange" class="input-range" type="range" min="10" max="50" step="1" value="10" style="width:100px;display: inline-block;" name="titleFont" />
-        <input type="text" class="range-value" id="titleFontText" style="width:30px"/><span>px</span>
+        <input type="text" class="range-value" id="titleFontText" style="width:30px;"/><span>px</span>
       </td>
+    </tr>
+    <tr>
+      <td>Backgroud color:</td>
+      <td><input type="color" id="titleBgColor" value="#ffffff" name="titleBgColor"></td>
     </tr>
   </table>
   <div id="items-list"></div>

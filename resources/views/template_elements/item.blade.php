@@ -17,11 +17,11 @@
       <td><label for="required">Img Url Required: </label></td>
       <td><input type="checkbox" id="itemsRequired" style="margin-left: 10px" ></td>
       <td><label for="Content">Content max lenght: </label></td>
-      <td><input type="number" style="width: 50px" value="20" id="contentLenght" ></td>
+      <td><input type="number" style="width: 50px" value="100" id="contentLenght" ></td>
     </tr>
     <tr>
       <td><label>Image Size:</label></td>
-      <td><div id="imgSize" class="box">Kéo để chọn size</div></td>
+      <td><div id="imgSize" class="box" style="max-width: 100px;max-height: 100px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
     </tr>
   </table>
   <div id="items-list"></div>

@@ -47,7 +47,7 @@
           echo "var js_template='".$temData['template']."';\n";
           ?>
       var tem_data=js_data;
-      var div_script= '<div id="script-text" style="margin-top: 10px"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">layscript</button>Scrip:<p id ="script"></p></div>';
+      var div_script= '<div id="script-text" style="margin-top: 10px;display: block"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">layscript</button>Scrip:<p id ="script"></p></div>';
 
       //contentEditable
     /*  Vue.component('editable',{

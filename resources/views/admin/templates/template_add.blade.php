@@ -66,7 +66,7 @@
       position: absolute;
     }
 
-    .items-class:hover .crud{
+    .items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
       display: block;
     }
   </style>
@@ -77,8 +77,8 @@
     <div class="container-fluid">
       <div class="row">
         <div style="margin-top: 10px">
-          <div id="template-layout" style="width: 59%;height: 100%;height-max: auto;float: left;display: block;border:dotted 3px #cdcdcd;">
-            <div id="template">
+          <div id="template-layout">
+            <div id="template" style="border: solid 1px #cdcdcd;">
             </div>
             @include('.template_elements.item')
             @include('.template_elements.title')
@@ -101,8 +101,11 @@
       <!-- /.row -->
       <form action="{{route('template.store')}}" method="post" class="form">
         <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
-        <lable>Tên Template: </lable>
-        <input type="text" id="txtName" name="txtName" class="input-item" placeholder="Tên Template"/><br>
+        <table>
+            <tr><td><input type="text" id="txtName" name="txtName" class="input-item" placeholder="Tên Template" required/></td></tr>
+            <tr><td><input type="number" id="txtWidth" class="input-item" placeholder="width" onchange="templateChange()"/> px</td></tr>
+        </table>
+
         <input type="text" id="txtData" name="txtData" style="display: none "/>
         <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
         <button class="btn btn-success" type="submit" onclick="saveTemplate()" style="margin: 15px 0px 0px 100px;">Lưu</button>
