@@ -86,7 +86,7 @@ function itemsBuilder(num,n,elementConfigId) {
         img.id='imgUrl'+i;
         img.align="left";
         content.id='content'+i;
-        div.className='itemcss';
+        div.className='itemClass';
 
         a.appendChild(img);
         a.appendChild(content);
@@ -136,7 +136,7 @@ function itemsChange(n) {
     }
 
     dataArray[n]='items:['+data_tg+'],';
-    templateArray[n]='<div v-for="item in items"><div class="itemcss"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="'+imgSize+'" align="left"><medium name="content" v-model="item.content" v-validate="'+contentConfig+'" style="padding-left: 10px"></medium></a></div></div>';
+    templateArray[n]='<div v-for="item in items"><div class="itemClass"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="'+imgSize+'" align="left"><medium name="content" v-model="item.content" v-validate="'+contentConfig+'" style="padding-left: 10px"></medium></a></div></div>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');

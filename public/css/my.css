@@ -61,9 +61,8 @@ a:hover{
 
 /*element css*/
 /*Items css*/
-.itemcss{
+.itemClass{
 	display: list-item;
-	margin-top: 5px;
 	height: auto;
 	overflow: hidden;
 	line-height: 15px;
@@ -75,12 +74,12 @@ a:hover{
 	vertical-align: middle;
 }
 
-.itemcss a span {
+.itemClass a span {
 	color: #0f0f0f;
 	padding-left: 8px ;
 }
 
-.itemcss a div {
+.itemClass a div {
 	color: #0f0f0f;
 	padding-left: 10px;
 	display: flex;
