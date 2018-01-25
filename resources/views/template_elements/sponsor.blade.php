@@ -2,11 +2,11 @@
   <table>
     <tr>
       <td><label for="sponsorName">Sponsor:</label></td>
-      <td><input type="text" class="item" id="sponsorName" value="dantri.com"></td>
+      <td><input type="text" class="form-control" id="sponsorName" value="dantri.com"></td>
     </tr>
     <tr>
       <td><label for="sponsorLenght">Sponsor max lenght: </label></td>
-      <td><input type="number" style="width: 50px" value="20" id="sponsorLenght" ></td>
+      <td><input type="number" class="form-control" value="20" id="sponsorLenght" ></td>
     </tr>
     <tr>
       <td><label>Color:</label></td>

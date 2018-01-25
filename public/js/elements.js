@@ -51,17 +51,21 @@ function showItemsConfig() {
 
         var required= document.getElementById('itemsRequired');
         var lenght= document.getElementById('contentLenght');
+        var imgSize=document.getElementById('imgSize');
+        imgSize.setAttribute("onchange","itemsChange("+n+")");
         required.setAttribute("onchange","itemsChange("+n+")");
         lenght.setAttribute("onchange","itemsChange("+n+")");
+
+        var format= document.getElementById('itemFormat');
+        format.setAttribute("onchange","itemsFormatBuilder("+n+",'items',this.value)");
         /* d.appendChild(itemForm);*/
     }
     else {
         showView('items');
     }
-
 };
 
-//draw item with number of items
+/*//draw item with number of items
 function itemsBuilder(num,n,elementConfigId) {
     var d = document.getElementById('element'+n);
     while (d.hasChildNodes()) {
@@ -71,10 +75,10 @@ function itemsBuilder(num,n,elementConfigId) {
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
     crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')" href="#items"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
     for(var i=1;i<=num;i++){
-        var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px"><tr><td><label for="imgUrl'+i+'">Image Url '+i+':</label></td><td><input id="txtImgUrl'+i+'" type="text" class="input-sm input-item" onchange="itemsChange('+n+')"/></td><tr><td><label for="linkClick'+i+'">Link Click '+i+':</label></td><td><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="input-sm input-item"/></td></tr><tr><td><label for="content'+i+'">Content '+i+':</label></td><td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="input-sm input-item"/></td></tr></table>';
+        var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px"><tr><td><label for="imgUrl'+i+'">Image Url '+i+':</label></td><td colspan="3"><input id="txtImgUrl'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td><tr><td><label for="linkClick'+i+'">Link Click '+i+':</label></td><td colspan="3"><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td></tr><tr><td><label for="content'+i+'">Content '+i+':</label></td><td colspan="3"><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td></tr></table>';
         items=items+list_item;
         var img=document.createElement('img');
         var a=document.createElement('a');
@@ -142,7 +146,199 @@ function itemsChange(n) {
     var txtTemplate= document.getElementById('txtTemplate');
     txtData.value=dataArray.join(" ");
     txtTemplate.value=templateArray.join(" ");
+}*/
+
+/*Begin create items v2 */
+function itemsBuilder(num,n,elementConfigId) {
+    var items= "";
+    for(var i=1;i<=num;i++){
+        var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px">' +
+            '<tr>' +
+            '<td><label for="imgUrl'+i+'">Image Url '+i+':</label></td>' +
+            '<td><input id="txtImgUrl'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td>' +
+            '<td><label>Item Title '+i+':</label></td>' +
+            '<td><input id="txtItemTitle'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td><label for="linkClick'+i+'">Link Click '+i+':</label></td>' +
+            '<td><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '<td><label>Item Sponsor '+i+':</label></td>' +
+            '<td><input id="txtItemSponsor'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td><label for="content'+i+'">Content '+i+':</label></td>' +
+            '<td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '<td><label>Sponsor Link '+i+':</label></td>' +
+            '<td><input id="txtItemSponsorLink'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '</tr>' +
+            '</table>';
+        items=items+list_item;
+    }
+    document.getElementById('items-list').innerHTML=items;
+    itemsFormatBuilder(n,elementConfigId,'1');
+
+};
+
+//
+function changeNum() {
+    var num = document.getElementById('itemNum');
+    itemsBuilder(num.value,n,"'items'");
 }
+
+function itemsFormatBuilder(n,elementConfigId,formVal) {
+    var num = document.getElementById('itemNum').value;
+    var d = document.getElementById('element'+n);
+    while (d.hasChildNodes()) {
+        d.removeChild(d.firstChild);
+    }
+    var f = document.createDocumentFragment();
+    var crud= document.createElement('div');
+    crud.className="crud";
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')" href="#items"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    f.appendChild(crud);
+    if(formVal=="1"){
+        for(var i=1;i<=num;i++){
+            var itemTitle=document.createElement('a');
+            var itemSponsor= document.createElement('a');
+            var itemImg=document.createElement('img');
+            var itemLink=document.createElement('a');
+            var div=document.createElement('div');
+            var itemContent= document.createElement('div');
+
+            itemLink.id='itemLink'+i;
+            itemLink.target="_blank";
+
+            itemImg.id='itemImg'+i;
+            itemImg.align="left";
+
+            itemContent.id='itemContent'+i;
+            div.className='itemClass';
+
+            itemTitle.id='itemTitle'+i;
+            itemTitle.style.display="none";
+
+            itemSponsor.id="itemSponsor"+i;
+            itemSponsor.style.display="none";
+
+            div.appendChild(itemTitle);
+            div.appendChild(itemSponsor);
+            itemLink.appendChild(itemImg);
+            itemLink.appendChild(itemContent);
+            div.appendChild(itemLink);
+            f.appendChild(div);
+            d.appendChild(f);
+        }
+        itemsChange(n);
+    }
+    else if(formVal=="2" ||formVal=="3" ){
+        for(var i=1;i<=num;i++){
+            var itemTitle=document.createElement('a');
+            var itemSponsor= document.createElement('a');
+            var itemImg=document.createElement('img');
+            var itemLink=document.createElement('a');
+            var div=document.createElement('div');
+            var itemContent= document.createElement('div');
+
+            itemLink.id='itemLink'+i;
+            itemLink.target="_blank";
+
+            itemImg.id='itemImg'+i;
+            formVal=="3"?itemImg.align="top":itemImg.align="left";
+
+            itemContent.id='itemContent'+i;
+            formVal=="3"? itemContent.style.paddingLeft="0px":itemContent.style.paddingLeft="10px";
+
+            itemTitle.id='itemTitle'+i;
+            itemTitle.style.fontWeight = "bold";
+            itemTitle.style.display="inline-block";
+            itemTitle.target="_blank";
+
+            itemSponsor.id="itemSponsor"+i;
+            itemSponsor.target="_blank";
+            itemSponsor.style.display="block";
+            itemSponsor.style.color="#b0b0b0";
+
+            div.className='itemClass';
+
+            div.appendChild(itemTitle);
+            div.appendChild(document.createElement('br'));
+            div.appendChild(itemSponsor);
+            itemLink.appendChild(itemImg);
+            itemLink.appendChild(itemContent);
+            div.appendChild(itemLink);
+            f.appendChild(div);
+            d.appendChild(f);
+        }
+        itemsChange(n);
+    }
+}
+//saveData change in items
+function itemsChange(n) {
+    var num = document.getElementById('itemNum').value;
+    var data_tg = "";
+    var imgSize = 'width:' + $("#imgSize").css("width") + ';height:' + $("#imgSize").css("height") + ';';
+    //document.getElementById('imgSize').textContent=$("#imgSize").css("width")+' x '+$("#imgSize").css("height");
+    for (var i = 1; i <= num; i++) {
+        var imgUrlId = 'txtImgUrl' + i, linkClickId = 'txtLinkClick' + i, contentId = 'txtContent' + i,
+            itemTitleId='txtItemTitle'+i,itemSponsorId='txtItemSponsor'+i,itemSponsorLinkId='txtItemSponsorLink'+i;
+        var imgId = 'itemImg' + i,
+            aId = 'itemLink' + i,
+            contentDiv = 'itemContent' + i,
+            itemTitle='itemTitle'+i,
+            itemSponsor='itemSponsor'+i;
+
+        var title=document.getElementById(itemTitle);
+        var sponsor=document.getElementById(itemSponsor);
+        var img = document.getElementById(imgId);
+        var a = document.getElementById(aId);
+        var content = document.getElementById(contentDiv);
+
+        title.textContent=document.getElementById(itemTitleId).value;
+        title.title=title.textContent;
+        title.href=document.getElementById(linkClickId).value;
+
+        sponsor.href=document.getElementById(itemSponsorLinkId).value;
+        sponsor.textContent=document.getElementById(itemSponsorId).value;
+        sponsor.title= sponsor.textContent;
+
+        img.src = document.getElementById(imgUrlId).value;
+        img.style = imgSize;
+        img.title = document.getElementById(contentId).value;
+        content.textContent = document.getElementById(contentId).value;
+        a.href = document.getElementById(linkClickId).value;
+
+        data_tg = data_tg + '{title:"'+charFormat(document.getElementById(itemTitleId).value)+'",sponsor:"'+document.getElementById(itemSponsorId).value +'",sponsorLink:"'+document.getElementById(itemSponsorLinkId).value +'",imgUrl:"' + document.getElementById(imgUrlId).value + '",linkClick:"' + document.getElementById(linkClickId).value + '",content:"' + charFormat(document.getElementById(contentId).value) + '"},';
+    }
+    if (document.getElementById('itemsRequired').checked) {
+        var imgUrlConfig = '{required:true,url:true}',
+            contentConfig = '{max:' + document.getElementById('contentLenght').value + '}';
+    }
+    else {
+        var imgUrlConfig = '{required:false,url:true}',
+            contentConfig = '{max:' + document.getElementById('contentLenght').value + '}';
+    }
+
+    dataArray[n] = 'items:[' + data_tg + '],';
+    templateArray[n] = templateArrayFormat(imgUrlConfig,contentConfig,imgSize);
+
+    var txtData = document.getElementById('txtData');
+    var txtTemplate = document.getElementById('txtTemplate');
+    txtData.value = dataArray.join(" ");
+    txtTemplate.value = templateArray.join(" ");
+}
+
+function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
+    var itemFormat= document.getElementById('itemFormat').value;
+    var tem="";
+    if(itemFormat=="1")
+        tem='<div v-for="item in items"><div class="itemClass"><a :href="item.linkClick" :title="item.content" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div></div>';
+    else if(itemFormat=="2")
+        tem='<div v-for="item in items"><div class="itemClass"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.sponsorLink" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div></div>';
+    else
+        tem='<div v-for="item in items"><div class="itemClass"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.sponsorLink" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></a></div></div>';
+    return tem;
+}
+/*End create items v2*/
 
 function showTitleConfig() {
     if(typeof(document.getElementsByClassName('title-class')[0]) === 'undefined'){
@@ -210,7 +406,7 @@ function titleChange(n) {
     title.style.backgroundColor=document.getElementById('titleBgColor').value;
 
     var titleStyle='color:'+document.getElementById('titleColor').value+';font-size:'+document.getElementById('titleFontText').value+'px;background-color:'+document.getElementById('titleBgColor').value+';padding:5px 5px 5px 10px;';
-    dataArray[n]='title:"'+titleData+'",';
+    dataArray[n]='title:"'+charFormat(titleData)+'",';
     templateArray[n]='<medium style="'+titleStyle+'" name="title" v-model="title" v-validate="'+titleConfig+'"></medium>';
 
     var txtData= document.getElementById('txtData');
@@ -348,22 +544,34 @@ function imageChange(n) {
 function templateChange() {
     var templateWidth= document.getElementById('txtWidth');
     var templateHeight= document.getElementById('txtHeight');
-    if(templateWidth.value!=null)
+    if(templateWidth.value!="")
         document.getElementById('template').style.width=templateWidth.value+'px';
     else
         document.getElementById('template').style.width="auto";
+
+    if(templateHeight.value!="")
+        document.getElementById('template').style.height=templateHeight.value+'px';
+    else
+        document.getElementById('template').style.height="auto";
 }
 
 //save template to db
 function saveTemplate() {
-    //get style for template
-    var templateStyle= document.getElementById('template').style;
+    if(!document.getElementById('template').hasChildNodes()){
+        document.getElementById('errorsMessages').value = "Chưa tạo template";
+        document.getElementById('errorsMessages').disabled= "false";
+        return false;
+    }
+    else{
+        //get style for template
+        var templateStyle= document.getElementById('template').style;
 
-    var tem_data='{'+dataArray.join(" ")+'}';
-    var txtData= document.getElementById('txtData');
-    var txtTemplate= document.getElementById('txtTemplate');
-    txtData.value=tem_data;
-    txtTemplate.value='<div style="'+templateStyle.cssText+'">'+templateArray.join(" ")+'</div>';
+        var tem_data='{'+dataArray.join(" ")+'}';
+        var txtData= document.getElementById('txtData');
+        var txtTemplate= document.getElementById('txtTemplate');
+        txtData.value=tem_data;
+        txtTemplate.value='<div style="'+templateStyle.cssText+'">'+templateArray.join(" ")+'</div>';
+    }
 };
 
 function clear() {
@@ -387,3 +595,7 @@ function deleteElement(n) {
     txtData.value=template.getData();
     txtTemplate.value=template.getTemplate();
 };
+
+function charFormat(char) {
+    return char.replace(/"/gi, "&quot;");
+}

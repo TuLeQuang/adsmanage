@@ -3,7 +3,7 @@
     <tr>
       <td><label for="itemNum">Items Number:</label></td>
       <td>
-        <select id="itemNum" class="input-sm" style="background: whitesmoke;margin-left: 10px" onchange="changeNum()">
+        <select id="itemNum" class="form-control" style="background: whitesmoke;" onchange="changeNum()">
           <option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>
             <?php
             for($i=1;$i<=7;$i++){
@@ -15,13 +15,23 @@
     </tr>
     <tr>
       <td><label for="required">Img Url Required: </label></td>
-      <td><input type="checkbox" id="itemsRequired" style="margin-left: 10px" ></td>
-      <td><label for="Content">Content max lenght: </label></td>
-      <td><input type="number" style="width: 50px" value="100" id="contentLenght" ></td>
+      <td><input type="checkbox" id="itemsRequired" class="form-check-input" ></td>
+      <td><label for="Content" style="margin-left: 5px">Content max lenght: </label></td>
+      <td><input type="number" class="form-control" style="width: 70px" value="100" id="contentLenght" ></td>
+    </tr>
+    <tr>
+      <td><label style="margin-left: 5px">Item Format: </label></td>
+      <td>
+        <select id="itemFormat" class="form-control" style="background: whitesmoke">
+          <option value="1">Format 1: Normal(300x600)</option>
+          <option value="2">Format 2: Full items</option>
+          <option value="3">Format 3: width 160x600</option>
+        </select>
+      </td>
     </tr>
     <tr>
       <td><label>Image Size:</label></td>
-      <td><div id="imgSize" class="box" style="max-width: 100px;max-height: 100px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
+      <td><div id="imgSize" class="box" style="max-width: 90px;max-height: 90px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
     </tr>
   </table>
   <div id="items-list"></div>

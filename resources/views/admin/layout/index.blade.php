@@ -62,15 +62,7 @@
 
     <script src="{{asset('/js/jquery-ui.js')}}"></script>
     <script src="{{asset('/js/jquery-ui.min.js')}}"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-                responsive: true
-        });
-    });
-    </script>
-    {{--<script type="text/javascript" language="javascript" src="{{asset('admin_asset/ckeditor/ckeditor.js')}}" ></script>--}}
+
     @yield('script')
 </body>
 

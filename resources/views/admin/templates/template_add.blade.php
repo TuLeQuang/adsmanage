@@ -4,113 +4,51 @@
   <link href="{{asset('css/jquery-ui/jquery-ui.css')}}" rel="stylesheet">
   <link href="{{asset('css/jquery-ui/jquery-ui.theme.css')}}" rel="stylesheet">
 @endsection
+
 @section('style')
-  <style type="text/css">
-    .input-item{
-      width: 200px;
-      margin-left: 25px;
-    }
-    td{
-      padding-top: 5px;
-    }
-    #items-list table tr td{
-      padding: 5px;
-    }
-    #items, #title, #sponsor, #image{
-      border-radius: 10px;
-      border:solid 1px #cdcdcd;
-      box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
-      width: 352px;
-      padding: 10px;
-      margin-top: 5px;
-    }
-
-    .box {
-      max-width: 500px;
-      max-height:500px;
-      width: 150px;
-      height: 150px;
-      border:solid 1px black;
-      background-color:#00b3ee;
-      text-align: center;
-    }
-    .text {
-      margin-top: 30px;
-      color: #fff;
-      text-align: center;
-      font-size: 18px;
-      letter-spacing: 1px;
-    }
-    .opac {
-      opacity: .8;
-    }
-    .move-cursor {
-      cursor: move;
-    }
-    .grab-cursor {
-      cursor: -webkit-grabbing;
-    }
-
-    .form{
-      width: 59%;
-      height: 100%;
-      height-max: auto;
-      float: left;
-      display: block;
-      margin-top: 10px;
-    }
-    .crud{
-      float:right;
-      display: none;
-      margin-left: 510px;
-      position: absolute;
-    }
-
-    .items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
-      display: block;
-    }
-  </style>
 @endsection
+
 @section('content')
   <!-- Page Content -->
   <div id="page-wrapper">
     <div class="container-fluid">
       <div class="row">
         <div style="margin-top: 10px">
+          <form action="{{route('template.store')}}" method="post" class="form">
+            <label style="color: red" disabled="true" id="errorsMessages"> </label>
+            <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
+            <table>
+              <tr><td><input type="text" id="txtName" name="txtName" class="input-item form-control" placeholder="Tên Template" required/></td></tr>
+              <tr><td><input type="number" id="txtWidth" class="input-item form-control" placeholder="Width px" onchange="templateChange()" required/></td></tr>
+              <tr><td><input type="number" id="txtHeight" class="input-item form-control" placeholder="Height px" onchange="templateChange()"/></td></tr>
+            </table>
+            <input type="text" id="txtData" name="txtData" style="display: none "/>
+            <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
+            <input class="btn btn-success" type="submit" value="Save" onclick="saveTemplate()" style="margin: 15px 0px 0px 60px;"/>
+            <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
+          </form>
           <div id="template-layout">
-            <div id="template" style="border: solid 1px #cdcdcd;">
-            </div>
+            <div id="template" style="border: solid 1px #cdcdcd;min-width: 100px ;"></div>
             @include('.template_elements.item')
             @include('.template_elements.title')
             @include('template_elements.sponsor')
             @include('template_elements.image')
           </div>
 
-          <div id="btn-elements" style="width: 29%;float: right;">
-            <button class="btn btn-toolbar" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
+          <div id="btn-elements">
+            <button class="btn btn-toolbar btn-element" type="button" id="btn-title" onclick="showTitleConfig()">Title</button></a>
             <br>
-            <button class="btn btn-toolbar" type="button" id="btn-items" onclick="showItemsConfig()">Items</button>
+            <button class="btn btn-toolbar btn-element" type="button" id="btn-items" onclick="showItemsConfig()">Items</button>
             <br>
-            <button class="btn btn-toolbar" type="button" id="btn-image" onclick="showImageConfig()">Image</button>
+            <button class="btn btn-toolbar btn-element" type="button" id="btn-image" onclick="showImageConfig()">Image</button>
             <br>
-            <button class="btn btn-toolbar" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
+            <button class="btn btn-toolbar btn-element" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
             <br>
           </div>
+
         </div>
       </div>
       <!-- /.row -->
-      <form action="{{route('template.store')}}" method="post" class="form">
-        <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
-        <table>
-            <tr><td><input type="text" id="txtName" name="txtName" class="input-item" placeholder="Tên Template" required/></td></tr>
-            <tr><td><input type="number" id="txtWidth" class="input-item" placeholder="width" onchange="templateChange()"/> px</td></tr>
-        </table>
-
-        <input type="text" id="txtData" name="txtData" style="display: none "/>
-        <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
-        <button class="btn btn-success" type="submit" onclick="saveTemplate()" style="margin: 15px 0px 0px 100px;">Lưu</button>
-        <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
-      </form>
     </div>
     <!-- /.container-fluid -->
   </div>
