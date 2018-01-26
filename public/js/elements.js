@@ -169,7 +169,6 @@ function itemsBuilder(num,n,elementConfigId) {
             '<td><label for="content'+i+'">Content '+i+':</label></td>' +
             '<td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td>' +
             '<td><label>Sponsor Link '+i+':</label></td>' +
-            '<td><input id="txtItemSponsorLink'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
             '</tr>' +
             '</table>';
         items=items+list_item;
@@ -257,6 +256,7 @@ function itemsFormatBuilder(n,elementConfigId,formVal) {
             itemSponsor.target="_blank";
             itemSponsor.style.display="block";
             itemSponsor.style.color="#b0b0b0";
+            itemSponsor.style.paddingBottom="5px";
 
             div.className='itemClass';
 
@@ -271,6 +271,56 @@ function itemsFormatBuilder(n,elementConfigId,formVal) {
         }
         itemsChange(n);
     }
+    else if (formVal=="4"){
+        for(var i=1;i<=num;i++){
+            var itemTitle=document.createElement('a');
+            var itemSponsor= document.createElement('a');
+            var itemImg=document.createElement('img');
+            var itemLink=document.createElement('a');
+            var div=document.createElement('div');
+            var itemContent= document.createElement('div');
+
+            if(i>1){
+                itemImg.id='itemImg'+i;
+                itemImg.style.display="none";
+
+                itemContent.id='itemContent'+i;
+                itemContent.style.display="none";
+            }
+            else if(i==1) {
+                itemImg.id='itemImg'+i;
+                itemImg.align="top";
+
+                itemContent.id='itemContent'+i;
+                itemContent.style.paddingLeft="0px";
+            }
+
+            itemLink.id='itemLink'+i;
+            itemLink.target="_blank";
+
+            itemTitle.id='itemTitle'+i;
+            itemTitle.style.marginTop="10px";
+            itemTitle.style.marginBottom="10px";
+            itemTitle.style.fontWeight = "bold";
+            itemTitle.style.display="inline-block";
+            itemTitle.target="_blank";
+
+            itemSponsor.id="itemSponsor"+i;
+            itemSponsor.style.display="none";
+
+            div.className='itemClass';
+
+            itemLink.appendChild(itemImg);
+            div.appendChild(itemLink);
+            div.appendChild(itemTitle);
+            div.appendChild(document.createElement('br'));
+            div.appendChild(itemContent);
+            div.appendChild(itemSponsor);
+            f.appendChild(div);
+            d.appendChild(f);
+        }
+        itemsChange(n);
+    }
 }
 //saveData change in items
 function itemsChange(n) {
@@ -280,7 +330,7 @@ function itemsChange(n) {
     //document.getElementById('imgSize').textContent=$("#imgSize").css("width")+' x '+$("#imgSize").css("height");
     for (var i = 1; i <= num; i++) {
         var imgUrlId = 'txtImgUrl' + i, linkClickId = 'txtLinkClick' + i, contentId = 'txtContent' + i,
-            itemTitleId='txtItemTitle'+i,itemSponsorId='txtItemSponsor'+i,itemSponsorLinkId='txtItemSponsorLink'+i;
+            itemTitleId='txtItemTitle'+i,itemSponsorId='txtItemSponsor'+i;
         var imgId = 'itemImg' + i,
             aId = 'itemLink' + i,
             contentDiv = 'itemContent' + i,
@@ -297,17 +347,18 @@ function itemsChange(n) {
         title.title=title.textContent;
         title.href=document.getElementById(linkClickId).value;
 
-        sponsor.href=document.getElementById(itemSponsorLinkId).value;
+        sponsor.href=document.getElementById(linkClickId).value;
         sponsor.textContent=document.getElementById(itemSponsorId).value;
         sponsor.title= sponsor.textContent;
 
         img.src = document.getElementById(imgUrlId).value;
-        img.style = imgSize;
+        img.style.width = $("#imgSize").css("width");
+        img.style.height = $("#imgSize").css("height");
         img.title = document.getElementById(contentId).value;
         content.textContent = document.getElementById(contentId).value;
         a.href = document.getElementById(linkClickId).value;
 
-        data_tg = data_tg + '{title:"'+charFormat(document.getElementById(itemTitleId).value)+'",sponsor:"'+document.getElementById(itemSponsorId).value +'",sponsorLink:"'+document.getElementById(itemSponsorLinkId).value +'",imgUrl:"' + document.getElementById(imgUrlId).value + '",linkClick:"' + document.getElementById(linkClickId).value + '",content:"' + charFormat(document.getElementById(contentId).value) + '"},';
+        data_tg = data_tg + '{title:"'+charFormat(document.getElementById(itemTitleId).value)+'",sponsor:"'+document.getElementById(itemSponsorId).value+'",imgUrl:"' + document.getElementById(imgUrlId).value + '",linkClick:"' + document.getElementById(linkClickId).value + '",content:"' + charFormat(document.getElementById(contentId).value) + '"},';
     }
     if (document.getElementById('itemsRequired').checked) {
         var imgUrlConfig = '{required:true,url:true}',
@@ -331,11 +382,13 @@ function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
     var itemFormat= document.getElementById('itemFormat').value;
     var tem="";
     if(itemFormat=="1")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.content" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div></div>';
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.content" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div>';
     else if(itemFormat=="2")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.sponsorLink" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div></div>';
-    else
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.sponsorLink" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></a></div></div>';
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.linkClick" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div>';
+    else if(itemFormat=="3")
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.linkClick" target="_blank" :title="item.sponsor"><medium name="Item Sponsor" v-model="item.sponsor" style="padding-left: 0px;color: #b0b0b0;padding-bottom: 5px"></medium></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></a></div>';
+    else if(itemFormat=="4")
+        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a></div>';
     return tem;
 }
 /*End create items v2*/

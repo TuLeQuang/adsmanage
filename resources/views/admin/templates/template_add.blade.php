@@ -52,10 +52,10 @@
     </div>
     <!-- /.container-fluid -->
   </div>
-  <div class="field-actions">
+  {{--<div class="field-actions">
     <a type="remove" id="del_frmb-1515378824375-fld-1" class="del-button btn icon-cancel delete-confirm" title="Remove Element"></a>
     <a type="edit" id="frmb-1515378824375-fld-1-edit" class="toggle-form btn icon-pencil" title="Edit"></a>
-  </div>
+  </div>--}}
   <!-- /#page-wrapper -->
 @endsection
 

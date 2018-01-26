@@ -26,14 +26,16 @@
           <option value="1">Format 1: Normal(300x600)</option>
           <option value="2">Format 2: Full items</option>
           <option value="3">Format 3: width 160x600</option>
+          <option value="4">Format 4: width 140 - 1 image</option>
         </select>
       </td>
     </tr>
     <tr>
       <td><label>Image Size:</label></td>
-      <td><div id="imgSize" class="box" style="max-width: 90px;max-height: 90px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
+      <td><div id="imgSize" class="box" style="max-width: 140px;max-height: 140px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
     </tr>
   </table>
   <div id="items-list"></div>
   <button class="btn btn-danger" id="btn-close-items" onclick="hideView('items')" style="margin: 15px 0px 0px 15px">Close</button>
 </div>
+
