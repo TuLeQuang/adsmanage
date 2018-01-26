@@ -31,13 +31,19 @@ td{
 	padding: 5px;
 }
 #items, #title, #sponsor, #image{
-	border-radius: 10px;
+	display: none;
+	background-color:whitesmoke ;
+	border-radius: 7px;
 	border:solid 1px #cdcdcd;
 	box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
-	width: 352px;
+	width: 470px;
 	padding: 10px;
 	margin-top: 5px;
 	text-align: -webkit-center;
+}
+
+.title-class, .items-class, .sponsor-class, .image-class{
+	position: relative;
 }
 
 .box {
@@ -74,17 +80,15 @@ td{
 	display: block;
 }
 .crud{
-	float:right;
 	display: none;
-	margin-left: 510px;
+	top: 0px;
+	right: 0px;
 	position: absolute;
 }
 
 .items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
 	display: block;
 }
-
-
 
 /*element css*/
 /*Items css*/

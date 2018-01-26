@@ -34,10 +34,7 @@
 {{--  <script src="{{ asset('js/app.js') }}"></script>--}}
   <script src="/templatemanager/node_modules/vee-validate/dist/vee-validate.js"></script>
   <script src="/templatemanager/node_modules/vue/dist/vue.js"></script>
-
-  <script src="/templatemanager/node_modules/vue-medium/dist/index.js"></script>
-
-  <script src="/templatemanager/node_modules/medium-editor/dist/js/medium-editor.js"></script>
+  <script src="js/index.js"></script>
   <script type="text/javascript">
       //vue validate
       Vue.use(VeeValidate);

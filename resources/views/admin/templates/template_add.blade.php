@@ -30,7 +30,7 @@
           <div id="template-layout">
             <div id="template" style="border: solid 1px #cdcdcd;min-width: 100px ;"></div>
             @include('.template_elements.item')
-            @include('.template_elements.title')
+          {{--  @include('.template_elements.title')--}}
             @include('template_elements.sponsor')
             @include('template_elements.image')
           </div>
@@ -64,7 +64,7 @@
   <script src="{{asset('/js/jquery-ui.js')}}"></script>
   <script type="text/javascript" language="JavaScript">
       //Drag Img
-      grid_size = 10;
+      grid_size = 5;
       $(".box").resizable({ grid: grid_size * 2 })
           .on("mousedown", function(){
               $( this )

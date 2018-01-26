@@ -1,4 +1,4 @@
-<div id="image" style="display: none;width: 100%">
+<div id="image">
   <table>
     <tr>
       <td><label for="imageUrl">Image Url:</label></td>

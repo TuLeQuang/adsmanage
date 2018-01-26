@@ -1,4 +1,4 @@
-<div id="items" style="display: none;width: 100%">
+<div id="items" style="width: 100%;">
   <table>
     <tr>
       <td><label for="itemNum">Items Number:</label></td>
@@ -31,7 +31,7 @@
     </tr>
     <tr>
       <td><label>Image Size:</label></td>
-      <td><div id="imgSize" class="box" style="max-width: 140px;max-height: 140px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
+      <td><div id="imgSize" class="box" {{--onresize="imgResize(this)"--}} style="max-width: 140px;max-height: 140px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
     </tr>
   </table>
   <div id="items-list"></div>

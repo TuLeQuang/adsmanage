@@ -1,4 +1,4 @@
-<div id="sponsor" style="display: none;width: 100%">
+<div id="sponsor">
   <table>
     <tr>
       <td><label for="sponsorName">Sponsor:</label></td>

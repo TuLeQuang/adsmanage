@@ -171,7 +171,6 @@ function itemsBuilder(num,n,elementConfigId) {
             '<tr>' +
             '<td><label for="content'+i+'">Content '+i+':</label></td>' +
             '<td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td>' +
-            '<td><label>Sponsor Link '+i+':</label></td>' +
             '</tr>' +
             '</table>';
         items=items+list_item;
@@ -404,8 +403,9 @@ function showTitleConfig() {
         root.className="title-class";
         var d=document.getElementById('template');
         d.appendChild(root);
-        showView('title');
+
         titleBuilder(n,"'title'");
+        showView('title');
         var titleData= document.getElementById('txtTitle');
         var color=document.getElementById('titleColor');
         var fontSizeRange=document.getElementById('titleFontRange');
@@ -422,6 +422,7 @@ function showTitleConfig() {
         lenght.setAttribute("onchange","titleChange("+n+")");
         bgColor.setAttribute("onchange","titleChange("+n+")");
         titleChange(n);
+
     }
     else
         showView('title');
@@ -435,13 +436,50 @@ function titleBuilder(n,elementConfigId){
     };
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
-    crud.className="crud";
+    crud.className="crud ";
     crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
+
+    var config= document.createElement('div');
+    config.id="title";
+    config.innerHTML= '  <table>\n' +
+        '    <tr>\n' +
+        '      <td><label>Title:</label></td>\n' +
+        '      <td colspan="3"><input id="txtTitle" type="text" class="form-control" value="Title Demo" /></td>\n' +
+        '    </tr>\n' +
+        '    <tr>\n' +
+        '      <td><label for="titleRequired">Required: </label></td>\n' +
+        '      <td><input type="checkbox" id="titleRequired" class="form-check-input" style="margin-left: 10px"></td>\n' +
+        '      <td><label for="titleLenght">Title max lenght: </label></td>\n' +
+        '      <td><input type="number" class="form-control" style=" width:60px" value="40" id="titleLenght"></td>\n' +
+        '    </tr>\n' +
+        '    <tr>\n' +
+        '      <td>Title color:</td>\n' +
+        '      <td><input type="color" id="titleColor" value="#000000" name="titleColor"></td>\n' +
+        '    </tr>\n' +
+        '    <tr>\n' +
+        '      <td>Font size:</td>\n' +
+        '      <td class="range-slider">\n' +
+        '        <input id="titleFontRange" class="input-range" type="range" min="10" max="50" step="1" value="10" style="width:100px;display: inline-block;" name="titleFont" />\n' +
+        '        <input type="text" class="range-value" id="titleFontText" style="width:30px;"/><span>px</span>\n' +
+        '      </td>\n' +
+        '    </tr>\n' +
+        '    <tr>\n' +
+        '      <td>Backgroud color:</td>\n' +
+        '      <td><input type="color" id="titleBgColor" value="#ffffff" name="titleBgColor"></td>\n' +
+        '    </tr>\n' +
+        '    <tr>\n' +
+        '      <td colspan="4" style="text-align: center"><button class="btn btn-danger" id="btn-close-items" onclick="hideView(\'title\')" style="margin: 15px 0px 0px 15px">Close</button>\n ' +
+        '      </td>' +
+        '    </tr>\n'+
+        '  </table>';
+
     var title=document.createElement('div');
     title.id="titleElement";
     title.style.padding="5px 5px 5px 15px";
     f.appendChild(title);
+
+    f.appendChild(config);
     d.appendChild(f);
 };
 
@@ -654,4 +692,9 @@ function deleteElement(n) {
 
 function charFormat(char) {
     return char.replace(/"/gi, "&quot;");
+}
+
+function imgResize(id) {
+    var reSize = document.getElementById(id);
+    reSize.innerHTML='W:'+$("#"+id).css("width")+';H:'+$("#"+id).css("height")+';';
 }
