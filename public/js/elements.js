@@ -59,6 +59,9 @@ function showItemsConfig() {
         var format= document.getElementById('itemFormat');
         format.setAttribute("onchange","itemsFormatBuilder("+n+",'items',this.value)");
         /* d.appendChild(itemForm);*/
+
+        var num = document.getElementById('itemNum');
+        itemsBuilder(num.value,n,"'items'");
     }
     else {
         showView('items');

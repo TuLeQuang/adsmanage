@@ -4,7 +4,6 @@
       <td><label for="itemNum">Items Number:</label></td>
       <td>
         <select id="itemNum" class="form-control" style="background: whitesmoke;" onchange="changeNum()">
-          <option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>
             <?php
             for($i=1;$i<=7;$i++){
                 echo "<option value='".$i."'>".$i."<"."/option>";
