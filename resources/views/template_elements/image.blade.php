@@ -2,11 +2,11 @@
   <table>
     <tr>
       <td><label for="imageUrl">Image Url:</label></td>
-      <td><input type="url" class="item" id="txtImageUrl" required></td>
+      <td><input type="url" class="form-control" id="txtImageUrl" required></td>
     </tr>
      <tr>
       <td><label for="imagelink">Link:</label></td>
-      <td><input type="url" class="item" id="txtImageLink" required></td>
+      <td><input type="url" class="form-control" id="txtImageLink" required></td>
     </tr>
     <tr>
       <td><label>Image Size:</label></td>

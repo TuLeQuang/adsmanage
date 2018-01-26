@@ -46,7 +46,6 @@
           </tr>
           </thead>
           <tbody>
-
           @for($i=0;$i<count($templates);$i++)
             <tr class="odd gradeX" align="center">
               <td>{{$templates[$i]['id']}}</td>
@@ -71,7 +70,6 @@
                 </form>
               </td>
             </tr>
-
           @endfor
           </tbody>
         </table>

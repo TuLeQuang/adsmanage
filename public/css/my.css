@@ -1,68 +1,95 @@
-.menu1 ul{
-	position: absolute;
-	z-index: 999;
-}
-
-.break{
-	clear: both;
-	height: 10px;
-	width: 100%;
-	margin:auto;
-	border-bottom: 1px solid #EEEEEE;
-}
-
-.break90{
-	clear: both;
-	height: 10px;
-	width: 90%;
-	margin:auto;
-	border-bottom: 1px solid #EEEEEE;
-}
-
-.space20{
-	height: 20px;
-	width: 100%;
-}
-
-
-.row-item{
-	padding-left:15px;
-}
-
-.border-left{
-	border-left: 1px solid #EEEEEE;
-}
-
-.border-right{
-	border-right: 1px solid #EEEEEE;
-}
-
-a:hover{
+a,a:hover{
 	text-decoration: none;
 }
 
-.myheader{
-	background-color: #337AB7;
-	color:white;
-}
-
-.clear{
-	clear:both;
-}
-
+/*template_add Css*/
 #template-layout{
-	width: 59%;
+	width: 65%;
 	height: inherit;
-	height-max: auto;
+	margin-top: 10px;
 	float: left;
 	display: block;
 	border:dotted 3px #cdcdcd;
 }
 
+#btn-elements{
+	float: left;
+	margin-left: 20px;
+}
+.btn-element{
+	width: 100px;
+	margin-top: 10px;
+}
+.input-item{
+	width: 200px;
+	margin-left: 25px;
+}
+td{
+	padding-top: 5px;
+}
+#items-list table tr td{
+	padding: 5px;
+}
+#items, #title, #sponsor, #image{
+	border-radius: 10px;
+	border:solid 1px #cdcdcd;
+	box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
+	width: 352px;
+	padding: 10px;
+	margin-top: 5px;
+	text-align: -webkit-center;
+}
+
+.box {
+	max-width: 500px;
+	max-height:500px;
+	width: 150px;
+	height: 150px;
+	border:solid 1px black;
+	background-color:#00b3ee;
+	text-align: center;
+}
+.text {
+	margin-top: 30px;
+	color: #fff;
+	text-align: center;
+	font-size: 18px;
+	letter-spacing: 1px;
+}
+.opac {
+	opacity: .8;
+}
+.move-cursor {
+	cursor: move;
+}
+.grab-cursor {
+	cursor: -webkit-grabbing;
+}
+
+.form{
+	width: 250px;
+	height: 100%;
+	margin-left: -30px;
+	float: left;
+	display: block;
+}
+.crud{
+	float:right;
+	display: none;
+	margin-left: 510px;
+	position: absolute;
+}
+
+.items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
+	display: block;
+}
+
+
+
 /*element css*/
 /*Items css*/
 .itemClass{
-	display: list-item;
+	display:block;
 	height: auto;
 	overflow: hidden;
 	line-height: 15px;
@@ -73,6 +100,9 @@ a:hover{
 	border-bottom:1px solid #cdcdcd ;
 	vertical-align: middle;
 }
+.itemClass a {
+    color: #0f0f0f;
+}
 
 .itemClass a span {
 	color: #0f0f0f;
@@ -82,5 +112,5 @@ a:hover{
 .itemClass a div {
 	color: #0f0f0f;
 	padding-left: 10px;
-	display: flex;
+    display: flex;
 }
