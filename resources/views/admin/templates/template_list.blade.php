@@ -30,7 +30,7 @@
           </div>
         @endif
         <div style="float: right;margin-bottom: 5px; display: inline-block">
-          <button class="btn btn-success"><a href="{{route('template.create')}}" style="text-decoration: none;color: white">&#43; Add Template</a></button>
+         <a href="{{route('template.create')}}" style="text-decoration: none;color: white"><button class="btn btn-success">&#43; Add Template</button></a>
         </div>
 
         <table class="table table-striped table-bordered table-hover" id="dataTables-example">

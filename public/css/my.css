@@ -3,21 +3,36 @@ a,a:hover{
 }
 
 /*template_add Css*/
-#template-layout{
-	width: 65%;
-	height: inherit;
+.template-layout{
+	position: relative;
+	width: 78%;
 	margin-top: 10px;
 	float: left;
 	display: block;
-	border:dotted 3px #cdcdcd;
+	border: dotted 3px #cdcdcd;
+	min-height: 340px;
+	height: 100%;
 }
 
-#btn-elements{
+.template-layout.empty:after {
+	content: attr(data-content);
+	position: absolute;
+	text-align: center;
+	top: 140px;
+	left: 280px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.div-elements{
+	position: absolute;
+	z-index: 1000;
 	float: left;
+	right: 20px;
 	margin-left: 20px;
 }
 .btn-element{
-	width: 100px;
+	width: 200px;
 	margin-top: 10px;
 }
 .input-item{
@@ -47,11 +62,8 @@ td{
 }
 
 .box {
-	max-width: 500px;
-	max-height:500px;
 	width: 150px;
 	height: 150px;
-	border:solid 1px black;
 	background-color:#00b3ee;
 	text-align: center;
 }
@@ -73,9 +85,13 @@ td{
 }
 
 .form{
+	position: fixed;
+	right: 0px;
+	top: 235px;
 	width: 250px;
 	height: 100%;
 	margin-left: -30px;
+	margin-top: 10px;
 	float: left;
 	display: block;
 }
@@ -117,4 +133,11 @@ td{
 	color: #0f0f0f;
 	padding-left: 10px;
     display: flex;
+}
+
+.sticky {
+	position: fixed;
+	right: 20px;
+	margin-left: 20px;
+	top:5px;
 }
