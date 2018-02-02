@@ -28,8 +28,7 @@ a,a:hover{
 	position: absolute;
 	z-index: 1000;
 	float: left;
-	right: 20px;
-	margin-left: 20px;
+	right: 1.5%;
 }
 .btn-element{
 	width: 200px;
@@ -88,7 +87,7 @@ td{
 	position: fixed;
 	right: 0px;
 	top: 235px;
-	width: 250px;
+	width: 19%;
 	height: 100%;
 	margin-left: -30px;
 	margin-top: 10px;
