@@ -26,6 +26,8 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	});
 });
 
+Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate' );
+
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');

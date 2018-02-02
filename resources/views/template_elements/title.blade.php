@@ -1,4 +1,4 @@
-<div id="title" style="display: none;width: 100%">
+<div id="title">
   <table>
     <tr>
       <td><label>Title:</label></td>
@@ -26,6 +26,5 @@
       <td><input type="color" id="titleBgColor" value="#ffffff" name="titleBgColor"></td>
     </tr>
   </table>
-  <div id="items-list"></div>
   <button class="btn btn-danger" id="btn-close-items" onclick="hideView('title')" style="margin: 15px 0px 0px 15px">Close</button>
 </div>

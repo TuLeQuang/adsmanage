@@ -45,7 +45,7 @@
                 @endif
         </div>
         <div style="float: right;margin-bottom: 5px; display: inline-block">
-          <a href="{{route('template.create')}}" style="text-decoration: none;color: white"><button class="btn btn-success" title="Add Template">&#43; Add Template</button></a>
+         <a href="{{route('template.create')}}" style="text-decoration: none;color: white"><button class="btn btn-success">&#43; Add Template</button></a>
         </div>
         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
           <thead>

@@ -1,4 +1,4 @@
-<div id="items" style="display: none;width: 100%">
+<div id="items" style="width: 100%;">
   <table>
     <tr>
       <td><label for="itemNum">Items Number:</label></td>
@@ -19,7 +19,7 @@
       <td><input type="number" class="form-control" style="width: 70px" value="100" id="contentLenght" ></td>
     </tr>
     <tr>
-      <td><label style="margin-left: 5px">Item Format: </label></td>
+      <td><label>Item Format: </label></td>
       <td>
         <select id="itemFormat" class="form-control" style="background: whitesmoke">
           <option value="1">Format 1: Normal(300x600)</option>
@@ -31,7 +31,13 @@
     </tr>
     <tr>
       <td><label>Image Size:</label></td>
-      <td><div id="imgSize" class="box" style="max-width: 140px;max-height: 140px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>
+    {{--  <td><div id="imgSize" class="box" onresize="imgResize('imgSize')" style="max-width: 140px;max-height: 140px;min-width: 30px;min-height: 30px">Kéo để chọn size</div></td>--}}
+      <td colspan="4">
+        <span>W: </span>
+        <input type="number" class="form-control" id="imgWidth" max="140" min="30" value="140" style="width: 70px;display: inline-block">
+        <span> x H: </span>
+        <input type="number" id="imgHeight" max="140" min="30" value="140" class="form-control" style="width: 70px;display: inline-block"> px
+      </td>
     </tr>
   </table>
   <div id="items-list"></div>

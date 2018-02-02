@@ -15723,7 +15723,7 @@ window.axios.defaults.headers.common = {
 
 
 
-var routes = [{ path: '/testVue', component: __WEBPACK_IMPORTED_MODULE_1__components_Tem_vue___default.a }, { path: '/vueitems', component: __WEBPACK_IMPORTED_MODULE_2__components_User_vue___default.a }, { path: '/templates', component: __WEBPACK_IMPORTED_MODULE_3__components_ViewTem_vue___default.a }];
+var routes = [{ path: '/testVue', component: __WEBPACK_IMPORTED_MODULE_1__components_Tem_vue___default.a }, { path: '/vueitems', component: __WEBPACK_IMPORTED_MODULE_2__components_User_vue___default.a }, { path: '/templates', component: __WEBPACK_IMPORTED_MODULE_3__components_ViewTem_vue___default.a }, { path: '/admin/template/{id}' }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router_dist_vue_router_js___default.a({
     mode: 'history',

@@ -1,4 +1,3 @@
-
 //unEnable and Enable layout
 function showView(viewId) {
     var a= document.getElementById(viewId);
@@ -11,22 +10,29 @@ function hideView(viewId) {
 
 //template object
 var template={
-    template_data:" ",
-    template_html:" ",
+    template_data:"",
+    template_html:"",
+    template_config:"",
     getData : function() {
         return this.template_data;
     },
     getTemplate:function () {
         return this.template_html;
     },
-    set:function (data,templateHTML) {
-        this.template_data=data;
+    getConfig:function () {
+        return this.template_config;
+    },
+    set:function (data,templateHTML,config) {
+        template.template_data=data;
         template.template_html=templateHTML;
+        template.template_config=config;
     }
 };
+
 var n=-1;
 var dataArray=[];
 var templateArray=[];
+var configArray=[];
 
 //show items form
 function showItemsConfig() {
@@ -47,21 +53,30 @@ function showItemsConfig() {
         root.className="items-class";
         var d=document.getElementById('template');
         d.appendChild(root);
+
+        checkLayout();
         showView('items');
 
         var required= document.getElementById('itemsRequired');
         var lenght= document.getElementById('contentLenght');
-        var imgSize=document.getElementById('imgSize');
-        imgSize.setAttribute("onchange","itemsChange("+n+")");
+      /*  var imgSize=document.getElementById('imgSize');
+        imgSize.setAttribute("onchange","itemsChange("+n+")");*/
         required.setAttribute("onchange","itemsChange("+n+")");
         lenght.setAttribute("onchange","itemsChange("+n+")");
 
         var format= document.getElementById('itemFormat');
         format.setAttribute("onchange","itemsFormatBuilder("+n+",'items',this.value)");
+
+        var width= document.getElementById('imgWidth');
+        var height= document.getElementById('imgHeight');
+        width.setAttribute("onchange","itemsChange("+n+")");
+        height.setAttribute("onchange","itemsChange("+n+")");
+      /*  width.value=$("#imgSize").width();
+        height.value=$("#imgSize").height();*/
         /* d.appendChild(itemForm);*/
 
         var num = document.getElementById('itemNum');
-        itemsBuilder(num.value,n,"'items'");
+        itemsBuilder(num.value,n,"items");
     }
     else {
         showView('items');
@@ -158,20 +173,19 @@ function itemsBuilder(num,n,elementConfigId) {
         var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px">' +
             '<tr>' +
             '<td><label for="imgUrl'+i+'">Image Url '+i+':</label></td>' +
-            '<td><input id="txtImgUrl'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td>' +
+            '<td><input id="txtImgUrl'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')" value="http://via.placeholder.com/140x140"/></td>' +
             '<td><label>Item Title '+i+':</label></td>' +
-            '<td><input id="txtItemTitle'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td>' +
+            '<td><input id="txtItemTitle'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')" value="Item Title '+i+'"/></td>' +
             '</tr>' +
             '<tr>' +
             '<td><label for="linkClick'+i+'">Link Click '+i+':</label></td>' +
-            '<td><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '<td><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control" value="http://via.placeholder.com/140x140"/></td>' +
             '<td><label>Item Sponsor '+i+':</label></td>' +
-            '<td><input id="txtItemSponsor'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td>' +
+            '<td><input id="txtItemSponsor'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control" value="sponsor.com"/></td>' +
             '</tr>' +
             '<tr>' +
             '<td><label for="content'+i+'">Content '+i+':</label></td>' +
-            '<td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td>' +
-            '<td><label>Sponsor Link '+i+':</label></td>' +
+            '<td><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control" value="Item Content '+i+'"/></td>' +
             '</tr>' +
             '</table>';
         items=items+list_item;
@@ -184,7 +198,7 @@ function itemsBuilder(num,n,elementConfigId) {
 //
 function changeNum() {
     var num = document.getElementById('itemNum');
-    itemsBuilder(num.value,n,"'items'");
+    itemsBuilder(num.value,n,"items");
 }
 
 function itemsFormatBuilder(n,elementConfigId,formVal) {
@@ -196,7 +210,7 @@ function itemsFormatBuilder(n,elementConfigId,formVal) {
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
     crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')" href="#items"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView(\''+elementConfigId+'\')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+','+'\''+elementConfigId+'\')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
     if(formVal=="1"){
         for(var i=1;i<=num;i++){
@@ -329,8 +343,8 @@ function itemsFormatBuilder(n,elementConfigId,formVal) {
 function itemsChange(n) {
     var num = document.getElementById('itemNum').value;
     var data_tg = "";
-    var imgSize = 'width:' + $("#imgSize").css("width") + ';height:' + $("#imgSize").css("height") + ';';
-    //document.getElementById('imgSize').textContent=$("#imgSize").css("width")+' x '+$("#imgSize").css("height");
+    /*var imgSize = 'width:' + $("#imgSize").css(width)+ ';height:' + $("#imgSize").css(height) + ';';*/
+    var imgSize= 'width:' +document.getElementById('imgWidth').value+ 'px;height:' +document.getElementById('imgHeight').value + 'px;';
     for (var i = 1; i <= num; i++) {
         var imgUrlId = 'txtImgUrl' + i, linkClickId = 'txtLinkClick' + i, contentId = 'txtContent' + i,
             itemTitleId='txtItemTitle'+i,itemSponsorId='txtItemSponsor'+i;
@@ -355,8 +369,10 @@ function itemsChange(n) {
         sponsor.title= sponsor.textContent;
 
         img.src = document.getElementById(imgUrlId).value;
-        img.style.width = $("#imgSize").css("width");
-        img.style.height = $("#imgSize").css("height");
+        /*img.style.width =$("#imgWidth").value+"px";
+        img.style.height = $("#imgHeight").value+"px";*/
+        img.style.width =document.getElementById('imgWidth').value+"px";
+        img.style.height =document.getElementById('imgHeight').value+"px";
         img.title = document.getElementById(contentId).value;
         content.textContent = document.getElementById(contentId).value;
         a.href = document.getElementById(linkClickId).value;
@@ -373,15 +389,18 @@ function itemsChange(n) {
     }
 
     dataArray[n] = 'items:[' + data_tg + '],';
-    templateArray[n] = templateArrayFormat(imgUrlConfig,contentConfig,imgSize);
+    templateArray[n] = templateArrayFormat(imgSize);
+    configArray[n] = configArrayFormat(imgUrlConfig,contentConfig,imgSize);
 
     var txtData = document.getElementById('txtData');
     var txtTemplate = document.getElementById('txtTemplate');
+    var txtConfig = document.getElementById('txtConfig');
     txtData.value = dataArray.join(" ");
     txtTemplate.value = templateArray.join(" ");
+    txtConfig.value = templateArray.join(" ");
 }
 
-function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
+function configArrayFormat(imgUrlConfig,contentConfig,imgSize) {
     var itemFormat= document.getElementById('itemFormat').value;
     var tem="";
     if(itemFormat=="1")
@@ -394,6 +413,20 @@ function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
         tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a></div>';
     return tem;
 }
+
+function templateArrayFormat(imgSize) {
+    var itemFormat= document.getElementById('itemFormat').value;
+    var tem="";
+    if(itemFormat=="1")
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.content" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left"><div name="content" style="padding-left: 10px">{'+'{item.content}'+'}</div></a></div>';
+    else if(itemFormat=="2")
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><a :href="item.linkClick" target="_blank" :title="item.sponsor"><div name="Item Sponsor" style="padding-left: 0px;color: #b0b0b0">{'+'{item.sponsor}'+'}</div></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="left" :title="item.content"><div name="content" style="padding-left: 10px">{'+'{item.content}'+'}</div></a></div>';
+    else if(itemFormat=="3")
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.linkClick" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><a :href="item.linkClick" target="_blank" :title="item.sponsor"><div name="Item Sponsor" style="padding-left: 0px;color: #b0b0b0;padding-bottom: 5px">{'+'{item.sponsor}'+'}</div></a><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"><div name="content" style="padding-left: 0px">{'+'{item.content}'+'}</div></a></div>';
+    else if(itemFormat=="4")
+        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><div name="content" style="padding-left: 0px">{'+'{item.content}'+'}</div></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a></div>';
+    return tem;
+}
 /*End create items v2*/
 
 function showTitleConfig() {
@@ -404,8 +437,10 @@ function showTitleConfig() {
         root.className="title-class";
         var d=document.getElementById('template');
         d.appendChild(root);
+
+        checkLayout();
+        titleBuilder(n,'title');
         showView('title');
-        titleBuilder(n,"'title'");
         var titleData= document.getElementById('txtTitle');
         var color=document.getElementById('titleColor');
         var fontSizeRange=document.getElementById('titleFontRange');
@@ -422,6 +457,7 @@ function showTitleConfig() {
         lenght.setAttribute("onchange","titleChange("+n+")");
         bgColor.setAttribute("onchange","titleChange("+n+")");
         titleChange(n);
+
     }
     else
         showView('title');
@@ -435,9 +471,10 @@ function titleBuilder(n,elementConfigId){
     };
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
-    crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    crud.className="crud ";
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView(\''+elementConfigId+'\')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+','+'\''+elementConfigId+'\')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
+
     var title=document.createElement('div');
     title.id="titleElement";
     title.style.padding="5px 5px 5px 15px";
@@ -463,12 +500,15 @@ function titleChange(n) {
 
     var titleStyle='color:'+document.getElementById('titleColor').value+';font-size:'+document.getElementById('titleFontText').value+'px;background-color:'+document.getElementById('titleBgColor').value+';padding:5px 5px 5px 10px;';
     dataArray[n]='title:"'+charFormat(titleData)+'",';
-    templateArray[n]='<medium style="'+titleStyle+'" name="title" v-model="title" v-validate="'+titleConfig+'"></medium>';
+    templateArray[n]='<div style="'+titleStyle+'" name="title">{'+'{title}'+'}</div>';
+    configArray[n]='<medium style="'+titleStyle+'" name="title" v-model="title" v-validate="'+titleConfig+'"></medium>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
+    var txtConfig=document.getElementById('txtConfig');
     txtData.value=dataArray.join(" ");
     txtTemplate.value=templateArray.join(" ");
+    txtConfig.value=configArray.join(" ");
 }
 
 function showSponsorConfig(){
@@ -479,8 +519,10 @@ function showSponsorConfig(){
         root.className="sponsor-class";
         var d=document.getElementById('template');
         d.appendChild(root);
+
+        checkLayout();
         showView('sponsor');
-        sponsorBuilder(n,"'sponsor'");
+        sponsorBuilder(n,'sponsor');
 
         var color=document.getElementById('sponsorColor');
         var name=document.getElementById('sponsorName');
@@ -504,7 +546,7 @@ function sponsorBuilder(n,elementConfigId){
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
     crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView(\''+elementConfigId+'\')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+','+'\''+elementConfigId+'\')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
     var div= document.createElement('div');
     div.style.padding="5px 5px 5px 15px";
@@ -528,12 +570,15 @@ function sponsorChange(n) {
     var sponsorStyle='color:'+document.getElementById('sponsorColor').value+';font-weight:bold;float:left';
     var sponsorConfig='{required:true,max:'+document.getElementById('sponsorLenght').value+'}';
     dataArray[n]='sponsor:"'+sponsorName+'",';
-    templateArray[n]='<div style="padding:5px 5px 5px 10px"><medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span></div>';
+    templateArray[n]='<div style="padding:5px 5px 5px 10px"><div style="'+sponsorStyle+'" name="sponsor">{'+'{sponsor}'+'}</div><span> &ensp;tài trợ thông tin</span></div>';
+    configArray[n]='<div style="padding:5px 5px 5px 10px"><medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span></div>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
+    var txtConfig=document.getElementById('txtConfig');
     txtData.value=dataArray.join(" ");
     txtTemplate.value=templateArray.join(" ");
+    txtConfig.value=configArray.join(" ");
 };
 
 function showImageConfig() {
@@ -544,12 +589,18 @@ function showImageConfig() {
         root.className="image-class";
         var d=document.getElementById('template');
         d.appendChild(root);
+
+        checkLayout();
         showView('image');
-        imageBuilder(n,"'image'");
+        imageBuilder(n,"image");
         var imageUrl= document.getElementById('txtImageUrl');
         var imageLink=document.getElementById('txtImageLink');
+        var imageWidth= document.getElementById('imageWidth');
+        var imageHeight= document.getElementById('imageHeight');
         imageUrl.setAttribute("onchange","imageChange("+n+")");
         imageLink.setAttribute("onchange","imageChange("+n+")");
+        imageWidth.setAttribute("onchange","imageChange("+n+")");
+        imageHeight.setAttribute("onchange","imageChange("+n+")");
     }
     else
         showView('image');
@@ -564,7 +615,7 @@ function imageBuilder(n,elementConfigId) {
     var f = document.createDocumentFragment();
     var crud= document.createElement('div');
     crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
+    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView(\''+elementConfigId+'\')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+','+'\''+elementConfigId+'\')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
 
     var imageLinkClick=document.createElement('a');
@@ -578,7 +629,8 @@ function imageBuilder(n,elementConfigId) {
 }
 
 function imageChange(n) {
-    var imageSize='width:'+$("#imageSize").css("width")+';height:'+$("#imageSize").css("height")+';';
+    /*var imageSize='width:'+$("#imageWidth").value+'px;height:'+$("#imageHeight").value+'px;';*/
+    var  imageSize='width:'+document.getElementById('imageWidth').value+'px;height:'+document.getElementById('imageHeight').value+'px;';
     var imgUrlId='txtImageUrl',linkClickId='txtImageLink';
     var imgId='imageUrl',aId='imageLinkClick';
     var img=document.getElementById(imgId);
@@ -589,11 +641,14 @@ function imageChange(n) {
 
     dataArray[n]='imageLink:"'+document.getElementById(linkClickId).value+'",imageUrl:"'+document.getElementById(imgUrlId).value+'",';
     templateArray[n]='<a :href="imageLink" target="_blank"><img :src="imageUrl" style="'+imageSize+'"></a>';
+    configArray[n]=templateArray[n];
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
+    var txtConfig=document.getElementById('txtConfig');
     txtData.value=dataArray.join(" ");
     txtTemplate.value=templateArray.join(" ");
+    txtConfig.value=configArray.join(" ");
 }
 
 //template config
@@ -614,19 +669,22 @@ function templateChange() {
 //save template to db
 function saveTemplate() {
     if(!document.getElementById('template').hasChildNodes()){
-        document.getElementById('errorsMessages').value = "Chưa tạo template";
-        document.getElementById('errorsMessages').disabled= "false";
+        document.getElementById('errorsMessages').style.display= "block";
+        document.getElementById('errorsMessages').innerHTML = "Chưa tạo template";
         return false;
     }
     else{
         //get style for template
         var templateStyle= document.getElementById('template').style;
 
-        var tem_data='{'+dataArray.join(" ")+'}';
         var txtData= document.getElementById('txtData');
         var txtTemplate= document.getElementById('txtTemplate');
+        var txtConfig= document.getElementById('txtConfig');
+        var tem_data='{'+dataArray.join(" ")+'}';
         txtData.value=tem_data;
         txtTemplate.value='<div style="'+templateStyle.cssText+'">'+templateArray.join(" ")+'</div>';
+        txtConfig.value='<div style="'+templateStyle.cssText+'">'+configArray.join(" ")+'</div>';
+        return true;
     }
 };
 
@@ -637,21 +695,47 @@ function clear() {
     }
 };
 
-function deleteElement(n) {
+function deleteElement(n,elementConfigId) {
     $("#element"+n).remove();
-    hideView('items');
+    hideView(elementConfigId);
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');
+    var txtConfig= document.getElementById('txtConfig');
 
     var data= txtData.value;
     var templateHTML= txtTemplate.value;
+    var config=txtConfig.value;
 
-    template.set(data.replace(dataArray[n],""),templateHTML.replace(templateArray[n],""));
-    dataArray.splice(n, 1,'');templateArray.splice(n, 1,'');
+    template.set(data.replace(dataArray[n],""),templateHTML.replace(templateArray[n],""),config.replace(configArray[n],""));
+    dataArray.splice(n, 1,'');templateArray.splice(n, 1,'');configArray.splice(n, 1,'');
     txtData.value=template.getData();
     txtTemplate.value=template.getTemplate();
+    txtConfig.value=template.getConfig();
+
+    checkLayout();
+};
+
+function checkLayout() {
+    var d=document.getElementById('template');
+    var layout=document.getElementById('template-layout');
+    if(!d.hasChildNodes()){
+        layout.className="template-layout empty";
+        layout.style.backgroundColor="#f1f1f1";
+    }
+    else{
+        layout.className="template-layout";
+        layout.style.backgroundColor="#ffffff";
+    }
 };
 
 function charFormat(char) {
     return char.replace(/"/gi, "&quot;");
+}
+
+function imgResize(n) {
+    itemsChange(n);
+    var width =document.getElementById('imgWidth');
+    var height =document.getElementById('imgHeight');
+    width.value=$("#imgSize").width();
+    height.value=$("#imgSize").height();
 }
