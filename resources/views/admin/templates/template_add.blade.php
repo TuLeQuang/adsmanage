@@ -6,28 +6,6 @@
 @endsection
 
 @section('style')
-  <style>
-    .form{
-      width: 59%;
-      height: 100%;
-      height-max: auto;
-      float: left;
-      display: block;
-      margin-top: 10px;
-    }
-    .crud{
-      float:right;
-      display: none;
-      margin-left: 510px;
-      position: absolute;
-    }
-    .items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
-      display: block;
-    }
-    .mau-template{
-        width: 150px;height: 150px;background-size: cover;margin-left: 25px;
-    }
-  </style>
 @endsection
 
 @section('content')
@@ -67,7 +45,7 @@
           @endif
           </div>
           <div id="btn-elements" style="width: 29%;float: right;">
-            <button class="btn btn-toolbar" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
+            <button class="btn btn-toolbar btn-element" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
             <br>
             <button class="btn btn-toolbar btn-element" type="button" id="btn-items" onclick="showItemsConfig()">Items</button>
             <br>
@@ -75,7 +53,6 @@
             <br>
             <button class="btn btn-toolbar btn-element" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
             <br>
-            <button type="button" class="btn btn-toolbar" data-toggle="modal" data-target="#myModal">Chọn mẫu</button>
           </div>
 
         </div>
