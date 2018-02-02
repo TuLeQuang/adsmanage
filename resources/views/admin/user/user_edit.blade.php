@@ -23,57 +23,63 @@
                     </div>
                 @endif
 
-                @if(session('thongbao'))
-                    <div class="alert alert-danger">
-                        {{session('thongbao')}}
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
                     </div>
                 @endif
-                @if(session('thongbao1'))
-                    <div class="alert alert-success">
-                        {{session('thongbao1')}}
+
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{session('error')}}
                     </div>
                 @endif
                 <form action="admin/user/user_edit/{{$user->id}}" method="POST">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Name*</label>
                         <input class="form-control" name="name" placeholder="Please Enter Name" value="{{$user->name}}" required="" />
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
+                        <label>Email*</label>
                         <input type="email" class="form-control" name="email" placeholder="Please Enter Email" value="{{$user->email}}" readonly="" />
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="changePassword" onchange="enPass()" name="changePassword">
-                        <label>Password</label>
+                        <label>Password*</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Password" disabled=""/>
                     </div>
                     <div class="form-group">
-                        <label>RePassword</label>
+                        <label>RePassword*</label>
                         <input type="password" class="form-control" id="rePassword" name="passwordAgain" placeholder="Please Enter RePassword" disabled="" />
                     </div>
-                    <div class="form-group">
-                        <label>User Level</label>
-                        <label class="radio-inline">
-                            <input name="level" value="1"  type="radio"
-                            @if($user->level==1)
-                                {{"checked"}}
-                            @endif>Admin
-                        </label>
-                        <label class="radio-inline">
-                            <input name="level" value="0" checked="" type="radio"
-                            @if($user->level==0)
-                                {{"checked"}}
-                            @endif>Member
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-default">Edit</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-                    <button type="button" class="btn btn-default">
+                    @if(Auth::check() && Auth::user()->level==1)
+                        <div class="form-group">
+                            <label>User Level*</label>
+                            <label class="radio-inline">
+                                <input name="level" value="1"  type="radio"
+                                @if($user->level==1)
+                                    {{"checked"}}
+                                @endif>Admin
+                            </label>
+                            <label class="radio-inline">
+                                <input name="level" value="0" checked="" type="radio"
+                                @if($user->level==0)
+                                    {{"checked"}}
+                                @endif>Member
+                            </label>
+                        </div>
+                    @endif
+                    <button type="submit" class="btn btn-default" title="Edit User">Edit</button>
+                    <button type="reset" class="btn btn-default" title="Reset">Reset</button>
+                    
                         @if(Auth::user()->level==1)
-                        <a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black">Back</a></button>
+                        <a href="{{asset('admin/user/user_list/')}}" style="text-decoration: none;color: black" title="Back">
+                            <button type="button" class="btn btn-default">Back</button></a>
                         @else
-                        <a href="admin/user/user_list_member/{{Auth::user()->id}}" style="text-decoration: none;color: black">Back</a></button>
+                        <a href="admin/user/user_list_member/{{Auth::user()->id}}" style="text-decoration: none;color: black" title="Back">
+                            <button type="button" class="btn btn-default">Back</button>
+                        </a>
                         @endif
                         
                 </form>
@@ -88,18 +94,6 @@
 
 @section('script')
     <script>
-       /* $(document).ready(function() {
-            $('#changePassword').change(function() {
-                if($(this).is(":checked"))
-                {
-                    $(".password").removeAttr('disabled');
-                }
-                else
-                {
-                    $(".password").attr('disabled','');
-                }
-            });
-        });  */
         $("div.alert").delay(2000).slideUp();
 
         function enPass(){

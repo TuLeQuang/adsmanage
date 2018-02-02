@@ -25,7 +25,7 @@ class UserController extends Controller
     public function getUser_Add()
     {
         if(Auth::user()->level!=1)
-            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền thêm tài khoản');
+            return redirect('admin/user/user_list')->with('error','Bạn không được quyền thêm tài khoản');
     	return view('admin.user.user_add');
     }
     public function postUser_Add(Request $request)
@@ -49,22 +49,25 @@ class UserController extends Controller
                 'password.min'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
                 'password.max'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
                 'passwordAgain.required'=>'Bạn chưa nhập lại mật khẩu',
-                'passwordAgain.same'=>'Mật khẩu nhập lại chưa khớp',
-                
+                'passwordAgain.same'=>'Mật khẩu nhập lại chưa khớp',      
             ]);
     	$user=new User();
     	$user->name=$request->name;
     	$user->email=$request->email;
     	$user->password=bcrypt($request->password);
     	$user->level=$request->level;
-        $user->active  = $request->has('active')? 1 : 0;
+        $user->active  = 1;
     	$user->save();
-    	return redirect('admin/user/user_add')->with('thongbao','Thêm tài khoản thành công');
+    	return redirect('admin/user/user_list')->with('success','Thêm tài khoản thành công');
     }
 
     public function getEdit($id)
     {   
         $user=User::find($id);
+        if(Auth::user()->level==1 && Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id)))
+        {
+            return redirect('admin/user/user_list')->with('error','Bạn không được sửa tài khoản admin khác');
+        }
     	return view('admin.user.user_edit',['user'=>$user]);
     }
 
@@ -72,11 +75,12 @@ class UserController extends Controller
     {
     	$this->validate($request,
             [
-                'name' => 'required|min:5'
+                'name' => 'required|min:5|unique:users,name',
             ],
             [
                 'name.required'=>'Bạn chưa nhập tên người dùng',
-                'name.min'=>'Tên người dùng phải có ít nhất 5 kí tự'
+                'name.min'=>'Tên người dùng phải có ít nhất 5 kí tự',
+                'name.unique'=>'Tên người dùng đã tồn tại hãy chọn tên khác',
             ]);
     	$user=User::find($id);
     	$user->name=$request->name;
@@ -99,11 +103,16 @@ class UserController extends Controller
     		$user->password=bcrypt($request->password);
     	}
     	$user->save();
-    	return redirect('admin/user/user_edit/'.$id)->with('thongbao','Sửa thông tin thành công');
+    	return redirect('admin/user/user_edit/'.$id)->with('success','Sửa thông tin thành công');
     }
+    
     public function getActive(Request $request,$id)
     {
         $user=User::find($id);
+        if(Auth::user()->level==1 && Auth::user()->level!=1 && ($user['level'] == 1 || ($user['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $user['level']==1 &&(Auth::user()->id!=$id) || (Auth::user()->id==$id)))
+        {
+            return redirect('admin/user/user_list')->with('error','Bạn không được thay đổi trang thái hoạt động này');
+        }
         if($user->active==1)
             {$user->active=0;}
         else
@@ -114,12 +123,12 @@ class UserController extends Controller
     public function getDelete($id)
     {
     	$delete=User::find($id);
-    	if(Auth::user()->level!=1 && ($delete['level'] == 1 || ($delete['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $delete['level']==1 &&(Auth::user()->id!=$id) || (Auth::user()->id==$id)) )
+    	if(Auth::user()->level!=1 && ($delete['level'] == 1 || ($delete['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $delete['level']==1 &&(Auth::user()->id!=$id) || (Auth::user()->id==$id)))
         {
-            return redirect('admin/user/user_list')->with('thongbao','Bạn không được quyền xóa tài khoản'); 
+            return redirect('admin/user/user_list')->with('error','Bạn không được quyền xóa tài khoản');
         }
         $delete->delete($id);
-    	return redirect('admin/user/user_list')->with('thongbao','Xóa tài khoản thành công');
+    	return redirect('admin/user/user_list')->with('success','Xóa tài khoản thành công');
     }
 
     public function getLogin()
@@ -139,7 +148,7 @@ class UserController extends Controller
                 'password.min'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
                 'password.max'=>'Mật khẩu phải có độ dài ít nhất từ 5 đến 32 kí tự',
             ]);
-        /*Auth::user()->active= $request->active=1;*/
+        
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'active' => $request->active=1]))
         {
             if (Auth::user()->level!=1) 
@@ -150,7 +159,7 @@ class UserController extends Controller
         }
         else
         {
-            return redirect('admin/login')->with('thongbao','Email hoặc Password không đúng');
+            return redirect('admin/login')->with('error','Email hoặc Password không đúng');
         }
     }
 
