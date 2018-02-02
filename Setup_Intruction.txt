@@ -1,0 +1,26 @@
+//Installation
+  1. Get the app either download and uncompress the zipball or use git in your terminal:
+        git clone https://nekochan28@bitbucket.org/nekochan28/templatemanager.git
+        git pull origin release/release_v101
+
+  2. Install Dependencies:
+    - Move to folder project and run command in terminal:
+        composer install
+        npm install
+        npm vue --save
+        npm vee-validate --save
+        npm vue-medium --save
+
+  3. Install Database :
+    - Create a database for your application in the app's root directory: /script/templateDB.sql
+    - Change .env.example file in the app's root directory to .env and edit database info to your
+    - Then run command in your terminal:
+         php artisan key:generate
+
+  4. Open the application:
+    - Run your browser and access the Url:
+        localhost/project-folder-name/public/admin/login
+    - if you are using Linux or MacOS, You must set permissions for the project by running the chmod command.
+    - Type email and password:
+        admin@gmail.com
+        admin123

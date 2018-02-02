@@ -24,7 +24,8 @@
             </table>
             <input type="text" id="txtData" name="txtData" style="display: none "/>
             <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
-              <input class="btn btn-success" type="submit" value="Save" {{--onclick="saveTemplate()"--}} style="margin: 15px 0px 0px 60px;"/>
+            <input type="text" id="txtConfig" name="txtConfig" style="display: none "/>
+            <input class="btn btn-success" type="submit" value="Save" {{--onclick="saveTemplate()"--}} style="margin: 15px 0px 0px 60px;"/>
             <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
           </form>
           <div id="template-layout" class="template-layout" data-content="Kích chọn element." >
@@ -63,10 +64,6 @@
     </div>
     <!-- /.container-fluid -->
   </div>
-  {{--<div class="field-actions">
-    <a type="remove" id="del_frmb-1515378824375-fld-1" class="del-button btn icon-cancel delete-confirm" title="Remove Element"></a>
-    <a type="edit" id="frmb-1515378824375-fld-1-edit" class="toggle-form btn icon-pencil" title="Edit"></a>
-  </div>--}}
   <!-- /#page-wrapper -->
 @endsection
 

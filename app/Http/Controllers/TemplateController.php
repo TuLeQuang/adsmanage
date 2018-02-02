@@ -18,6 +18,11 @@ class TemplateController extends Controller
         return Template::all();
     }
 
+    public function getTemplate($id){
+        $template=Template::find($id)->template;
+        return $template;
+    }
+
     public function show($id){
         $temData= Template::find($id);
         return view('admin.templates.template_detail',compact('temData'));
@@ -37,6 +42,7 @@ class TemplateController extends Controller
         $template = new Template;
         $template->data= $request->txtData;
         $template->template= $request->txtTemplate;
+        $template->config=$request->txtConfig;
         $template->name=$request->txtName;
         $template->user_id=2;
         $template->active=1;

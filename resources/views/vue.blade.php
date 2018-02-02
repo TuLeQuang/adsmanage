@@ -8,7 +8,7 @@
 <body>
 <div id="app" >
   <tem></tem>
-   {{-- <user-list></user-list>--}}
+    <user-list></user-list>
 </div>
 <button id="showVue" type="button" onclick="create_vue()">click</button>
 
