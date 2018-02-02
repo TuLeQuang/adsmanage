@@ -55,7 +55,7 @@
             <th style="text-align: center;">Template Name</th>
             <th style="text-align: center;">Create At</th>
             <th style="text-align: center;">Updated At</th>
-            <th style="text-align: center;">Review</th>
+            {{--<th style="text-align: center;">Review</th>--}}
             <th style="text-align: center;">Active</th>
             <th style="text-align: center;" colspan="2">Action</th>
             </tr>

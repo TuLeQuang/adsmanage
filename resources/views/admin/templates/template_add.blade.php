@@ -14,6 +14,15 @@
     <div class="container-fluid">
       <div class="row">
         <div style="margin-top: 10px">
+          <div>
+            @if(count($errors) > 0)
+              <div class="alert alert-danger">
+                @foreach($errors->all() as $err)
+                  {{$err}}<br>
+                @endforeach
+              </div>
+            @endif
+          </div>
           <form id="template-form" onsubmit="return saveTemplate()" action="{{route('template.store')}}" method="post" class="form">
             <label style="color: red;display: none ;margin-left: 30px"  id="errorsMessages"> </label>
             <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
@@ -28,38 +37,19 @@
             <input class="btn btn-success" type="submit" value="Save" {{--onclick="saveTemplate()"--}} style="margin: 15px 0px 0px 60px;"/>
             <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
           </form>
-<<<<<<< HEAD
 
-          <div id="template-layout">
-=======
           <div id="template-layout" class="template-layout" data-content="Kích chọn element." >
->>>>>>> origin/export_template
             <div id="template" style="border: solid 1px #cdcdcd;min-width: 100px ;"></div>
             @include('.template_elements.item')
             @include('.template_elements.title')
             @include('template_elements.sponsor')
             @include('template_elements.image')
           </div>
-<<<<<<< HEAD
-          <div>
-            @if(count($errors) > 0) 
-              <div class="alert alert-danger">
-                  @foreach($errors->all() as $err)
-                      {{$err}}<br>
-                  @endforeach
-              </div>
-          @endif
-          </div>
-          <div id="btn-elements" style="width: 29%;float: right;">
-            <button class="btn btn-toolbar btn-element" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
-=======
 
           <div id="btn-elements" class="div-elements">
             <a href="{{route('template.create').'#title'}}">
                 <button class="btn btn-toolbar btn-element" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
             </a>
-
->>>>>>> origin/export_template
             <br>
             <a href="{{route('template.create').'#items'}}">
             <button class="btn btn-toolbar btn-element" type="button" id="btn-items" onclick="showItemsConfig()">Items</button>
