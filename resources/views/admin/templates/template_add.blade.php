@@ -65,9 +65,11 @@
       margin-left: 510px;
       position: absolute;
     }
-
     .items-class:hover .crud,.title-class:hover .crud,.sponsor-class:hover .crud,.image-class:hover .crud{
       display: block;
+    }
+    .mau-template{
+        width: 150px;height: 150px;background-size: cover;margin-left: 25px;
     }
   </style>
 @endsection
@@ -77,6 +79,28 @@
     <div class="container-fluid">
       <div class="row">
         <div style="margin-top: 10px">
+          <!-- preview mẫu template  -->
+          {{-- modal --}}
+          <!-- <div class="modal fade" id="myModal" {{-- role="dialog" --}}>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Chọn mẫu Template</h4>
+                </div>
+                <div class="modal-body">
+                  <a><img src="https://dantricdn.com/zoom/327_245/2018/1/29/photo-7-15171889361161574678838.jpg" class="mau-template"></a>
+                  <a href="http://dantri.com.vn"><img src="https://dantricdn.com/zoom/327_245/2018/1/29/photo-7-15171889361161574678838.jpg" class="mau-template"></a>
+                  <a href="http://dantri.com.vn"><img src="https://dantricdn.com/zoom/327_245/2018/1/29/photo-7-15171889361161574678838.jpg" class="mau-template"></a>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          {{-- end modal --}}
+
           <div id="template-layout">
             <div id="template" style="border: solid 1px #cdcdcd;">
             </div>
@@ -85,7 +109,15 @@
             @include('template_elements.sponsor')
             @include('template_elements.image')
           </div>
-
+          <div>
+            @if(count($errors) > 0) 
+              <div class="alert alert-danger">
+                  @foreach($errors->all() as $err)
+                      {{$err}}<br>
+                  @endforeach
+              </div>
+          @endif
+          </div>
           <div id="btn-elements" style="width: 29%;float: right;">
             <button class="btn btn-toolbar" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
             <br>
@@ -95,6 +127,7 @@
             <br>
             <button class="btn btn-toolbar" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
             <br>
+            <button type="button" class="btn btn-toolbar" data-toggle="modal" data-target="#myModal">Chọn mẫu</button>
           </div>
         </div>
       </div>
@@ -103,7 +136,7 @@
         <input name="_token" type="hidden" value="{{{ csrf_token() }}}" />
         <table>
             <tr><td><input type="text" id="txtName" name="txtName" class="input-item" placeholder="Tên Template" required/></td></tr>
-            <tr><td><input type="number" id="txtWidth" class="input-item" placeholder="width" onchange="templateChange()"/> px</td></tr>
+            <tr><td><input type="number" id="txtWidth" min="0" class="input-item" placeholder="width" onchange="templateChange()"/> px</td></tr>
         </table>
 
         <input type="text" id="txtData" name="txtData" style="display: none "/>
@@ -134,7 +167,6 @@
                   .addClass("grab-cursor")
                   .addClass("opac");
           })
-
           .on("mouseup", function(){
               $( this )
                   .removeClass("grab-cursor")
@@ -163,5 +195,15 @@
 
       });
 
+      $("div.alert").delay(3000).slideUp();
+
+      $(window).on('load',function(){
+        $('#myModal').modal('show');
+      });
+      $('#myModal').modal({
+        backdrop: 'static',
+        keyboard: true
+      })
+      
   </script>
 @endsection

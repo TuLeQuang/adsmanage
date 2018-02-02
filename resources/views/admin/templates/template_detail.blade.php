@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="page-header">Template Detail</h1>
+          <h1 class="page-header">Template <small>Detail</small> </h1>
         </div>
         <div id="app">
         </div>
