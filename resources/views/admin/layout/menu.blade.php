@@ -12,7 +12,10 @@
             <li>
                 <a href="{{asset('admin/template')}}" title="Template"><i class="fa fa-dashboard fa-fw"></i>Template</a>
             </li>
-           
+            <li>
+                <a href="{{asset('admin/import')}}" title="Template"><i class="fa fa-dashboard fa-fw"></i>Import</a>
+            </li>
+        </ul>
     </div>
     <!-- /.sidebar-collapse -->
 </div>

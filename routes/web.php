@@ -12,6 +12,7 @@
 */
 Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	Route::resource('template', 'TemplateController');
+	Route::get('import','TemplateController@getImport');
 	Route::get('active-tem/{id}','TemplateController@getActive');
 	Route::group(['prefix'=>'user'],function(){
 			Route::get('user_list','UserController@getUser_List');

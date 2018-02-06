@@ -140,3 +140,15 @@ td{
 	margin-left: 20px;
 	top:5px;
 }
+
+/*import-template*/
+.input-data{
+	position: absolute;
+	text-align: center;
+	width: 300px;
+}
+.import-sticky{
+	position: fixed;
+	margin-top: 20px;
+	top: 0px;
+}

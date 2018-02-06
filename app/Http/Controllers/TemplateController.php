@@ -85,4 +85,8 @@ class TemplateController extends Controller
         $template::destroy($id);
         return redirect()->route('template.index')->with('success','Xóa template thành công');
     }
+
+    public function getImport(){
+        return view('admin.templates.template_import');
+    }
 }
