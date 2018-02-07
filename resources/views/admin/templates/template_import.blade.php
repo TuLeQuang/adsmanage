@@ -26,6 +26,7 @@
 
         <div id="import" style="display: inline-block;width: 100%; min-height: 300px;">
           <div id="input-data" class="input-data">
+           <span id="msg" style="color: red"></span><br>
            <textarea type="text" id="scriptText" class="form-control" rows="10" style="width: 100%"></textarea><br>
             <button id="btn-data" class="btn btn-info" onclick="renderForm()">Get Form</button>
             <a href="https://demo.admicro.vn/testscript/" target="_blank"><input id="btn-script" type="submit" class="btn btn-info" onclick="renderAds()" style="margin-left: 25px" value="Run Script"></a>
@@ -52,27 +53,43 @@
   <script src="/templatemanager/node_modules/vue/dist/vue.js"></script>
   <script src="js/index.js"></script>
   <script type="text/javascript">
-    var listArray=["image","link","title","domain","titlebox","title 1","desc"];
+    var listArray=["image","link","title","domain","titlebox","title 1","desc","descr","content"];
     var key=[];//data key in json
     var data="";
     function getData() {
-          var tg="";
-          var adsScript=document.getElementById('scriptText').value;
-          var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-          adsJson= JSON.parse(adsJson);
+        try {
+            var tg="";
+            var adsScript=document.getElementById('scriptText').value;
+            var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
+            adsJson= JSON.parse(adsJson);
 
-          //get data and data key from script
-          for (var i in adsJson.data) {
-              data +=  JSON.stringify(adsJson.data[i]);
-              for (var j in adsJson.data[i].items) {
-                  for(var x in adsJson.data[i].items[j]){
-                      tg+=x +" ";
-                  }
-                  key[j]=tg;
-                  tg="";
-              }
-          }
-          //console.log(data);
+            //get data and data key from script
+            for (var i in adsJson.data) {
+                data +=  JSON.stringify(adsJson.data[i]);
+                if(data.indexOf("items")>0){
+                    for (var j in adsJson.data[i].items) {
+                        for(var x in adsJson.data[i].items[j]){
+                            tg+=x +" ";
+                        }
+                        key[j]=tg;
+                        tg="";
+                    }
+                }
+                else {
+                    for(var j in adsJson.data[i]){
+                        tg+=j +" ";
+                    }
+                    key[i]=tg;
+                    tg="";
+                }
+            }
+            //console.log(data);
+            //console.log(key.toString());
+        }
+        catch(err) {
+            document.getElementById("msg").innerHTML = err.message;
+        }
+
       };
 
       function renderForm() {
@@ -117,6 +134,13 @@
               f.appendChild(div);
               if(typeof(document.getElementsByClassName('form-data')[0]) === 'undefined')
                 root.appendChild(f);
+              else {
+                  var form=document.getElementById("template-form");
+                  while (form.hasChildNodes()) {
+                      form.removeChild(form.firstChild);
+                  }
+                  root.appendChild(f);
+              }
           }
           getDataToForm();
       }
@@ -128,12 +152,24 @@
 
           //get data to form
           for (var i in adsJson.data) {
-              for (var j in adsJson.data[i].items) {
-                  for(var x in adsJson.data[i].items[j]){
+              if(data.indexOf("items")>0){
+                  for (var j in adsJson.data[i].items) {
+                      for(var x in adsJson.data[i].items[j]){
+                          for(var key in listArray){
+                              if(x==listArray[key].toString()){
+                                  //console.log(adsJson.data[i].items[j][x]);
+                                  document.getElementById(x+j).value=adsJson.data[i].items[j][x];
+                              }
+                          }
+                      }
+                  }
+              }
+              else{
+                  for(var j in adsJson.data[i]){
                       for(var key in listArray){
-                          if(x==listArray[key].toString()){
-                              //console.log(adsJson.data[i].items[j][x]);
-                              document.getElementById(x+j).value=adsJson.data[i].items[j][x];
+                          if(j==listArray[key].toString()){
+                              //console.log(adsJson.data[i][j]);
+                              document.getElementById(j+i).value=adsJson.data[i][j];
                           }
                       }
                   }
@@ -148,17 +184,31 @@
 
           //get data to form
           for (var i in adsJson.data) {
-              for (var j in adsJson.data[i].items) {
-                  for(var x in adsJson.data[i].items[j]){
+              if(data.indexOf("items")>0){
+                  for (var j in adsJson.data[i].items) {
+                      for(var x in adsJson.data[i].items[j]){
+                          for(var key in listArray){
+                              if(x==listArray[key].toString()){
+                                  //console.log(adsJson.data[i].items[j][x]);
+                                  adsJson.data[i].items[j][x]=document.getElementById(x+j).value;
+                              }
+                          }
+                      }
+                  }
+              }
+              else{
+                  for(var j in adsJson.data[i]){
                       for(var key in listArray){
-                          if(x==listArray[key].toString()){
-                              //console.log(adsJson.data[i].items[j][x]);
-                              adsJson.data[i].items[j][x]=document.getElementById(x+j).value;
+                          if(j==listArray[key].toString()){
+                              //console.log(adsJson.data[i][j]);
+                              adsJson.data[i][j]=document.getElementById(j+i).value;
                           }
                       }
                   }
               }
           }
+
+
           document.getElementById('scriptText').value=adsScript.replace(adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1),JSON.stringify(adsJson));
       }
 
