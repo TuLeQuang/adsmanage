@@ -19,6 +19,8 @@
           <h1 class="page-header">Template <small>Detail</small> </h1>
         </div>
         <div id="app"></div>
+
+        <div id="ads"></div>
       </div>
       <!-- /.row -->
     </div>
@@ -29,9 +31,9 @@
 
 @section('script')
 {{--  <script src="{{ asset('js/app.js') }}"></script>--}}
-  <script src="/templatemanager/node_modules/vee-validate/dist/vee-validate.js"></script>
-  <script src="/templatemanager/node_modules/vue/dist/vue.js"></script>
-  <script src="js/index.js"></script>
+  <script src="{{asset('js/vee-validate.js')}}"></script>
+  <script src="{{asset('js/vue.js')}}"></script>
+  <script src="{{asset('js/index.js')}}"></script>
   <script type="text/javascript">
       //vue validate
       Vue.use(VeeValidate);
@@ -45,23 +47,10 @@
           echo "var js_config='".$temData['config']."';\n";
           echo "var js_id='".$temData['id']."';\n";
           ?>
-      //var tem_data=js_data;
-      var tem_data=js_data;
-      var div_script= '<div id="script-text" style="margin-top: 10px;display: block"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">layscript</button>Scrip:<p id ="script"></p></div>';
 
-      //contentEditable
-    /*  Vue.component('editable',{
-          template:'<div contenteditable="true" @input="update"></div>',
-          props:['content'],
-          mounted:function(){
-              this.$el.innerText = this.content;
-          },
-          methods:{
-              update:function(event){
-                  this.$emit('update',event.target.innerText);
-              }
-          },
-      });*/
+      var tem_data=js_data;
+      //console.log(tem_data);
+      var div_script= '<div id="script-text" style="margin-top: 10px;display: block"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">layscript</button>Scrip:<p id ="script"></p></div>';
 
       //render template
       var vm = new Vue({
@@ -77,10 +66,10 @@
               exportScript: function () {
                   var myJSON = JSON.stringify(tem_data);
                   var template= js_template;
-                  document.getElementById('ads').innerHTML='&lt;script>var data='+myJSON+'&lt;/script>'+
+                  document.getElementById('ads').innerHTML=myJSON;/*'&lt;script>var data='+myJSON+'&lt;/script>'+
                                                             '&lt;script src="http://localhost/templatemanager/public/js/drawTemplate.js">&lt;/script>' +
                                                             '&lt;script src="http://localhost/templatemanager/node_modules/vue/dist/vue.js">&lt;/script>'+
-                                                            '&lt;script>drawAds(data,'+ js_id+')&lt;/script>';
+                                                            '&lt;script>drawAds(data,'+ js_id+')&lt;/script>';*/
               },
           },
       });

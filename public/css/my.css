@@ -152,3 +152,10 @@ td{
 	margin-top: 20px;
 	top: 0px;
 }
+.flex{
+	display: flex;
+	flex-wrap: wrap;
+}
+.flex table  {
+	margin-left: 6.5%;
+}
