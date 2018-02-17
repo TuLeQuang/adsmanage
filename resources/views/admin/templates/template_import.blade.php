@@ -46,8 +46,7 @@
   <script src="/templatemanager/node_modules/vue/dist/vue.js"></script>
   <script src="js/index.js"></script>--}}
   <script type="text/javascript">
-    var itemsKey=["image","link","title","domain","titlebox","title 1","desc","descr","content","color","src"];
-    var dataKey=["data",""];
+    var itemsKey=["image","link","title","domain","titlebox","title 1","desc","descr","content","color","src","slogan","logoBrand","descadv","sf_color",""];
     var key=[];//data key in json
     var data="";
 
@@ -57,6 +56,7 @@
             var adsScript=document.getElementById('scriptText').value;
             var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
             adsJson= JSON.parse(adsJson);
+
             /*// run with this
             //document.getElementById('template-form').innerHTML=allInternalObjs(adsJson);
             console.log(allInternalObjs(adsJson));*/
@@ -64,6 +64,8 @@
             /*traverse(adsJson, function (key, value, trail) {
                 document.getElementById('template-form').innerHTML=arguments.join();
             });*/
+
+            //get data and render form
             var k=[];
             (function traverse(o,name) {
                 name=name || "";
@@ -74,10 +76,15 @@
                         traverse(o[i],"&#8195;"+name+i+".");
                     }
                     else{
-                        for(var j in itemsKey)
+                        for(var j in itemsKey){
                             if(i==itemsKey[j]) {
-                                k.push(name + i +' : <input type="text" id="'+name +i+'" value="'+o[i]+'" onchange="setNewDataJson(\''+name+i+'\')" style="width: 300px"><br>'/*+ ' - ' + o[i]*/);
+                                k.push(name + i +' : <input type="text" id="'+name +i+'" value="'+o[i]+'" onchange="setNewDataJson(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
                             }
+                            /*else{
+                                k.push(name + i +'<br>'/!*+ ' - ' + o[i]*!/);
+                            }*/
+                        }
+
                     }
                 }
             })
