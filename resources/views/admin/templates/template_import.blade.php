@@ -165,6 +165,7 @@
         $('#lstStates').multiselect({
             onChange: function(option, checked) {
                 if (checked === true) {
+                    //console.log(select);
                     itemsKey.push($(option).val())
                 }
                 else {
@@ -173,16 +174,23 @@
                 //console.log(itemsKey);
                 renderForm2();
             },
+            onSelectAll: function () {
+                $('#lstStates').on('change', function(){
+                    var selected = $(this).find("option:selected");
+                    itemsKey = [];
+                    selected.each(function(){
+                        itemsKey.push($(this).val());
+                    });
+                    renderForm2();
+                });
+            },
             buttonText: function(options, select) {
-                if (options.length === 0) {
+                if (options.length === 0)
                     return 'Select Key To Render Form';
-                }
-                if (options.length === select[0].length) {
+                else if (options.length === select[0].length)
                     return 'All selected ('+select[0].length+')';
-                }
-                else if (options.length >= 4) {
+                else if (options.length >= 4)
                     return options.length + ' selected';
-                }
                 else {
                     var labels = [];
                     options.each(function() {
@@ -195,6 +203,7 @@
             includeSelectAllOption: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
+            selectAllJustVisible: false
         });
 
     };
