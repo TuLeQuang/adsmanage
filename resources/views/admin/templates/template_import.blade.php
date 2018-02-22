@@ -17,19 +17,19 @@
           <h1 class="page-header">Import <small>Template</small> </h1>
         </div>
 
-        <div id="import" style="display: inline-block;width: 100%; min-height: 300px;">
+        <div id="import">
           <div id="input-data" class="input-data">
            <span id="msg" style="color: red"></span><br>
            <textarea type="text" id="scriptText" class="form-control" rows="10" style="width: 100%"></textarea><br>
             <button id="btn-data" class="btn btn-info" onclick="getDataKey()">Get Form</button>
             <a href="https://demo.admicro.vn/testscript/" target="_blank"><input id="btn-script" type="submit" class="btn btn-info" style="margin-left: 25px" value="Run Script"></a>
           </div>
-          <div id="template-form" style="width: 68%;float: right">
+          <div id="template-form">
               <div id="checkBoxList">
-                  <select name="lstStates" multiple id="lstStates" onchange="selectKey()" style="display: none">
+                  <select name="lstStates" id="lstStates" onchange="selectKey()" multiple style="display: none">
                   </select>
               </div>
-              <div id="form"></div>
+              <div id="form" style="margin-top: 10px"></div>
           {{--<div id="run-script" style="width: 50%; float: left;display: inline-block">--}}
           </div>
         </div>
@@ -60,7 +60,6 @@
 
     function getDataKey() {
         try {
-            var tg="";
             var adsJson= getDataJson();
             //choose key to render form
             var k=[];
@@ -156,19 +155,25 @@
             f.appendChild(op);
         }
         checkList.appendChild(f);
+        itemsKey=[];
+        document.getElementById('form').innerHTML="";
         selectKey();
     }
 
     //select key and render form
     function selectKey() {
-          itemsKey=[];
         $('#lstStates').multiselect({
-            buttonText: function(options, select) {
-                options.each(function() {
-                    itemsKey.push($(this).val());
-                });
-                //console.log(itemsKey+1);
+            onChange: function(option, checked) {
+                if (checked === true) {
+                    itemsKey.push($(option).val())
+                }
+                else {
+                    itemsKey.splice(itemsKey.indexOf($(option).val()), 1);
+                }
+                //console.log(itemsKey);
                 renderForm2();
+            },
+            buttonText: function(options, select) {
                 if (options.length === 0) {
                     return 'Select Key';
                 }
@@ -206,7 +211,7 @@
                   if (o[i] !== null && typeof(o[i])=="object") {
                       //k.push(name + i +'<br>');
                       //going on step down in the object tree!!
-                      traverse(o[i],"&#8195;"+name+i+".");
+                      traverse(o[i],/*"&#8195;"+*/name+i+".");
                   }
                   else{
                       for(var j in itemsKey){
@@ -217,13 +222,10 @@
                               k.push(name + i +'<br>'/!*+ ' - ' + o[i]*!/);
                           }*/
                       }
-
                   }
               }
           })
           (adsJson);
-        /*var div = document.createElement('div');
-        div.innerHTML=k.join(" ");*/
         document.getElementById('form').innerHTML=k.join(" ");
     }
 

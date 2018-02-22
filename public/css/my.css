@@ -159,3 +159,13 @@ td{
 .flex table  {
 	margin-left: 6.5%;
 }
+
+#import{
+	display: inline-block;
+	width: 100%;
+	min-height: 300px
+}
+#template-form{
+	width: 68%;
+	float: right
+}
