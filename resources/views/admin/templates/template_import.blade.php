@@ -21,7 +21,7 @@
           <div id="input-data" class="input-data">
            <span id="msg" style="color: red"></span><br>
            <textarea type="text" id="scriptText" class="form-control" rows="10" style="width: 100%"></textarea><br>
-            <button id="btn-data" class="btn btn-info" onclick="getData()">Get Form</button>
+            <button id="btn-data" class="btn btn-info" onclick="getDataKey()">Get Form</button>
             <a href="https://demo.admicro.vn/testscript/" target="_blank"><input id="btn-script" type="submit" class="btn btn-info" style="margin-left: 25px" value="Run Script"></a>
           </div>
           <div id="template-form" style="width: 68%;float: right">
@@ -52,13 +52,16 @@
     var key=[];//data key in json
     var data="";
 
-    function getData() {
+    function getDataJson() {
+        var adsScript=document.getElementById('scriptText').value;
+        var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
+        return JSON.parse(adsJson);
+    }
+
+    function getDataKey() {
         try {
             var tg="";
-            var adsScript=document.getElementById('scriptText').value;
-            var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-            adsJson= JSON.parse(adsJson);
-
+            var adsJson= getDataJson();
             //choose key to render form
             var k=[];
             (function traverse(o) {
@@ -77,43 +80,18 @@
             //remove key
             key = remove_duplicates(k);
             checkBoxList(key);
+            $('#lstStates').multiselect('rebuild');
             //console.log(key);
-
-            /*var div = document.createElement('div');
-            div.innerHTML=key.join(" ");
-            document.getElementById('template-form').appendChild(div);*/
-
-
-           /* //get data and data key from script
-            for (var i in adsJson.data) {
-                data +=  JSON.stringify(adsJson.data[i]);
-                if(data.indexOf("items")>0){
-                    for (var j in adsJson.data[i].items) {
-                        for(var x in adsJson.data[i].items[j]){
-                            tg+=x +" ";
-                        }
-                        key[j]=tg;
-                        tg="";
-                    }
-                }
-                else {
-                    for(var j in adsJson.data[i]){
-                        tg+=j +" ";
-                    }
-                    key[i]=tg;
-                    tg="";
-                }
-            }
             //console.log(data);
-            //console.log(key.toString());*/
+            //console.log(key.toString());
         }
         catch(err) {
             document.getElementById("msg").innerHTML = err.message;
         }
       };
 
-      function renderForm() {
-          getData();
+     /* function renderForm() {
+          getDataKey();
           var root=document.getElementById('template-form');
           var f= document.createDocumentFragment();
           var div=document.createElement('div');
@@ -130,8 +108,8 @@
                           form.type="text";
                           form.className="form-control input-item";
                           form.setAttribute("onchange","setNewData()");
-                          /*form.setAttribute("v-model", "items."+listKey[j].toString());
-                          form.textContent='\{\{items.'+listKey[j].toString()+'\}\}';*/
+                          /!*form.setAttribute("v-model", "items."+listKey[j].toString());
+                          form.textContent='\{\{items.'+listKey[j].toString()+'\}\}';*!/
                           var label= document.createElement('label');
                           label.textContent=listKey[j].toString()+" "+(Number(i)+1)+": ";
 
@@ -160,77 +138,15 @@
                   root.appendChild(f);
               }
           }
-          getDataToForm();
-      }
-
-      function getDataToForm() {
-          var adsScript=document.getElementById('scriptText').value;
-          var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-          adsJson= JSON.parse(adsJson);
-
-          //get data to form
-          for (var i in adsJson.data) {
-              if(data.indexOf("items")>0){
-                  for (var j in adsJson.data[i].items) {
-                      for(var x in adsJson.data[i].items[j]){
-                          for(var key in itemsKey){
-                              if(x==itemsKey[key].toString()){
-                                  //console.log(adsJson.data[i].items[j][x]);
-                                  document.getElementById(x+j).value=adsJson.data[i].items[j][x];
-                              }
-                          }
-                      }
-                  }
-              }
-              else{
-                  for(var j in adsJson.data[i]){
-                      for(var key in itemsKey){
-                          if(j==itemsKey[key].toString()){
-                              //console.log(adsJson.data[i][j]);
-                              document.getElementById(j+i).value=adsJson.data[i][j];
-                          }
-                      }
-                  }
-              }
-          }
-      }
-
-      function setNewData() {
-          var adsScript=document.getElementById('scriptText').value;
-          var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-          adsJson= JSON.parse(adsJson);
-
-          //get data to form
-          for (var i in adsJson.data) {
-              if(data.indexOf("items")>0){
-                  for (var j in adsJson.data[i].items) {
-                      for(var x in adsJson.data[i].items[j]){
-                          for(var key in itemsKey){
-                              if(x==itemsKey[key].toString()){
-                                  //console.log(adsJson.data[i].items[j][x]);
-                                  adsJson.data[i].items[j][x]=document.getElementById(x+j).value;
-                              }
-                          }
-                      }
-                  }
-              }
-              else{
-                  for(var j in adsJson.data[i]){
-                      for(var key in itemsKey){
-                          if(j==itemsKey[key].toString()){
-                              //console.log(adsJson.data[i][j]);
-                              adsJson.data[i][j]=document.getElementById(j+i).value;
-                          }
-                      }
-                  }
-              }
-          }
-          document.getElementById('scriptText').value=adsScript.replace(adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1),JSON.stringify(adsJson));
-      }
+      }*/
 
     //render checkbox list form array
     function checkBoxList(aray) {
         var checkList=document.getElementById('lstStates');
+
+        while (checkList.hasChildNodes()) {
+            checkList.removeChild(checkList.firstChild);
+        }
         checkList.style.display="block";
         var f=document.createDocumentFragment();
         for(var i in aray){
@@ -254,7 +170,7 @@
                 //console.log(itemsKey+1);
                 renderForm2();
                 if (options.length === 0) {
-                    return 'None selected';
+                    return 'Select Key';
                 }
                 if (options.length === select[0].length) {
                     return 'All selected ('+select[0].length+')';
@@ -270,6 +186,10 @@
                     return labels.join(', ') + '';
                 }
             },
+            maxHeight: 300,
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
         });
 
     };
@@ -277,9 +197,7 @@
    //render form 2
     function renderForm2() {
         //console.log(itemsKey.join(" ")+2);
-        var adsScript=document.getElementById('scriptText').value;
-        var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-        adsJson= JSON.parse(adsJson);
+        var adsJson= getDataJson();
         //get data and render form
           var k=[];
           (function traverse(o,name) {
@@ -314,9 +232,7 @@
         var val=document.getElementById(inputId).value;
         inputId=inputId.toString().replace(/\s+/g, "");
         var adsScript=document.getElementById('scriptText').value;
-        var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
-        adsJson= JSON.parse(adsJson);
-
+        var adsJson= getDataJson();
         (function traverse(o,name) {
             name=name || "";
             for (var i in o) {
