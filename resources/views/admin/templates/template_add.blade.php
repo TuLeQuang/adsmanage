@@ -47,7 +47,7 @@
           </div>
 
           <div id="btn-elements" class="div-elements">
-            <a href="{{route('template.create').'#title'}}">
+            <a href="{{route('template.create').'#titles'}}">
                 <button class="btn btn-toolbar btn-element" type="button" id="btn-title" onclick="showTitleConfig()">Title</button>
             </a>
             <br>
@@ -61,7 +61,7 @@
             </a>
 
             <br>
-            <a href="{{route('template.create').'#sponsor'}}">
+            <a href="{{route('template.create').'#sponsors'}}">
             <button class="btn btn-toolbar btn-element" type="button" id="btn-logo" onclick="showSponsorConfig()">Sponsor</button>
             </a>
             <br>

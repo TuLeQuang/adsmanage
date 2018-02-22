@@ -20,7 +20,7 @@
         </div>
         <div id="app"></div>
 
-        <div id="ads"></div>
+        <div id="ads" style="float: right;width: 67%;word-wrap: break-word;padding-top: 10px"></div>
       </div>
       <!-- /.row -->
     </div>
@@ -50,7 +50,7 @@
 
       var tem_data=js_data;
       //console.log(tem_data);
-      var div_script= '<div id="script-text" style="margin-top: 10px;display: block"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">layscript</button>Scrip:<p id ="script"></p></div>';
+      var div_script= '<div id="script-text" style="display: block;float: left; position: absolute;left: 475px;top: 0px;"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">Get Script</button><p id ="script"></p></div>';
 
       //render template
       var vm = new Vue({
@@ -59,8 +59,8 @@
               return tem_data;
           },
           template:'<div>'
-          +'<button type="button" style="display: block" class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
-          +'<div style="height: auto; display: inline-block;"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_config+div_script+'</div>'
+          +'<button type="button" style="display: inline-block;margin-left: 20px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
+          +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_config+div_script+'</div>'
           +'</div>',
           methods:{
               exportScript: function () {

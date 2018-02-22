@@ -20,11 +20,11 @@
         <div id="import">
           <div id="input-data" class="input-data">
            <span id="msg" style="color: red"></span><br>
-           <textarea type="text" id="scriptText" class="form-control" rows="10" style="width: 100%"></textarea><br>
+           <textarea type="text" id="scriptText" class="form-control" rows="10" placeholder="Nhập data dạng Json" style="width: 100%"></textarea><br>
             <button id="btn-data" class="btn btn-info" onclick="getDataKey()">Get Form</button>
             <a href="https://demo.admicro.vn/testscript/" target="_blank"><input id="btn-script" type="submit" class="btn btn-info" style="margin-left: 25px" value="Run Script"></a>
           </div>
-          <div id="template-form">
+          <div id="form-render">
               <div id="checkBoxList">
                   <select name="lstStates" id="lstStates" onchange="selectKey()" multiple style="display: none">
                   </select>
@@ -175,7 +175,7 @@
             },
             buttonText: function(options, select) {
                 if (options.length === 0) {
-                    return 'Select Key';
+                    return 'Select Key To Render Form';
                 }
                 if (options.length === select[0].length) {
                     return 'All selected ('+select[0].length+')';
@@ -226,6 +226,7 @@
               }
           })
           (adsJson);
+          //console.log(k);
         document.getElementById('form').innerHTML=k.join(" ");
     }
 

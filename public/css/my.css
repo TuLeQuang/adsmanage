@@ -44,7 +44,7 @@ td{
 #items-list table tr td{
 	padding: 5px;
 }
-#items, #title, #sponsor, #image{
+#items, #titles, #sponsors, #image{
 	display: none;
 	background-color:whitesmoke ;
 	border-radius: 7px;
@@ -165,7 +165,8 @@ td{
 	width: 100%;
 	min-height: 300px
 }
-#template-form{
+
+#form-render{
 	width: 68%;
 	float: right
 }

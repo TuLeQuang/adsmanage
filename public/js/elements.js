@@ -439,8 +439,8 @@ function showTitleConfig() {
         d.appendChild(root);
 
         checkLayout();
-        titleBuilder(n,'title');
-        showView('title');
+        titleBuilder(n,'titles');
+        showView('titles');
         var titleData= document.getElementById('txtTitle');
         var color=document.getElementById('titleColor');
         var fontSizeRange=document.getElementById('titleFontRange');
@@ -460,7 +460,7 @@ function showTitleConfig() {
 
     }
     else
-        showView('title');
+        showView('titles');
 }
 
 //draw title
@@ -521,8 +521,8 @@ function showSponsorConfig(){
         d.appendChild(root);
 
         checkLayout();
-        showView('sponsor');
-        sponsorBuilder(n,'sponsor');
+        showView('sponsors');
+        sponsorBuilder(n,'sponsors');
 
         var color=document.getElementById('sponsorColor');
         var name=document.getElementById('sponsorName');
@@ -534,10 +534,10 @@ function showSponsorConfig(){
         sponsorChange(n);
     }
     else
-        showView('sponsor');
+        showView('sponsors');
 }
 
-//draw title
+//draw sponsor
 function sponsorBuilder(n,elementConfigId){
     var d = document.getElementById('element'+n);
     while (d.hasChildNodes()) {

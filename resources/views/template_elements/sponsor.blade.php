@@ -1,4 +1,4 @@
-<div id="sponsor">
+<div id="sponsors">
   <table>
     <tr>
       <td><label for="sponsorName">Sponsor:</label></td>
@@ -25,5 +25,5 @@
       <td colspan="3"><div id="logoSize" class="box" style="max-height: 70px;max-width: 70px;font-size: 11px">Kéo để chọn size</div></td>
     </tr>--}}
   </table>
-  <button class="btn btn-danger" id="btn-close-items" onclick="hideView('sponsor')" style="margin: 15px 0px 0px 15px">Close</button>
+  <button class="btn btn-danger" id="btn-close-items" onclick="hideView('sponsors')" style="margin: 15px 0px 0px 15px">Close</button>
 </div>
