@@ -203,7 +203,7 @@
             includeSelectAllOption: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
-            selectAllJustVisible: false
+            selectAllJustVisible: true
         });
 
     };
@@ -218,14 +218,14 @@
               name=name || "";
               for (var i in o) {
                   if (o[i] !== null && typeof(o[i])=="object") {
-                      //k.push(name + i +'<br>');
+                      //k.push('<b>'+name+'</b>'+ i +'<br>');
                       //going on step down in the object tree!!
                       traverse(o[i],/*"&#8195;"+*/name+i+".");
                   }
                   else{
                       for(var j in itemsKey){
                           if(i==itemsKey[j]) {
-                              k.push(name + i +' : <input type="text" id="'+name +i+'" value="'+o[i]+'" onchange="setNewDataJson(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
+                              k.push('<b>'+name+'</b>' + i +' : <input type="text" id="'+name +i+'" value="'+o[i]+'" onchange="setNewDataJson(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
                           }
                           /*else{
                               k.push(name + i +'<br>'/!*+ ' - ' + o[i]*!/);
