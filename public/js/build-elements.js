@@ -42,7 +42,7 @@ function showItemsConfig() {
     }
     var itemForm=document.createElement('div');
     var itemName= "'items'";
-    itemForm.innerHTML='<table><tr><td><label for="itemNum">Items Number:</label></td><td><select id="itemNum" class="input-sm" style="background: whitesmoke;margin-left: 10px" onchange="changeNum()"><option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>'+options+'</select></td></tr><tr><td><label for="required">Img Url Required: </label></td><td><input type="checkbox" id="itemsRequired" style="margin-left: 10px"></td><td><label for="Content">Content max lenght: </label></td><td><input type="number" style="width: 50px" value="20" id="contentLenght"></td></tr><tr><td><label>Image Size:</label></td><td><div id="imgSize" class="box">Kéo để chọn size</div></td></tr></table><div id="items-list"></div><button class="btn btn-danger" id="btn-close-items" onclick="hideView('+itemName+')" style="margin: 15px 0px 0px 15px">Close</button>';
+    itemForm.innerHTML='<table><tr><td><label for="itemNum">Items Number:</label></td><td><select id="itemNum" class="input-sm" style="background: whitesmoke;margin-left: 10px" onchange="changeNum()"><option selected="true" disabled="disabled" value="0">Chọn số lượng Items</option>'+options+'</select></td></tr><tr><td><label for="required">Img Url Required: </label></td><td><input type="checkbox" id="itemsRequired" style="margin-left: 10px"></td><td><label for="Content">Content max length: </label></td><td><input type="number" style="width: 50px" value="20" id="contentLength"></td></tr><tr><td><label>Image Size:</label></td><td><div id="imgSize" class="box">Kéo để chọn size</div></td></tr></table><div id="items-list"></div><button class="btn btn-danger" id="btn-close-items" onclick="hideView('+itemName+')" style="margin: 15px 0px 0px 15px">Close</button>';
     itemForm.id="items";
     itemForm.style.display="block";
     itemForm.style.width='100%';*/
@@ -58,11 +58,11 @@ function showItemsConfig() {
         showView('items');
 
         var required= document.getElementById('itemsRequired');
-        var lenght= document.getElementById('contentLenght');
+        var length= document.getElementById('contentLength');
       /*  var imgSize=document.getElementById('imgSize');
         imgSize.setAttribute("onchange","itemsChange("+n+")");*/
         required.setAttribute("onchange","itemsChange("+n+")");
-        lenght.setAttribute("onchange","itemsChange("+n+")");
+        length.setAttribute("onchange","itemsChange("+n+")");
 
         var format= document.getElementById('itemFormat');
         format.setAttribute("onchange","itemsFormatBuilder("+n+",'items',this.value)");
@@ -150,11 +150,11 @@ function itemsChange(n) {
     }
     if(document.getElementById('itemsRequired').checked){
         var imgUrlConfig='{required:true,url:true}',
-            contentConfig='{max:'+document.getElementById('contentLenght').value+'}';
+            contentConfig='{max:'+document.getElementById('contentLength').value+'}';
     }
     else {
         var imgUrlConfig='{required:false,url:true}',
-            contentConfig='{max:'+document.getElementById('contentLenght').value+'}';
+            contentConfig='{max:'+document.getElementById('contentLength').value+'}';
     }
 
     dataArray[n]='items:['+data_tg+'],';
@@ -381,11 +381,11 @@ function itemsChange(n) {
     }
     if (document.getElementById('itemsRequired').checked) {
         var imgUrlConfig = '{required:true,url:true}',
-            contentConfig = '{max:' + document.getElementById('contentLenght').value + '}';
+            contentConfig = '{max:' + document.getElementById('contentLength').value + '}';
     }
     else {
         var imgUrlConfig = '{required:false,url:true}',
-            contentConfig = '{max:' + document.getElementById('contentLenght').value + '}';
+            contentConfig = '{max:' + document.getElementById('contentLength').value + '}';
     }
 
     dataArray[n] = 'items:[' + data_tg + '],';
@@ -446,7 +446,7 @@ function showTitleConfig() {
         var fontSizeRange=document.getElementById('titleFontRange');
         var fontSizeText=document.getElementById('titleFontText');
         var required= document.getElementById('titleRequired');
-        var lenght= document.getElementById('titleLenght');
+        var length= document.getElementById('titleLength');
         var bgColor= document.getElementById('titleBgColor');
 
         fontSizeRange.setAttribute("onchange","titleChange("+n+")");
@@ -454,7 +454,7 @@ function showTitleConfig() {
         fontSizeText.setAttribute("onchange","titleChange("+n+")");
         titleData.setAttribute("onchange","titleChange("+n+")");
         required.setAttribute("onchange","titleChange("+n+")");
-        lenght.setAttribute("onchange","titleChange("+n+")");
+        length.setAttribute("onchange","titleChange("+n+")");
         bgColor.setAttribute("onchange","titleChange("+n+")");
         titleChange(n);
 
@@ -488,9 +488,9 @@ function titleChange(n) {
     title.textContent=titleData;
 
     if(document.getElementById('titleRequired').checked)
-        var titleConfig='{required:true,max:'+document.getElementById('titleLenght').value+'}';
+        var titleConfig='{required:true,max:'+document.getElementById('titleLength').value+'}';
     else
-        var titleConfig='{required:false,max:'+document.getElementById('titleLenght').value+'}';
+        var titleConfig='{required:false,max:'+document.getElementById('titleLength').value+'}';
 
   /*  document.getElementById('titleFontText').value=document.getElementById('titleFontRange').value;
     document.getElementById('titleFontRange').value= document.getElementById('titleFontText').value;*/
@@ -526,10 +526,14 @@ function showSponsorConfig(){
 
         var color=document.getElementById('sponsorColor');
         var name=document.getElementById('sponsorName');
-        var maxLenght =document.getElementById('sponsorLenght');
+        var maxLength =document.getElementById('sponsorLength');
+        var fontSizeRange=document.getElementById('sponsorFontRange');
+        var fontSizeText=document.getElementById('sponsorFontText');
+        fontSizeRange.setAttribute("onchange","sponsorChange("+n+")");
+        fontSizeText.setAttribute("onchange","sponsorChange("+n+")");
         color.setAttribute("onchange","sponsorChange("+n+")");
         name.setAttribute("onchange","sponsorChange("+n+")");
-        maxLenght.setAttribute("onchange","sponsorChange("+n+")");
+        maxLength.setAttribute("onchange","sponsorChange("+n+")");
 
         sponsorChange(n);
     }
@@ -552,8 +556,8 @@ function sponsorBuilder(n,elementConfigId){
     div.style.padding="5px 5px 5px 15px";
     var sponsor=document.createElement('span');
     sponsor.id="sponsorElement";
-    sponsor.style.fontWeight="bold";
-    var text=document.createElement('span');
+    var text = document.createElement('span');
+    text.id="sponsor-text";
     text.textContent=" tài trợ thông tin.";
     div.appendChild(sponsor);
     div.appendChild(text);
@@ -566,12 +570,17 @@ function sponsorChange(n) {
     var sponsorName= document.getElementById('sponsorName').value;
     sponsor.textContent=sponsorName;
     sponsor.style.color=document.getElementById('sponsorColor').value;
+    sponsor.style.fontWeight="bold";
+    sponsor.style.fontSize=document.getElementById('sponsorFontText').value+'px';
+    var text=document.getElementById('sponsor-text');
+    text.style.fontSize=sponsor.style.fontSize;
 
     var sponsorStyle='color:'+document.getElementById('sponsorColor').value+';font-weight:bold;float:left';
-    var sponsorConfig='{required:true,max:'+document.getElementById('sponsorLenght').value+'}';
+    var sponsorConfig='{required:true,max:'+document.getElementById('sponsorLength').value+'}';
+
     dataArray[n]='sponsor:"'+sponsorName+'",';
-    templateArray[n]='<div style="padding:5px 5px 5px 10px"><div style="'+sponsorStyle+'" name="sponsor">{'+'{sponsor}'+'}</div><span> &ensp;tài trợ thông tin</span></div>';
-    configArray[n]='<div style="padding:5px 5px 5px 10px"><medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span></div>';
+    templateArray[n]='<div style="padding:5px 5px 5px 10px;font-size:'+ sponsor.style.fontSize+';" ><div style="'+sponsorStyle+'" name="sponsor">{'+'{sponsor}'+'}</div><span> &ensp;tài trợ thông tin</span></div>';
+    configArray[n]='<div style="padding:5px 5px 5px 10px;font-size:'+ sponsor.style.fontSize+';"><medium style="'+sponsorStyle+'" name="sponsor" v-model="sponsor" v-validate="'+sponsorConfig+'"></medium><span> &ensp;tài trợ thông tin</span></div>';
 
     var txtData= document.getElementById('txtData');
     var txtTemplate= document.getElementById('txtTemplate');

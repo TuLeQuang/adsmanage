@@ -15,8 +15,8 @@
     <tr>
       <td><label for="required">Img Url Required: </label></td>
       <td><input type="checkbox" id="itemsRequired" class="form-check-input" ></td>
-      <td><label for="Content" style="margin-left: 5px">Content max lenght: </label></td>
-      <td><input type="number" class="form-control" style="width: 70px" value="100" id="contentLenght" ></td>
+      <td><label for="Content" style="margin-left: 5px">Content max length: </label></td>
+      <td><input type="number" class="form-control" style="width: 70px" value="100" id="contentLength" ></td>
     </tr>
     <tr>
       <td><label>Item Format: </label></td>
@@ -24,8 +24,8 @@
         <select id="itemFormat" class="form-control" style="background: whitesmoke">
           <option value="1">Format 1: Normal(300x600)</option>
           <option value="2">Format 2: Full items</option>
-          <option value="3">Format 3: width 160x600</option>
-          <option value="4">Format 4: width 140 - 1 image</option>
+          <option value="3">Format 3: 160x600</option>
+          <option value="4">Format 4: 1 image (140x600)</option>
         </select>
       </td>
     </tr>

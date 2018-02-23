@@ -40,10 +40,10 @@
 
           <div id="template-layout" class="template-layout" data-content="Kích chọn element." >
             <div id="template" style="border: solid 1px #cdcdcd;min-width: 100px ;"></div>
-            @include('.template_elements.item')
-            @include('.template_elements.title')
-            @include('template_elements.sponsor')
-            @include('template_elements.image')
+            @include('admin.templates.elements.item')
+            @include('admin.templates.elements.title')
+            @include('admin.templates.elements.sponsor')
+            @include('admin.templates.elements.image')
           </div>
 
           <div id="btn-elements" class="div-elements">
@@ -77,7 +77,7 @@
 @endsection
 
 @section('script')
-  <script src="{{asset('/js/elements.js')}}"></script>
+  <script src="{{asset('/js/build-elements.js')}}"></script>
   <script src="{{asset('/js/jquery-ui.js')}}"></script>
   <script type="text/javascript" language="JavaScript">
       //Drag Img

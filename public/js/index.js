@@ -7058,15 +7058,15 @@ MediumEditor.extensions = {};
 
             var elementId = MediumEditor.util.guid();
 
-            element.setAttribute('data-medium-editor-element', true);
-            element.classList.add('medium-editor-element');
-            element.setAttribute('role', 'textbox');
+            //element.setAttribute('data-medium-editor-element', true);
+            //element.classList.add('medium-editor-element');
+            //element.setAttribute('role', 'textbox');
             element.setAttribute('aria-multiline', true);
-            element.setAttribute('data-medium-editor-editor-index', editorId);
+            //element.setAttribute('data-medium-editor-editor-index', editorId);
             // TODO: Merge data-medium-editor-element and medium-editor-index attributes for 6.0.0
             // medium-editor-index is not named correctly anymore and can be re-purposed to signify
             // whether the element has been initialized or not
-            element.setAttribute('medium-editor-index', elementId);
+            //element.setAttribute('medium-editor-index', elementId);
             initialContent[elementId] = element.innerHTML;
 
             this.events.attachAllEventsToElement(element);

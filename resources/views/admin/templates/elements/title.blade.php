@@ -7,8 +7,8 @@
     <tr>
       <td><label for="titleRequired">Required: </label></td>
       <td><input type="checkbox" id="titleRequired" class="form-check-input" style="margin-left: 10px"></td>
-      <td><label for="titleLenght">Title max lenght: </label></td>
-      <td><input type="number" class="form-control" style=" width:60px" value="40" id="titleLenght"></td>
+      <td><label for="titleLength">Title max length: </label></td>
+      <td><input type="number" class="form-control" style=" width:60px" value="40" id="titleLength"></td>
     </tr>
     <tr>
       <td>Title color:</td>
@@ -22,7 +22,7 @@
       </td>
     </tr>
     <tr>
-      <td>Backgroud color:</td>
+      <td>Background color:</td>
       <td><input type="color" id="titleBgColor" value="#ffffff" name="titleBgColor"></td>
     </tr>
   </table>
