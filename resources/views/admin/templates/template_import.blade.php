@@ -19,17 +19,16 @@
 
         <div id="import">
           <div id="input-data" class="input-data">
+            <div id="checkBoxList">
+              <select name="lstStates" id="lstStates" onchange="selectKey()" multiple style="display: none">
+              </select>
+            </div>
            <span id="msg" style="color: red"></span><br>
            <textarea type="text" id="scriptText" class="form-control" rows="10" placeholder="Nhập data dạng Json" style="width: 100%"></textarea><br>
             <button id="btn-data" class="btn btn-info" onclick="getDataKey()">Get Form</button>
             <a href="https://demo.admicro.vn/testscript/" target="_blank"><input id="btn-script" type="submit" class="btn btn-info" style="margin-left: 25px" value="Run Script"></a>
           </div>
           <div id="form-render">
-              <div id="checkBoxList">
-                  <select name="lstStates" id="lstStates" onchange="selectKey()" multiple style="display: none">
-                  </select>
-              </div>
-              <div id="form" style="margin-top: 10px"></div>
           {{--<div id="run-script" style="width: 50%; float: left;display: inline-block">--}}
           </div>
         </div>
@@ -52,16 +51,17 @@
     var key=[];//data key in json
     var data="";
 
+    //parse data from textarea to json
     function getDataJson() {
         var adsScript=document.getElementById('scriptText').value;
         var adsJson=adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1);
         return JSON.parse(adsJson);
     }
 
+    //read all json key
     function getDataKey() {
         try {
             var adsJson= getDataJson();
-            //choose key to render form
             var k=[];
             (function traverse(o) {
                 for (var i in o) {
@@ -75,14 +75,16 @@
                 }
             })
             (adsJson);
-
-            //remove key
-            key = remove_duplicates(k);
-            checkBoxList(key);
-            $('#lstStates').multiselect('rebuild');
-            //console.log(key);
             //console.log(data);
             //console.log(key.toString());
+
+            //remove duplicates key
+            key = remove_duplicates(k);
+
+            //build checkbox list
+            checkBoxList(key);
+            //rebuild checkbox list if import new json
+            $('#lstStates').multiselect('rebuild');
         }
         catch(err) {
             document.getElementById("msg").innerHTML = err.message;
@@ -139,7 +141,7 @@
           }
       }*/
 
-    //render checkbox list form array
+    //render checkbox list from array
     function checkBoxList(aray) {
         var checkList=document.getElementById('lstStates');
 
@@ -156,11 +158,11 @@
         }
         checkList.appendChild(f);
         itemsKey=[];
-        document.getElementById('form').innerHTML="";
+        document.getElementById('form-render').innerHTML="";
         selectKey();
     }
 
-    //select key and render form
+    //select key from checkbox list to render form
     function selectKey() {
         $('#lstStates').multiselect({
             onChange: function(option, checked) {
@@ -172,7 +174,7 @@
                     itemsKey.splice(itemsKey.indexOf($(option).val()), 1);
                 }
                 //console.log(itemsKey);
-                renderForm2();
+                renderForm();
             },
             onSelectAll: function () {
                 $('#lstStates').on('change', function(){
@@ -181,7 +183,7 @@
                     selected.each(function(){
                         itemsKey.push($(this).val());
                     });
-                    renderForm2();
+                    renderForm();
                 });
             },
             buttonText: function(options, select) {
@@ -189,7 +191,7 @@
                     return 'Select Key To Render Form';
                 else if (options.length === select[0].length)
                     return 'All selected ('+select[0].length+')';
-                else if (options.length >= 4)
+                else if (options.length >= 5)
                     return options.length + ' selected';
                 else {
                     var labels = [];
@@ -205,11 +207,10 @@
             enableCaseInsensitiveFiltering: true,
             selectAllJustVisible: true
         });
-
     };
 
-   //render form 2
-    function renderForm2() {
+   //render form
+    function renderForm() {
         //console.log(itemsKey.join(" ")+2);
         var adsJson= getDataJson();
         //get data and render form
@@ -225,23 +226,22 @@
                   else{
                       for(var j in itemsKey){
                           if(i==itemsKey[j]) {
-                              k.push('<b>'+name+'</b>' + i +' : <input type="text" id="'+name +i+'" value="'+o[i]+'" onchange="setNewDataJson(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
+                              //k.push('<b>'+name+'</b>' + i +' : <input type="text" id="'+name +i+'" value=\''+o[i]+'\' onchange="setNewData(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
+                              k.push('<div class="data-input"><div class="lab-key"><b>'+name+'</b>' + i +' :</div><div class="input-flex"><div id="'+name +i+'" onblur="setNewData(\''+name+i+'\')" contenteditable="true" class="edit-data">'+o[i] +'</div></div></div><br>'/*+ ' - ' + o[i]*/);
                           }
-                          /*else{
-                              k.push(name + i +'<br>'/!*+ ' - ' + o[i]*!/);
-                          }*/
                       }
                   }
               }
           })
           (adsJson);
           //console.log(k);
-        document.getElementById('form').innerHTML=k.join(" ");
+        document.getElementById('form-render').innerHTML=k.join(" ");
     }
 
-   //change dataJson
-    function setNewDataJson(inputId) {
-        var val=document.getElementById(inputId).value;
+   //change JsonData
+    function setNewData(inputId) {
+        //var val=document.getElementById(inputId).value;
+        var val=document.getElementById(inputId).innerHTML;
         inputId=inputId.toString().replace(/\s+/g, "");
         var adsScript=document.getElementById('scriptText').value;
         var adsJson= getDataJson();
@@ -250,10 +250,10 @@
             for (var i in o) {
                 if (o[i] !== null && typeof(o[i])=="object") {
                     //going on step down in the object tree!!
-                    traverse(o[i],"&#8195;"+name+i+".");
+                    traverse(o[i],name+i+".");
                 }
                 else{
-                   if((name+i).indexOf(inputId)!=-1){
+                   if((name+i).toString()==inputId){
                        //console.log("tim thay");
                        o[i]=val;
                    }
@@ -289,7 +289,6 @@
                 $('#input-data').removeClass('import-sticky');
             }
         };
-
         stickyNav();
         // and run it again every time you scroll
         $(window).scroll(function() {
