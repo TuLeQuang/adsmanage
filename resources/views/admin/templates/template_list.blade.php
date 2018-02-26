@@ -4,15 +4,7 @@
 @endsection
 @section('style')
   <style type="text/css">
-    .review{
-      width: 80px;
-      height: 80px;
-      border: 1px solid #ddd;
-      background-image: none;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
+
   </style>
 @endsection
 @section('content')
@@ -55,7 +47,6 @@
             <th style="text-align: center;">Template Name</th>
             <th style="text-align: center;">Create At</th>
             <th style="text-align: center;">Updated At</th>
-            {{--<th style="text-align: center;">Review</th>--}}
             <th style="text-align: center;">Active</th>
             <th style="text-align: center;" colspan="2">Action</th>
             </tr>
@@ -68,10 +59,31 @@
               <td>{{$templates[$i]['name']}}</td>
               <td>{{$templates[$i]['created_at']}}</td>
               <td>{{$templates[$i]['updated_at']}}</td>
-              
-             <!--  <td>
-               <div class="review" style="background-image:url({{$templates[$i]['images']['name']}});"></div>
-             </td> -->
+
+              {{-- <td>
+                <div>
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-eye"></i> Preview
+                  </button>
+                  <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Review Template {{$templates[$i]['name']}}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <img src="https://dantricdn.com/thumb_w/640/2018/2/6/cm2-15178846444832023341470.jpg" style="background-size: auto;width: 250px;height: 250px">
+                          {{$templates[$i]['name']}}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td> --}}
               
               <td>
                 @if($templates[$i]['active']==1)

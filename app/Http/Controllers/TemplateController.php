@@ -30,8 +30,6 @@ class TemplateController extends Controller
     }
 
     public function index(){
-        
-        /*$templates=DB::table('templates')->join('images','templates', '=' ,'templates.id_Image')->select('templates.id','images.name');*/
         $templates= Template::orderBy('id', 'desc')->paginate(20);
         return view('admin.templates.template_list',compact('templates'));
     }
