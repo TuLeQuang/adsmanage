@@ -25,7 +25,7 @@
             <input type="text" id="txtData" name="txtData" style="display: none "/>
             <input type="text" id="txtTemplate" name="txtTemplate" style="display: none "/>
             <input class="btn btn-success" type="submit" value="Save" onclick="saveTemplate()" style="margin: 15px 0px 0px 60px;"/>
-            <button class="btn btn-danger" type="button" onclick="clear()" style="margin: 15px 0px 0px 15px">Clear</button>
+            <button id="clear" class="btn btn-danger" type="button" style="margin: 15px 0px 0px 15px">Clear</button>
           </form>
           <div id="template-layout">
             <div id="template" style="border: solid 1px #cdcdcd;min-width: 100px ;"></div>

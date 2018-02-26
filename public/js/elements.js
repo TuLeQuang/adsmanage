@@ -28,6 +28,9 @@ var n=-1;
 var dataArray=[];
 var templateArray=[];
 
+
+
+
 //show items form
 function showItemsConfig() {
  /*   var options="";
@@ -377,8 +380,10 @@ function itemsChange(n) {
 
     var txtData = document.getElementById('txtData');
     var txtTemplate = document.getElementById('txtTemplate');
+    var iterator = txtTemplate.keys();
+    iterator.next();
     txtData.value = dataArray.join(" ");
-    txtTemplate.value = templateArray.join(" ");
+    txtTemplate.value = templateArray.join(" "); 
 }
 
 function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
@@ -393,7 +398,7 @@ function templateArrayFormat(imgUrlConfig,contentConfig,imgSize) {
     else if(itemFormat=="4")
         tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.linkClick" target="_blank"><img :src="item.imgUrl" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.linkClick" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a></div>';
     return tem;
-}
+} 
 /*End create items v2*/
 
 function showTitleConfig() {
@@ -431,15 +436,15 @@ function showTitleConfig() {
 function titleBuilder(n,elementConfigId){
     var d = document.getElementById('element'+n);
     while (d.hasChildNodes()) {
-        d.removeChild(d.firstChild);
+        d.removeChild(d.firstChild); 
     };
-    var f = document.createDocumentFragment();
+    var f = document.createDocumentFragment(); 
     var crud= document.createElement('div');
     crud.className="crud";
     crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
     f.appendChild(crud);
     var title=document.createElement('div');
-    title.id="titleElement";
+    title.id="titleElement"; 
     title.style.padding="5px 5px 5px 15px";
     f.appendChild(title);
     d.appendChild(f);
@@ -611,10 +616,10 @@ function templateChange() {
         document.getElementById('template').style.height="auto";
 }
 
-//save template to db
+//save template to db 
 function saveTemplate() {
     if(!document.getElementById('template').hasChildNodes()){
-        document.getElementById('errorsMessages').value = "Chưa tạo template";
+        document.getElementById('errorsMessages').value = "Chưa tạo template"; 
         document.getElementById('errorsMessages').disabled= "false";
         return false;
     }
@@ -630,12 +635,19 @@ function saveTemplate() {
     }
 };
 
-function clear() {
-    var items = document.getElementById("template");
-    while (items.hasChildNodes()) {
-        items.removeChild(items.firstChild);
-    }
-};
+$(document).ready(function(){
+    $("#clear").click(function(){
+        $("#template").empty();
+    }); 
+});
+$( function() {
+    $("#template").sortable({
+        revert: true
+    });
+});
+
+var sapxep = ["@include('.template_elements.item')","@include('.template_elements.title')","@include('template_elements.sponsor')","@include('template_elements.image')"];
+
 
 function deleteElement(n) {
     $("#element"+n).remove();
