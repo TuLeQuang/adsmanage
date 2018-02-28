@@ -87,7 +87,7 @@
           if(js_adsUserId!=js_userLogin){
               document.getElementById('ads_name').disabled = true;
               document.getElementById('ads_brand').disabled = true;
-              document.getElementById('myModal').disabled = true;
+              document.getElementById('myModal').style.display = "none";
           }
       })();
   </script>
