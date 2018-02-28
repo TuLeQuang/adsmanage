@@ -60,7 +60,7 @@
           },
           template:'<div>'
           +'<button type="button" style="display: inline-block;margin-left: 20px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
-          +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_template+div_script+'</div>'
+          +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_config +div_script+'</div>'
           +'</div>',
           methods:{
               exportScript: function () {

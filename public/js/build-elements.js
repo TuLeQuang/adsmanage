@@ -83,89 +83,6 @@ function showItemsConfig() {
     }
 };
 
-/*//draw item with number of items
-function itemsBuilder(num,n,elementConfigId) {
-    var d = document.getElementById('element'+n);
-    while (d.hasChildNodes()) {
-        d.removeChild(d.firstChild);
-    }
-    var items= "";
-    var f = document.createDocumentFragment();
-    var crud= document.createElement('div');
-    crud.className="crud";
-    crud.innerHTML='<button type="button" class="btn btn-default btn-sm" onclick="showView('+elementConfigId+')" href="#items"><span class="glyphicon glyphicon-wrench"></span></button><button type="button" onclick="deleteElement('+n+')" id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>';
-    f.appendChild(crud);
-    for(var i=1;i<=num;i++){
-        var list_item='<table style="border-top:solid 1px #cdcdcd;margin-top: 5px"><tr><td><label for="imgUrl'+i+'">Image Url '+i+':</label></td><td colspan="3"><input id="txtImgUrl'+i+'" type="text" class="form-control" onchange="itemsChange('+n+')"/></td><tr><td><label for="linkClick'+i+'">Link Click '+i+':</label></td><td colspan="3"><input id="txtLinkClick'+i+'" type="text" onchange="itemsChange('+n+')" class="form-control"/></td></tr><tr><td><label for="content'+i+'">Content '+i+':</label></td><td colspan="3"><input type="text" id="txtContent'+i+'" onchange="itemsChange('+n+')" class="form-control"/></td></tr></table>';
-        items=items+list_item;
-        var img=document.createElement('img');
-        var a=document.createElement('a');
-        var div=document.createElement('div');
-       var content= document.createElement('div');
-
-        a.id='linkClick'+i;
-        a.target="_blank";
-        img.id='imgUrl'+i;
-        img.align="left";
-        content.id='content'+i;
-        div.className='itemClass';
-
-        a.appendChild(img);
-        a.appendChild(content);
-        div.appendChild(a);
-        f.appendChild(div);
-        d.appendChild(f);
-    }
-    document.getElementById('items-list').innerHTML=items;
-};
-
-//
-function changeNum() {
-    var num = document.getElementById('itemNum');
-    itemsBuilder(num.value,n,"'items'");
-}
-
-//saveData change in items
-function itemsChange(n) {
-    var num = document.getElementById('itemNum');
-    var data_tg="";
-    var imgSize='width:'+$("#imgSize").css("width")+';height:'+$("#imgSize").css("height")+';';
-    for(var i=1;i<=num.value;i++){
-        var imgUrlId='txtImgUrl'+i, linkClickId='txtLinkClick'+i, contentId='txtContent'+i;
-        var imgId='imgUrl'+i, aId='linkClick'+i,contentDiv='content'+i;
-        var img=document.getElementById(imgId);
-        var a=document.getElementById(aId);
-        var content=document.getElementById(contentDiv);
-
-        img.src=document.getElementById(imgUrlId).value;
-        img.style=imgSize;
-        img.align="left";
-        img.title=document.getElementById(contentId).value;
-
-        content.textContent=document.getElementById(contentId).value;
-
-        a.href=document.getElementById(linkClickId).value;
-
-        data_tg=data_tg+'{imgUrl:"'+document.getElementById(imgUrlId).value+'",linkClick:"'+document.getElementById(linkClickId).value+'",content:"'+document.getElementById(contentId).value+'"},';
-    }
-    if(document.getElementById('itemsRequired').checked){
-        var imgUrlConfig='{required:true,url:true}',
-            contentConfig='{max:'+document.getElementById('contentLength').value+'}';
-    }
-    else {
-        var imgUrlConfig='{required:false,url:true}',
-            contentConfig='{max:'+document.getElementById('contentLength').value+'}';
-    }
-
-    dataArray[n]='items:['+data_tg+'],';
-    templateArray[n]='<div v-for="item in items"><div class="itemClass"><a :href="item.linkClick" target="_blank"><img :src="item.image" style="'+imgSize+'" align="left"><medium name="content" v-model="item.content" v-validate="'+contentConfig+'" style="padding-left: 10px"></medium></a></div></div>';
-
-    var txtData= document.getElementById('txtData');
-    var txtTemplate= document.getElementById('txtTemplate');
-    txtData.value=dataArray.join(" ");
-    txtTemplate.value=templateArray.join(" ");
-}*/
-
 /*Begin create items v2 */
 function itemsBuilder(num,n,elementConfigId) {
     var items= "";
@@ -404,13 +321,13 @@ function configArrayFormat(imgUrlConfig,contentConfig,imgSize) {
     var itemFormat= document.getElementById('itemFormat').value;
     var tem="";
     if(itemFormat=="1")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.content" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div>';
+        tem='<div class="itemClass" v-for="item in items"><span :title="item.content" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px;display: flex;"></medium></span></div>';
     else if(itemFormat=="2")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.link" target="_blank" :title="item.domain"><medium name="Item Sponsor" v-model="item.domain" style="padding-left: 0px;color: #b0b0b0"></medium></a><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px"></medium></a></div>';
+        tem='<div class="itemClass" v-for="item in items"><span :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></span><span target="_blank" :title="item.domain"><medium name="Item Sponsor" v-model="item.domain" style="padding-left: 0px;color: #b0b0b0"></medium></span><span target="_blank"><img :src="item.image" style="' + imgSize + '" align="left" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 10px;display: flex;"></medium></span></div>';
     else if(itemFormat=="3")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><a :href="item.link" target="_blank" :title="item.domain"><medium name="Item Sponsor" v-model="item.domain" style="padding-left: 0px;color: #b0b0b0;padding-bottom: 5px"></medium></a><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></a></div>';
+        tem='<div class="itemClass" v-for="item in items"><span :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></span><span target="_blank" :title="item.domain"><medium name="Item Sponsor" v-model="item.domain" style="padding-left: 0px;color: #b0b0b0;padding-bottom: 5px"></medium></span><span target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></span></div>';
     else if(itemFormat=="4")
-        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.link" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.link" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px" ></medium></a></div>';
+        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><span target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"></span><span :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px; margin-top: 10px;margin-bottom: 10px;" ></medium></span><medium name="content" v-model="item.content" v-validate="' + contentConfig + '" style="padding-left: 0px"></medium></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><span :title="item.title" target="_blank"><medium name="Item Title" v-model="item.title" style="font-weight: bold; padding-left: 0px;margin-top: 10px;margin-bottom: 10px;" ></medium></span></div>';
     return tem;
 }
 
@@ -418,13 +335,13 @@ function templateArrayFormat(imgSize) {
     var itemFormat= document.getElementById('itemFormat').value;
     var tem="";
     if(itemFormat=="1")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.content" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left"><div name="content" style="padding-left: 10px">{'+'{item.content}'+'}</div></a></div>';
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.content" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left"><div name="content" style="padding-left: 10px;display: flex;">{'+'{item.content}'+'}</div></a></div>';
     else if(itemFormat=="2")
-        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><a :href="item.link" target="_blank" :title="item.domain"><div name="Item Sponsor" style="padding-left: 0px;color: #b0b0b0">{'+'{item.domain}'+'}</div></a><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left" :title="item.content"><div name="content" style="padding-left: 10px">{'+'{item.content}'+'}</div></a></div>';
+        tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><a :href="item.link" target="_blank" :title="item.domain"><div name="Item Sponsor" style="padding-left: 0px;color: #b0b0b0">{'+'{item.domain}'+'}</div></a><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="left" :title="item.content"><div name="content" style="padding-left: 10px;display: flex;">{'+'{item.content}'+'}</div></a></div>';
     else if(itemFormat=="3")
         tem='<div class="itemClass" v-for="item in items"><a :href="item.link" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><a :href="item.link" target="_blank" :title="item.domain"><div name="Item Sponsor" style="padding-left: 0px;color: #b0b0b0;padding-bottom: 5px">{'+'{item.domain}'+'}</div></a><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"><div name="content" style="padding-left: 0px">{'+'{item.content}'+'}</div></a></div>';
     else if(itemFormat=="4")
-        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.link" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a><div name="content" style="padding-left: 0px">{'+'{item.content}'+'}</div></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.link" :title="item.title" target="_blank" style="margin-top: 10px;margin-bottom: 10px"><div name="Item Title" style="font-weight: bold; padding-left: 0px" >{'+'{item.title}'+'}</div></a></div>';
+        tem='<div class="itemClass" v-for="(item,index) in items" v-if="index==0"><a :href="item.link" target="_blank"><img :src="item.image" style="' + imgSize + '" align="top" :title="item.content"></a><a :href="item.link" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px;margin-top: 10px;margin-bottom: 10px;" >{'+'{item.title}'+'}</div></a><div name="content" style="padding-left: 0px">{'+'{item.content}'+'}</div></div><div class="itemClass" v-for="(item,index) in items" v-if="index!=0"><a :href="item.link" :title="item.title" target="_blank"><div name="Item Title" style="font-weight: bold; padding-left: 0px;margin-top: 10px;margin-bottom: 10px;" >{'+'{item.title}'+'}</div></a></div>';
     return tem;
 }
 /*End create items v2*/
