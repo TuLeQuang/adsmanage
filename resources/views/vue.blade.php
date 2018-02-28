@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-
+<?php
+        ?>
 <html>
 <head>
   <title>Ví dụ css đối với các html component về Vue.js - All Laravel</title>
