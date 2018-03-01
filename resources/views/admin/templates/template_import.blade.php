@@ -307,15 +307,18 @@
             var r = sel.getRangeAt(0).getBoundingClientRect();
             var rb1 = rel1.getBoundingClientRect();
             var rb2 = rel2.getBoundingClientRect();
-            ele.style.top = (r.top - rb2.bottom)*100/(rb1.top-rb2.bottom) + 'px'; //this will place ele below the selection
+            ele.style.top = (r.bottom+10 - rb2.top)*100/(rb1.top-rb2.top) + 'px'; //this will place ele below the selection
             ele.style.left = (r.left - rb2.left)*100/(rb1.left-rb2.left) + 'px'; //this will align the right edges together
 
             //code to set content
             ele.style.display = 'block';
         }
+        else
+            ele.style.display = 'none';
+
     });
-    window.addEventListener('mousedown', function () {
+    /*window.addEventListener('mousedown', function () {
         ele.style.display = 'none';
-    });
+    });*/
   </script>
 @endsection

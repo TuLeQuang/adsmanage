@@ -209,6 +209,9 @@ td{
 
 /* begin editor*/
 #editor {
+	border: solid 1px #cdcdcd;
+	background-color: #2aabd2;
+	box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
 	padding: 5px;
 	position: absolute;
 	display: none;
