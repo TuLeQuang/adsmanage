@@ -58,11 +58,14 @@
       //get data and template form db
           <?php
           $tem_data= json_decode($temData,true);
-          echo "var js_data = ".$tem_data['data'].";\n";
           echo "var js_template='".$temData['template']."';\n";
           echo "var js_config='".$temData['config']."';\n";
           echo "var js_id='".$temData['id']."';\n";
           echo "var js_adsToken='". csrf_field()."';\n";
+          if(isset($adsData))
+              echo "var js_data = ".$adsData.";\n";
+          else
+              echo "var js_data = ".$tem_data['data'].";\n";
           ?>
 
       var tem_data=js_data;

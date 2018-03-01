@@ -13,6 +13,7 @@
 Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	Route::resource('template', 'TemplateController');
 	Route::resource('ads', 'AdsController');
+	Route::get('ads/clone/{adsId}/{templateId}', 'AdsController@cloneAds')->name('adsClone');
 	Route::get('import','TemplateController@getImport');
 	Route::get('active-tem/{id}','TemplateController@getActive');
 	Route::group(['prefix'=>'user'],function(){

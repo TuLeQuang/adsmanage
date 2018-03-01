@@ -79,8 +79,8 @@ class AdsController extends Controller
     public function edit($id)
     {
         $adsData= Ads::find($id);
-        $adsTemplate=Template::find($adsData->templates_id);
-        return view('admin.ads.ads_edit',compact(['adsData','adsTemplate']));
+        $template=Template::find($adsData->templates_id);
+        return view('admin.ads.ads_edit',compact(['adsData','template']));
     }
 
     /**
@@ -111,5 +111,12 @@ class AdsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function cloneAds($adsId,$templateId){
+        $temData= Template::find($templateId);
+        $adsClone= Ads::find($adsId);
+        $adsData=$adsClone->data;
+        return view('admin.ads.ads_add',compact(['temData','adsData']));
     }
 }

@@ -42,8 +42,8 @@
       <?php
           $ads_data= json_decode($adsData,true);
           echo "var js_data = ".$ads_data['data'].";\n";
-          echo "var js_template='".$adsTemplate['template']."';\n";
-          echo "var js_config='".$adsTemplate['config']."';\n";
+          echo "var js_template='".$template['template']."';\n";
+          echo "var js_config='".$template['config']."';\n";
           echo "var js_id='".$adsData['id']."';\n";
           echo "var js_adsName='".$adsData['name']."';\n";
           echo "var js_adsBrand='".$adsData['brand']."';\n";
@@ -51,6 +51,7 @@
           echo "var js_userLogin='".Auth::user()->id."';\n";
           echo "var js_adsRoute='".route('ads.update',$adsData['id'])."';\n";
           echo "var js_adsToken='". csrf_field()."';\n";
+          echo "var js_adsCloneLink='".route('adsClone',[$adsData['id'],$template['id']])."';\n";
       ?>
 
       var ads_data=js_data;
@@ -69,15 +70,21 @@
               return ads_data;
           },
           template:'<div style="display: inline-block;width:100%">'
-          +'<button type="button" style="display: block" class="btn btn-info" data-toggle="modal" data-target="#myModal" id="myModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
+          +'<button type="button" style="display: block" class="btn btn-info" data-toggle="modal" data-target="#myModal" id="btnModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 600px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="(item, index) in items"><tr><td><label>Image Url '+'\{\{index+1\}\}'+': </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image" style="margin-left: 15px;width: 460px"/></td></tr><tr><td><label>Link Click '+'\{\{index+1\}\}'+': </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control" style="margin-left: 15px;width: 460px"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
           +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+ads_template+'</div>'
-          +'<div id="ads" style="display:inline-block;margin-left: 50px;"><form action="'+js_adsRoute+'" method="post">'+js_adsToken+'<input name="_method" type="hidden" value="PUT"/><label style="color: red;display: none ;margin-left: 30px"  id="errorsMessages"></label><table><tr><td><label for="">Ads Name: </label></td><td><input type="text" id="ads_name" name="txtAdsName" class="input-item form-control" required></td></tr><tr><td><label for="">Ads Brand: </label></td><td><input type="text" id="ads_brand" name="txtAdsBrand" class="input-item form-control" required></td></tr></table><input type="text" id="ads_data" name="txtAdsData" style="display: none"><input type="submit" id="save-ads" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary" value="Save Ads" style="margin-left: 130px;margin-top: 10px"/></form></div>'
+          +'<div id="ads" style="display:inline-block;margin-left: 50px;"><form action="'+js_adsRoute+'" method="post">'+js_adsToken+'<input name="_method" type="hidden" value="PUT"/><label style="color: red;display: none ;margin-left: 30px"  id="errorsMessages"></label><table><tr><td><label for="">Ads Name: </label></td><td><input type="text" id="ads_name" name="txtAdsName" class="input-item form-control" required></td></tr><tr><td><label for="">Ads Brand: </label></td><td><input type="text" id="ads_brand" name="txtAdsBrand" class="input-item form-control" required></td></tr></table><input type="text" id="ads_data" name="txtAdsData" style="display: none"><input type="submit" id="save-ads" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary" value="Save Ads" style="margin-left: 130px;margin-top: 10px"/></form><button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button></div>'
           +'</div>',
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(ads_data);
                   document.getElementById('ads_data').value=myJSON;
               },
+              cloneAds: function () {
+                  if(js_adsUserId!=js_userLogin){
+                      window.location.href =js_adsCloneLink;
+                  }
+
+              }
           },
       });
       document.getElementById('ads_name').value=js_adsName;
@@ -87,7 +94,9 @@
           if(js_adsUserId!=js_userLogin){
               document.getElementById('ads_name').disabled = true;
               document.getElementById('ads_brand').disabled = true;
-              document.getElementById('myModal').style.display = "none";
+              document.getElementById('btnModal').style.display = "none";
+              document.getElementById('save-ads').style.display = "none";
+              document.getElementById('clone-ads').style.display = "block";
           }
       })();
   </script>
