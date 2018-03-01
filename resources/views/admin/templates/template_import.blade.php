@@ -3,6 +3,7 @@
   <title>Import Template</title>
   <meta id="csrf-token" name="csrf-token" value="{{ csrf_token() }}">
   <link href="{{asset('css/bootstrap-multiselect.css')}}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" rel="stylesheet">
 @endsection
 @section('style')
   <style type="text/css">
@@ -31,6 +32,17 @@
           <div id="form-render">
           {{--<div id="run-script" style="width: 50%; float: left;display: inline-block">--}}
           </div>
+
+          {{--editor--}}
+          <div id="cal1">&nbsp;</div>
+          <div id="cal2">&nbsp;</div>
+          <div id="editor">
+            <button class="bold button-editor" id="bold" title="Bold"><i class="fa fa-bold"></i></button>
+            <button class="italics button-editor" id="italics" title="Italic"><i class="fa fa-italic"></i></button>
+            <button class="underline button-editor" id="underline" title="Underline"><i class="fa fa-underline"></i></button>
+            <button class="button-editor"><input type="text" id="color" class="color" ></button>
+          </div>
+
         </div>
 
         <div id="ads">
@@ -44,6 +56,7 @@
 @endsection
 
 @section('script')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
   <script src="{{asset('js/bootstrap-multiselect.js')}}"></script>
   <script type="text/javascript">
     //var itemsKey=["image","link","title","domain","titlebox","title 1","desc","descr","content","color","src","slogan","logoBrand","descadv","sf_color",""];
@@ -90,56 +103,6 @@
             document.getElementById("msg").innerHTML = err.message;
         }
       };
-
-     /* function renderForm() {
-          getDataKey();
-          var root=document.getElementById('template-form');
-          var f= document.createDocumentFragment();
-          var div=document.createElement('div');
-          div.className="form-data flex";
-
-          for(var i in key){
-              var table=document.createElement("table");
-              var listKey=key[i].split(" ");
-              for(var j=0 ; j<=listKey.length;j++){
-                  for(var x in itemsKey){
-                      if(listKey[j]==itemsKey[x].toString()){
-                          var form= document.createElement('input');
-                          form.id=listKey[j].toString()+i;
-                          form.type="text";
-                          form.className="form-control input-item";
-                          form.setAttribute("onchange","setNewData()");
-                          /!*form.setAttribute("v-model", "items."+listKey[j].toString());
-                          form.textContent='\{\{items.'+listKey[j].toString()+'\}\}';*!/
-                          var label= document.createElement('label');
-                          label.textContent=listKey[j].toString()+" "+(Number(i)+1)+": ";
-
-                          var tr=document.createElement("tr");
-                          var td1=document.createElement("td");
-                          var td2=document.createElement("td");
-                          td1.appendChild(label);
-                          td2.appendChild(form);
-                          tr.appendChild(td1);
-                          tr.appendChild(td2);
-                          table.appendChild(tr);
-                      }
-                  }
-
-              }
-              table.appendChild(document.createElement('hr'));
-              div.appendChild(table);
-              f.appendChild(div);
-              if(typeof(document.getElementsByClassName('form-data')[0]) === 'undefined')
-                root.appendChild(f);
-              else {
-                  var form=document.getElementById("template-form");
-                  while (form.hasChildNodes()) {
-                      form.removeChild(form.firstChild);
-                  }
-                  root.appendChild(f);
-              }
-          }
-      }*/
 
     //render checkbox list from array
     function checkBoxList(aray) {
@@ -295,5 +258,67 @@
             stickyNav();
         });
     });
+
+    //editor
+    $('#bold').on('click', function() {
+        document.execCommand('bold', false, null);
+    });
+    $('#italics').on('click', function() {
+        document.execCommand('italic', false, null);
+    });
+
+    $('#underline').on('click', function() {
+        document.execCommand('underline', false, null);
+    });
+   /* $('.link a').click(function() {
+        {
+            url = prompt('Enter the link here: ', 'http://');
+            document.execCommand($(this).data('command'), false, url);
+        }
+    });*/
+
+    $('#color').spectrum({
+        color: '#000000',
+        showPalette: true,
+        showInput: true,
+        showInitial: true,
+        preferredFormat: "hex",
+        showButtons: false,
+        change: function(color) {
+            color = color.toHexString();
+            document.execCommand('foreColor', false, color);
+        }
+    });
+
+  /*  $('.size1').on('change', function() {
+        var size = $(this).val();
+        $('.texteditor').css('fontSize', size + 'px');
+    });*/
+
+  //editor css
+    var ele = document.getElementById('editor');
+    var sel = window.getSelection();
+    var rel1= document.createRange();
+    rel1.selectNode(document.getElementById('cal1'));
+    var rel2= document.createRange();
+    rel2.selectNode(document.getElementById('cal2'));
+    window.addEventListener('mouseup', function () {
+        if (!sel.isCollapsed) {
+            var r = sel.getRangeAt(0).getBoundingClientRect();
+            var rb1 = rel1.getBoundingClientRect();
+            var rb2 = rel2.getBoundingClientRect();
+            ele.style.top = (r.bottom+10 - rb2.top)*100/(rb1.top-rb2.top) + 'px'; //this will place ele below the selection
+            ele.style.left = (r.left - rb2.left)*100/(rb1.left-rb2.left) + 'px'; //this will align the right edges together
+
+            //code to set content
+            ele.style.display = 'block';
+        }
+        else
+            ele.style.display = 'none';
+
+    });
+    /*window.addEventListener('mousedown', function () {
+        ele.style.display = 'none';
+    });*/
   </script>
 @endsection

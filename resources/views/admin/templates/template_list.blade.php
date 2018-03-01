@@ -4,15 +4,6 @@
 @endsection
 @section('style')
   <style type="text/css">
-    .review{
-      width: 80px;
-      height: 80px;
-      border: 1px solid #ddd;
-      background-image: none;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
   </style>
 @endsection
 @section('content')
@@ -49,7 +40,7 @@
            <a href="{{route('template.create')}}" style="text-decoration: none;color: white"><button class="btn btn-success">&#43; Add Template</button></a>
           </div>
         @endif
-        <table class="table table-striped table-bordered table-hover" id="dataTables-exampl">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
           <thead>
             <tr align="center" >
             <th style="text-align: center;">Id</th>
@@ -91,7 +82,6 @@
                     Un-Active
                   </a> 
                 @endif
-                </a>
               </td>
 
               <td class="center"><i class="fa fa-pencil fa-fw"></i>
@@ -113,7 +103,6 @@
                     </button>
                   </a>
                   @endif
-                  
                 </form>
               </td> 
             </tr>
@@ -143,7 +132,7 @@
       return false;
     }
     $(document).ready(function() {
-      $('#dataTables-exampl').DataTable({
+      $('#dataTables-example').DataTable({
               responsive: true
       });
     });

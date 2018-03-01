@@ -34,7 +34,6 @@
         @include('admin.layout.header')
 
         @yield('content')
-
         
     </div>
     <div style="text-align: center;font-size: 13px;color: black;clear: both;">Copyright © Your Website 2018</div>

@@ -1,19 +1,9 @@
 @extends('admin.layout.index')
 @section('title')
-  <title>Ads</title>
+  <title>Ads List</title>
 @endsection
 @section('style')
-
   <style type="text/css">
-    .review{
-      width: 80px;
-      height: 80px;
-      border: 1px solid #ddd;
-      background-image: none;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
   </style>
 @endsection
 @section('content')
@@ -75,10 +65,10 @@
                           <td>{{$templateDatas->id}}</td>
                           <td>{{$templateDatas->name}}</td>
                           <td class="center"><i class="fa fa-pencil fa-fw"></i>
-                            <a href="" title="Detail">Detail</a>
+                            <a href="{{route('template.show',$templateDatas->id)}}" title="Detail">Detail</a>
                           </td>
                           <td class="center"><i class="fa fa-edit fa-fw"></i>
-                            <a href="#" title="Chọn Template">Chọn</a>
+                            <a href="{{route('ads.show',$templateDatas->id)}}" title="Chọn Template">Chọn</a>
                           </td> 
                         </tr>
                         
@@ -98,14 +88,15 @@
         <table class="table table-striped table-bordered table-hover" id="dataTables-examples">
           <thead>
             <tr align="center" >
-              <th style="text-align: center;">Id</th>
-              <th style="text-align: center;display: none">User_Id</th>
-              <th style="text-align: center;display: none">Template_Id</th>
-              <th style="text-align: center;">User_Name</th>
-              <th style="text-align: center;">Template_Name</th>
+              {{--<th style="text-align: center;">Id</th>--}}
+              <th style="text-align: center;display: none">User Id</th>
+              <th style="text-align: center;display: none">Template Id</th>
+              <th style="text-align: center;">User</th>
+              <th style="text-align: center;">Template</th>
+              <th style="text-align: center;">Ads</th>
               <th style="text-align: center;">Brand</th>
-              <th style="text-align: center;">Create At</th>
-              <th style="text-align: center;">Updated At</th>
+              <th style="text-align: center;">Create</th>
+              <th style="text-align: center;">Updated</th>
               <th style="text-align: center;">Detail</th>
               <th style="text-align: center;">Edit</th>
               <th style="text-align: center;">Delete</th>
@@ -115,7 +106,7 @@
           <tbody id="dataTables">
             @foreach($adsData as $adsDatas)
               <tr class="odd gradeX" align="center">
-                <td>{{$adsDatas->adsId}}</td>
+               {{-- <td>{{$adsDatas->adsId}}</td>--}}
                 <td style="display: none">{{$adsDatas->adsUserId}}</td>
                 <td style="display: none">{{$adsDatas->adstemplatesId}}</td>
                 @if($adsDatas->adsUserId==$adsDatas->userId) 
@@ -123,21 +114,21 @@
                 @endif 
                 @if($adsDatas->adstemplatesId==$adsDatas->templatesId) 
                   <td>{{$adsDatas->templateName}}</td>
-                @endif 
-                
+                @endif
+                <td>{{$adsDatas->adsName}}</td>
                 <td>{{$adsDatas->brand}}</td>
                 <td>{{$adsDatas->created_at}}</td>
                 <td>{{$adsDatas->updated_at}}</td>
                 <td class="center"><i class="fa fa-pencil fa-fw"></i>
-                  <a href="" title="Detail">Detail</a>
+                  <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Detail">Detail</a>
                 </td>
 
                 <td class="center" >
                   <i class="fa fa-pencil fa-fw"></i> 
                   @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id)
-                    <a href="" title="Edit" style="color: black">Edit</a>
+                    <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Edit">Edit</a>
                   @else
-                    <a style="cursor: not-allowed;color: #cdcdcd" disabled>Edit</a>
+                    <span href="#" style="cursor: not-allowed;color: #cdcdcd" disabled>Edit</span>
                   @endif
                 </td>
                 <td class="center">
@@ -159,10 +150,8 @@
                 </td> 
               </tr>
             @endforeach
-
           </tbody>
         </table>
-
       </div>
       <!-- /.row -->
     </div>

@@ -112,7 +112,7 @@ td{
 	height: auto;
 	overflow: hidden;
 	line-height: 15px;
-	color: #666;
+	color: #000000;
 	font-size: 11px;
 	font-family: tahoma,arial;
 	padding:9px;
@@ -206,3 +206,72 @@ td{
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 }
+
+/* begin editor*/
+#editor {
+	border: solid 1px #cdcdcd;
+	background-color: #2aabd2;
+	box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.2);
+	padding: 5px;
+	position: absolute;
+	display: none;
+	z-index: 3000;
+}
+
+#cal1{
+	position:absolute;
+	height:0px;
+	width:0px;
+	top:100px;
+	left:100px;
+	overflow:none;
+	z-index:-100;
+}
+#cal2{
+	position:absolute;
+	height:0px;
+	width:0px;
+	top:0px;
+	left:0px;
+	overflow:none;
+	z-index:-100;
+}
+
+.button-editor {
+	border-radius: 2px;
+	border: none;
+	padding: 7px;
+}
+
+.button-editor:hover {
+	background-color: #5bc0de;
+}
+
+.bold, .underline, .italics {
+	width: 30px;
+	height: 35px;
+	font-size: 16px;
+	cursor: pointer;
+	outline:none;
+}
+
+.color:hover {
+	background-color: #2aabd2;
+}
+select {
+	height: 25px;
+	width: 45px;
+	font-size: 14px;
+	font-weight: bold;
+	color: grey;
+	background: #fafafa;
+	border: 1px solid #d3d3d3;
+	border-radius: 3px;
+	outline: none;
+	cursor: pointer;
+}
+select:hover{
+	color:black;
+}
+
+/*end editor*/

@@ -7,6 +7,8 @@ use DB;
 class Ads extends Model
 {
     protected $table='ads';
+    public $timestamps=false;
+
     public function getAdsInfo()
     {
     	return DB::table('ads')
@@ -17,3 +19,4 @@ class Ads extends Model
             ->get();
     }
 }
+

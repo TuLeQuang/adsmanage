@@ -46,11 +46,12 @@
           echo "var js_template='".$temData['template']."';\n";
           echo "var js_config='".$temData['config']."';\n";
           echo "var js_id='".$temData['id']."';\n";
+          echo "var js_addAdsLink='".route('ads.show',$temData['id'])."';\n";
           ?>
 
       var tem_data=js_data;
       //console.log(tem_data);
-      var div_script= '<div id="script-text" style="display: block;float: left; position: absolute;left: 475px;top: 0px;"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">Get Script</button><p id ="script"></p></div>';
+      var div_script= '<div id="script-text" style="display: block;float: left; position: absolute;left: 475px;top: 0px;"><button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">Add ads</button></div>';
 
       //render template
       var vm = new Vue({
@@ -59,17 +60,18 @@
               return tem_data;
           },
           template:'<div>'
-          +'<button type="button" style="display: none;margin-left: 20px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'
-          +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_template+'</div>'
+          /*+'<button type="button" style="display: inline-block;margin-left: 20px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Change Image</button><div class="modal fade" id="myModal" role="dialog"><div class="modal-dialog" style="width: 300px"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Edit Image and Link click</h4></div><div class="modal-body"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span><table style="margin-top: 5px" v-for="item in items"><tr><td><label>Image Url: </label></td><td><input id="txtImgUrl" type="text" class="form-control" name="Image Url" v-validate="{required:true,url:true}" v-model="item.image"/></td></tr><tr><td><label>Link Click: </label></td><td><input id="txtLinkClick" type="text" v-model="item.link" name="Link click" v-validate="{url:true}" class="form-control"/></td></tr></table></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>'*/
+          +'<div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">{'+'{'+' errors.all().join("*  ")'+'}'+'}</span>'+js_template+div_script+'</div>'
           +'</div>',
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(tem_data);
                   var template= js_template;
-                  document.getElementById('ads').innerHTML=myJSON;/*'&lt;script>var data='+myJSON+'&lt;/script>'+
+                  /*document.getElementById('ads').innerHTML='&lt;script>var data='+myJSON+'&lt;/script>'+
                                                             '&lt;script src="http://localhost/templatemanager/public/js/drawTemplate.js">&lt;/script>' +
                                                             '&lt;script src="http://localhost/templatemanager/node_modules/vue/dist/vue.js">&lt;/script>'+
                                                             '&lt;script>drawAds(data,'+ js_id+')&lt;/script>';*/
+                  window.location.href =js_addAdsLink;
               },
           },
       });
