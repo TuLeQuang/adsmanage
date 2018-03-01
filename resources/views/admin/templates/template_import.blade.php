@@ -32,12 +32,17 @@
           <div id="form-render">
           {{--<div id="run-script" style="width: 50%; float: left;display: inline-block">--}}
           </div>
-            <div id="editor">
-                <button class="bold button-editor" id="bold" title="Bold"><i class="fa fa-bold"></i></button>
-                <button class="italics button-editor" id="italics" title="Italic"><i class="fa fa-italic"></i></button>
-                <button class="underline button-editor" id="underline" title="Underline"><i class="fa fa-underline"></i></button>
-                <button class="button-editor"><input type="text" id="color" class="color" ></button>
-            </div>
+
+          {{--editor--}}
+          <div id="cal1">&nbsp;</div>
+          <div id="cal2">&nbsp;</div>
+          <div id="editor">
+            <button class="bold button-editor" id="bold" title="Bold"><i class="fa fa-bold"></i></button>
+            <button class="italics button-editor" id="italics" title="Italic"><i class="fa fa-italic"></i></button>
+            <button class="underline button-editor" id="underline" title="Underline"><i class="fa fa-underline"></i></button>
+            <button class="button-editor"><input type="text" id="color" class="color" ></button>
+          </div>
+
         </div>
 
         <div id="ads">
@@ -185,7 +190,7 @@
                       for(var j in itemsKey){
                           if(i==itemsKey[j]) {
                               //k.push('<b>'+name+'</b>' + i +' : <input type="text" id="'+name +i+'" value=\''+o[i]+'\' onchange="setNewData(\''+name+i+'\')" style="width: 300px;right:0px" class="form-control input-item"><br>'/*+ ' - ' + o[i]*/);
-                              k.push('<div class="data-input"><div class="lab-key"><b>'+name+'</b>' + i +' :</div><div class="input-flex"><div id="'+name +i+'" onblur="setNewData(\''+name+i+'\')" onfocus="getPos(\''+name+i+'\')" contenteditable="true" class="edit-data">'+o[i] +'</div></div></div><br>'/*+ ' - ' + o[i]*/);
+                              k.push('<div class="data-input"><div class="lab-key"><b>'+name+'</b>' + i +' :</div><div class="input-flex"><div id="'+name +i+'" onblur="setNewData(\''+name+i+'\')" contenteditable="true" class="edit-data">'+o[i] +'</div></div></div><br>'/*+ ' - ' + o[i]*/);
                           }
                       }
                   }
@@ -221,8 +226,6 @@
         })
         (adsJson);
         document.getElementById('scriptText').value=adsScript.replace(adsScript.slice(adsScript.indexOf("{"),adsScript.lastIndexOf("}")+1),JSON.stringify(adsJson));
-        var editor=document.getElementById('editor');
-        editor.style.display="none";
     }
 
     //remove remove-duplicate-values-from dataJson
@@ -292,15 +295,27 @@
         $('.texteditor').css('fontSize', size + 'px');
     });*/
 
-  //get element position
-    function getPos(id) {
-        var element = $('#'+id);
-        var position = element.position();
+  //editor css
+    var ele = document.getElementById('editor');
+    var sel = window.getSelection();
+    var rel1= document.createRange();
+    rel1.selectNode(document.getElementById('cal1'));
+    var rel2= document.createRange();
+    rel2.selectNode(document.getElementById('cal2'));
+    window.addEventListener('mouseup', function () {
+        if (!sel.isCollapsed) {
+            var r = sel.getRangeAt(0).getBoundingClientRect();
+            var rb1 = rel1.getBoundingClientRect();
+            var rb2 = rel2.getBoundingClientRect();
+            ele.style.top = (r.top - rb2.bottom)*100/(rb1.top-rb2.bottom) + 'px'; //this will place ele below the selection
+            ele.style.left = (r.left - rb2.left)*100/(rb1.left-rb2.left) + 'px'; //this will align the right edges together
 
-       var editor=document.getElementById('editor');
-       editor.style.display="block";
-       editor.style.top=position.top+"px";
-       editor.style.left="50px";
-    }
+            //code to set content
+            ele.style.display = 'block';
+        }
+    });
+    window.addEventListener('mousedown', function () {
+        ele.style.display = 'none';
+    });
   </script>
 @endsection

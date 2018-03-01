@@ -17,6 +17,27 @@
         <div class="col-lg-12">
           <h1 class="page-header">Ads <small>Edit</small> </h1>
         </div>
+        <div id="erroMesg" style="display: inline-block">
+          @if(count($errors) > 0)
+            <div class="alert alert-danger">
+              @foreach($errors->all() as $err)
+                {{$err}}<br>
+              @endforeach
+            </div>
+          @endif
+
+          @if(session('success'))
+            <div class="alert alert-success">
+              {{session('success')}}
+            </div>
+          @endif
+
+          @if(session('error'))
+            <div class="alert alert-danger">
+              {{session('error')}}
+            </div>
+          @endif
+        </div>
         <div id="app"></div>
 
         {{--<div id="ads" style="float: right;width: 67%;word-wrap: break-word;padding-top: 10px"></div>--}}

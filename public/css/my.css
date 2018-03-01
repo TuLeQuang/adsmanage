@@ -210,9 +210,28 @@ td{
 /* begin editor*/
 #editor {
 	padding: 5px;
-	display: none;
 	position: absolute;
+	display: none;
 	z-index: 3000;
+}
+
+#cal1{
+	position:absolute;
+	height:0px;
+	width:0px;
+	top:100px;
+	left:100px;
+	overflow:none;
+	z-index:-100;
+}
+#cal2{
+	position:absolute;
+	height:0px;
+	width:0px;
+	top:0px;
+	left:0px;
+	overflow:none;
+	z-index:-100;
 }
 
 .button-editor {

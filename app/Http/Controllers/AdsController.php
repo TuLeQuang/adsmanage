@@ -92,6 +92,14 @@ class AdsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,
+            [
+                'txtAdsName' => 'required|unique:ads,name',
+            ],
+            [
+                'txtAdsName.required'=>'Bạn chưa nhập tên quảng cáo',
+                'txtAdsName.unique'=>'Tên quảng cáo đã tồn tại hãy chọn tên khác',
+            ]);
         $ads = Ads::find($id);
         $ads->data= $request->txtAdsData;
         $ads->name=$request->txtAdsName;
