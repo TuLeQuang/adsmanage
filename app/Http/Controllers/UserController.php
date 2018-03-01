@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
+use Carbon\Carbon;
+use DB;
 
 class UserController extends Controller
 {
@@ -75,15 +77,20 @@ class UserController extends Controller
     {
     	$this->validate($request,
             [
-                'name' => 'required|min:5|unique:users',
+                'name' => 'required|min:5|',
             ],
             [
                 'name.required'=>'Bạn chưa nhập tên người dùng',
                 'name.min'=>'Tên người dùng phải có ít nhất 5 kí tự',
-                'name.unique'=>'Tên người dùng đã tồn tại hãy chọn tên khác',
+                
             ]);
     	$user=User::find($id);
-    	$user->name=$request->name;
+        $listUserName=DB::table('users')->select('name')->where('id','<>',$id)->get();
+        foreach ($listUserName as $listName) {
+            if(Auth::user()->name==$listName)
+                return redirect('admin/user/user_edit/'.$id)->with('error','Tên người dùng đã tồn tại');
+        }
+       $user->name=$request->name;
     	$user->level=$request->level;
     	if($request->changePassword == "on")
     	{
@@ -102,6 +109,7 @@ class UserController extends Controller
             ]);
     		$user->password=bcrypt($request->password);
     	}
+        $user->updated_at=Carbon::now('Asia/Ho_Chi_Minh');
     	$user->save();
     	return redirect('admin/user/user_edit/'.$id)->with('success','Sửa thông tin thành công');
     }
