@@ -62,6 +62,7 @@
 
     <script src="{{asset('/js/jquery-ui.js')}}"></script>
     <script src="{{asset('/js/jquery-ui.min.js')}}"></script>
+    
     @yield('script')
 </body>
 

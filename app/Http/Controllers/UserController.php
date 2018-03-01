@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function getUser_List()
     {
-    	if(Auth::user()->level==1)
+    	if(Auth::user()->level==1 || Auth::user()->level==2)
         {
             $user=User::all();
             return view('admin.user.user_list',['user'=>$user]);
@@ -75,7 +75,7 @@ class UserController extends Controller
     {
     	$this->validate($request,
             [
-                'name' => 'required|min:5|unique:users,name',
+                'name' => 'required|min:5|unique:users',
             ],
             [
                 'name.required'=>'Bạn chưa nhập tên người dùng',
@@ -151,11 +151,11 @@ class UserController extends Controller
         
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'active' => $request->active=1]))
         {
-            if (Auth::user()->level!=1) 
+            if (Auth::user()->level==1 || Auth::user()->level==2 ) 
             {   
-                return redirect('admin/template');
+                return redirect('admin/user/user_list');
             }
-            return redirect('admin/user/user_list');
+            return redirect('admin/template');
         }
         else
         {

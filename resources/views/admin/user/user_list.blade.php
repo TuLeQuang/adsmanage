@@ -11,10 +11,11 @@
                 <h1 class="page-header">Hello <small>{{Auth::user()->name}}</small></h1>          
             </div>
             <!-- /.col-lg-12 -->
-             
-            <div style="float: right;margin-bottom: 5px; display: inline-block">
-                <a href="{{asset('admin/user/user_add/')}}" style="text-decoration: none;color: white" title="Add User"><button type="button" class="btn btn-success">&#43; Add User</button></a>
-            </div>
+            @if(Auth::user()->level==1 || Auth::user()->level==0)
+                <div style="float: right;margin-bottom: 5px; display: inline-block">
+                    <a href="{{asset('admin/user/user_add/')}}" style="text-decoration: none;color: white" title="Add User"><button type="button" class="btn btn-success">&#43; Add User</button></a>
+                </div>
+            @endif 
             <div style="clear: both;">
                 @if(count($errors) > 0) 
                     <div class="alert alert-danger">
@@ -43,9 +44,11 @@
                         <th style="text-align: center;">Name</th>
                         <th style="text-align: center;">Email</th>
                         <th style="text-align: center;">Level</th>
-                        <th style="text-align: center;">Active</th>
-                        <th style="text-align: center;">Edit</th>
-                        <th style="text-align: center;">Delete</th>
+                        @if(Auth::user()->level==1 || Auth::user()->level==0)
+                            <th style="text-align: center;">Active</th>
+                            <th style="text-align: center;">Edit</th>
+                            <th style="text-align: center;">Delete</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -57,31 +60,35 @@
                             <td>
                                 @if($us->level==1)
                                     {{"Admin"}}
+                                @elseif($us->level==2)
+                                    {{"Manage"}}
                                 @else
                                     {{"Member"}}
                                 @endif
                             </td>
-                            <td class="center" >
-                                @if($us->active==1)
-                                    <i class="fa fa-unlock"></i>
-                                    <a href="admin/user/active/{{$us->id}}" style="color: green" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
-                                        Active
-                                    </a> 
-                                @else
-                                    <i class="fa fa-lock"></i>
-                                    <a href="admin/user/active/{{$us->id}}" style="color: red" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
-                                        Un-Active
-                                    </a>
-                                @endif
-                            </td>
-                            <td class="center">
-                                <i class="fa fa-pencil fa-fw"></i> 
-                                <a href="admin/user/user_edit/{{$us->id}}" title="Edit User">Edit</a>
-                            </td>
-                            <td class="center">   
-                                <a href="admin/user/delete/{{$us->id}}" onclick="return xacnhan('Bạn có muốn xóa không ?')" title="Delete User">
-                                <i class="fa fa-trash-o  fa-fw"></i>Delete</a>  
-                            </td>
+                            @if(Auth::user()->level==1 || Auth::user()->level==0)
+                                <td class="center" >
+                                    @if($us->active==1)
+                                        <i class="fa fa-unlock"></i>
+                                        <a href="admin/user/active/{{$us->id}}" style="color: green" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
+                                            Active
+                                        </a> 
+                                    @else
+                                        <i class="fa fa-lock"></i>
+                                        <a href="admin/user/active/{{$us->id}}" style="color: red" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
+                                            Un-Active
+                                        </a>
+                                    @endif
+                                </td>
+                                <td class="center">
+                                    <i class="fa fa-pencil fa-fw"></i> 
+                                    <a href="admin/user/user_edit/{{$us->id}}" title="Edit User">Edit</a>
+                                </td>
+                                <td class="center">   
+                                    <a href="admin/user/delete/{{$us->id}}" onclick="return xacnhan('Bạn có muốn xóa không ?')" title="Delete User">
+                                    <i class="fa fa-trash-o  fa-fw"></i>Delete</a>  
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
@@ -96,6 +103,11 @@
 
 @section('script')
     <script>
+        $(document).ready(function() {
+          $('#dataTables-example').DataTable({
+                  responsive: true
+          });
+        });
         $("div.alert").delay(2500).slideUp();
         function xacnhan(msg){
             if(window.confirm(msg))

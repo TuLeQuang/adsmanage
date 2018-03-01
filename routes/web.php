@@ -25,17 +25,15 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 			Route::get('active/{id}','UserController@getActive');
 			Route::get('delete/{id}','UserController@getDelete');
 	});
+	Route::resource('ads','AdsController');
 });
 
 Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate' );
-
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
-
 Route::get ( '/vueitems', 'TemplateController@readItems' );
 Route::get ( '/templates', 'TemplateController@getAllTem' );
-
 Route::get('/testVue', function(){
    return view('vue');
 });

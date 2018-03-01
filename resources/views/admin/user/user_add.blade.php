@@ -59,6 +59,9 @@
                             <input name="level" value="1"  type="radio">Admin
                         </label>
                         <label class="radio-inline">
+                            <input name="level" value="2" checked="" type="radio">Manage
+                        </label>
+                        <label class="radio-inline">
                             <input name="level" value="0" checked="" type="radio">Member
                         </label>
                     </div>

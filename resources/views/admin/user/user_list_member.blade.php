@@ -7,7 +7,7 @@
         
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Hello {{Auth::user()->name}}
+                    Hello <small>{{Auth::user()->name}}</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
