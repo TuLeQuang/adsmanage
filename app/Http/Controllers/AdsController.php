@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Template;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use DB;
 
 class AdsController extends Controller
 {
@@ -54,8 +55,7 @@ class AdsController extends Controller
         $ads->created_at=Carbon::now('Asia/Ho_Chi_Minh');
         $ads->updated_at=Carbon::now('Asia/Ho_Chi_Minh');
         $ads->save();
-        echo "them tanh cong cmnr";
-        //return redirect()->route('ads.index');
+        return redirect()->route('ads.index');
     }
 
     /**
@@ -92,22 +92,21 @@ class AdsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,
-            [
-                'txtAdsName' => 'required|unique:ads,name',
-            ],
-            [
-                'txtAdsName.required'=>'Bạn chưa nhập tên quảng cáo',
-                'txtAdsName.unique'=>'Tên quảng cáo đã tồn tại hãy chọn tên khác',
-            ]);
         $ads = Ads::find($id);
+
+        $adsNames=DB::table('ads')->select('name')->where('id','<>',$id)->get();
+        foreach ($adsNames as $adsName){
+            if($request->txtAdsName==$adsName->name){
+                return redirect()->route('ads.edit',$id)->with('error','Tên quảng cáo đã tồn tại');
+            }
+        }
+
         $ads->data= $request->txtAdsData;
         $ads->name=$request->txtAdsName;
         $ads->brand=$request->txtAdsBrand;
         $ads->updated_at=Carbon::now('Asia/Ho_Chi_Minh');
         $ads->save();
-        echo "sua thanh cong cmnr";
-        //return redirect()->route('ads.index');
+        return redirect()->route('ads.index');
     }
 
     /**
