@@ -25,7 +25,7 @@
         </div>
         <!-- /.col-lg-12 -->
         <div style="clear: both;">
-          @if(count($errors) > 0) 
+          @if(count($errors) > 0)
               <div class="alert alert-danger">
                   @foreach($errors->all() as $err)
                     {{$err}}<br>
@@ -68,24 +68,28 @@
               <td>{{$templates[$i]['name']}}</td>
               <td>{{$templates[$i]['created_at']}}</td>
               <td>{{$templates[$i]['updated_at']}}</td>
-              
+             <!--  <td>@{{ item.id }}</td>
+              <td>@{{ item.User_Id }}</td>
+              <td>@{{ item.Template Name }}</td>
+              <td>@{{ item.Create At }}</td>
+              <td>@{{ item.Updated At }}</td> -->
              <!--  <td>
                <div class="review" style="background-image:url({{$templates[$i]['images']['name']}});"></div>
              </td> -->
-              
+
               <td>
                 @if($templates[$i]['active']==1)
                   <i class="fa fa-unlock"></i>
-                  <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:green" 
+                  <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:green"
                   onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
                     Acitive
                   </a>
                 @else
                   <i class="fa fa-lock"></i>
-                  <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:red" 
+                  <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:red"
                   onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
                     Un-Active
-                  </a> 
+                  </a>
                 @endif
                 </a>
               </td>
@@ -93,16 +97,63 @@
               <td class="center"><i class="fa fa-pencil fa-fw"></i>
                 <a href="{{ route('template.show',$templates[$i]['id'])}}" title="Detail">Detail</a>
               </td>
+<!--         <div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Chỉnh sửa sản phẩm</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id)">
+                            <div class="form-group">
+                                <label for="name">Id:</label>
+                                <input type="text" name="name" class="form-control" v-model="fillItem.name" />
+                                <span v-if="formErrorsUpdate['id']" class="error text-danger">@{{ formErrorsUpdate['id'] }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">User_Id:</label>
+                                <input type="text" name="price" class="form-control" v-model="fillItem.price" />
+                                <span v-if="formErrorsUpdate['User_Id']" class="error text-danger">@{{ formErrorsUpdate['User_Id'] }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Template Name:</label>
+                                <textarea name="content" class="form-control" v-model="fillItem.content"></textarea>
+                                <span v-if="formErrorsUpdate['Template Name']" class="error text-danger">@{{ formErrorsUpdate['Template Name'] }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Create At:</label>
+                                <textarea name="content" class="form-control" v-model="fillItem.content"></textarea>
+                                <span v-if="formErrorsUpdate['Create At']" class="error text-danger">@{{ formErrorsUpdate['Create At'] }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Updated At:</label>
+                                <textarea name="content" class="form-control" v-model="fillItem.content"></textarea>
+                                <span v-if="formErrorsUpdate['Updated At']" class="error text-danger">@{{ formErrorsUpdate['Updated At'] }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Cập nhật sản phẩm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
               <td class="center">
                 <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
                   <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                   <input type="hidden" name="_method" value="DELETE">
                   <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
-                    <i class="fa fa-trash-o fa-fw"></i>Delete
-                  </button>
+                      <i class="fa fa-trash-o fa-fw"></i>Delete
+                    </button>
                 </form>
-              </td> 
+              </td>
             </tr>
           @endfor
 
@@ -115,6 +166,14 @@
     <!-- /.container-fluid -->
   </div>
   <!-- /#page-wrapper -->
+@endsection
+@section('js')
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue.resource/0.9.3/vue-resource.min.js"></script>
+
+    <script type="text/javascript" src="{{ Asset('js/product.js') }}"></script>
 @endsection
 
 @section('script')
@@ -129,4 +188,5 @@
       return false;
     }
    </script>
+
 @endsection

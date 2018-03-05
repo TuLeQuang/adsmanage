@@ -8,15 +8,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Hello <small>{{Auth::user()->name}}</small></h1>          
+                <h1 class="page-header">Hello <small>{{Auth::user()->name}}</small></h1>
             </div>
             <!-- /.col-lg-12 -->
-             
+
             <div style="float: right;margin-bottom: 5px; display: inline-block">
                 <a href="{{asset('admin/user/user_add/')}}" style="text-decoration: none;color: white" title="Add User"><button type="button" class="btn btn-success">&#43; Add User</button></a>
             </div>
             <div style="clear: both;">
-                @if(count($errors) > 0) 
+                @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
                             {{$err}}<br>
@@ -66,7 +66,7 @@
                                     <i class="fa fa-unlock"></i>
                                     <a href="admin/user/active/{{$us->id}}" style="color: green" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
                                         Active
-                                    </a> 
+                                    </a>
                                 @else
                                     <i class="fa fa-lock"></i>
                                     <a href="admin/user/active/{{$us->id}}" style="color: red" onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
@@ -75,12 +75,12 @@
                                 @endif
                             </td>
                             <td class="center">
-                                <i class="fa fa-pencil fa-fw"></i> 
+                                <i class="fa fa-pencil fa-fw"></i>
                                 <a href="admin/user/user_edit/{{$us->id}}" title="Edit User">Edit</a>
                             </td>
-                            <td class="center">   
+                            <td class="center">
                                 <a href="admin/user/delete/{{$us->id}}" onclick="return xacnhan('Bạn có muốn xóa không ?')" title="Delete User">
-                                <i class="fa fa-trash-o  fa-fw"></i>Delete</a>  
+                                <i class="fa fa-trash-o  fa-fw"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -105,4 +105,13 @@
             return false;
         }
     </script>
+
+
+    <script>
+    $(document).ready(function() {
+      $('#dataTables-example').DataTable({
+              responsive: true
+      });
+    });
+  </script>
 @endsection
