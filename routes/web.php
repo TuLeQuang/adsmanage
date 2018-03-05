@@ -27,7 +27,6 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 			Route::get('active/{id}','UserController@getActive');
 			Route::get('delete/{id}','UserController@getDelete');
 	});
-	Route::resource('ads','AdsController');
 });
 
 Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate' );
