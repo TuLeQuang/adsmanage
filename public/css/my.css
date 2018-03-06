@@ -26,7 +26,7 @@ a,a:hover{
 
 .div-elements{
 	position: absolute;
-	z-index: 1000;
+	z-index: 500;
 	float: left;
 	right: 1.5%;
 }

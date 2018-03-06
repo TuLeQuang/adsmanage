@@ -9,6 +9,7 @@ use App\Template;
 use App\Ads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\Response;
 class AdsController extends Controller
 {
     public function index(){
@@ -131,5 +132,9 @@ class AdsController extends Controller
         $adsClone= Ads::find($adsId);
         $adsData=$adsClone->data;
         return view('admin.ads.ads_add',compact(['temData','adsData']));
+    }
+
+    public function adsDemo(Request $request){
+        return $request->all();
     }
 }

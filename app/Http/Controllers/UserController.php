@@ -13,7 +13,7 @@ class UserController extends Controller
     {
     	if(Auth::user()->level==1 || Auth::user()->level==2)
         {
-            $user=User::all();
+            $user=User::orderBy('id', 'DESC')->get();
             return view('admin.user.user_list',['user'=>$user]);
         }
         

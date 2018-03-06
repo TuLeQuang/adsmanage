@@ -70,6 +70,7 @@
           echo "var js_adsBrand='".$adsData['brand']."';\n";
           echo "var js_adsUserId='".$adsData['users_id']."';\n";
           echo "var js_userLogin='".Auth::user()->id."';\n";
+          echo "var js_userLvLogin='".Auth::user()->level."';\n";
           echo "var js_adsCloneLink='".route('adsClone',[$adsData['id'],$template['id']])."';\n";
       ?>
 
@@ -127,7 +128,9 @@
                            </table>
                            <input type="text" id="ads_data" name="txtAdsData" style="display: none"><input type="submit" id="save-ads" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary" value="Save Ads" style="margin-left: 130px;margin-top: 10px"/>
                         </form>
-                        <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button>
+                        @if(Auth::user()->level==1 || Auth::user()->level==0)
+                            <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button>
+                        @endif
                      </div>
                   </div>`,
           methods:{
@@ -147,7 +150,7 @@
       document.getElementById('ads_brand').value=js_adsBrand;
 
       (function checkUser() {
-          if(js_adsUserId!=js_userLogin){
+          if(js_adsUserId!=js_userLogin &&  js_userLvLogin!=2){
               document.getElementById('ads_name').disabled = true;
               document.getElementById('ads_brand').disabled = true;
               document.getElementById('btnModal').style.display = "none";

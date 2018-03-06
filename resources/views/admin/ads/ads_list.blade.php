@@ -36,7 +36,9 @@
                 @endif
         </div>
         <div style="float: right;margin-bottom: 5px; display: inline-block">
-          <button class="btn btn-success" data-toggle="modal" data-target="#myModal">&#43; Add Ads</button>
+          @if(Auth::user()->level==1 || Auth::user()->level==0)
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">&#43; Add Ads</button>
+          @endif
           <!-- Modal -->
           <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -88,7 +90,7 @@
         <table class="table table-striped table-bordered table-hover" id="dataTables-examples">
           <thead>
             <tr align="center" >
-              {{--<th style="text-align: center;">Id</th>--}}
+              <th style="text-align: center;">Stt</th>
               <th style="text-align: center;display: none">User Id</th>
               <th style="text-align: center;display: none">Template Id</th>
               <th style="text-align: center;">User</th>
@@ -98,15 +100,17 @@
               <th style="text-align: center;">Create</th>
               <th style="text-align: center;">Updated</th>
               <th style="text-align: center;">Detail</th>
-              <th style="text-align: center;">Edit</th>
-              <th style="text-align: center;">Delete</th>
+              @if(Auth::user()->level==1 || Auth::user()->level==0)
+               {{-- <th style="text-align: center;">Edit</th>--}}
+                <th style="text-align: center;">Delete</th>
+              @endif
 
             </tr>
           </thead>
           <tbody id="dataTables">
-            @foreach($adsData as $adsDatas)
+            @foreach($adsData as $key=>$adsDatas)
               <tr class="odd gradeX" align="center">
-               {{-- <td>{{$adsDatas->adsId}}</td>--}}
+                <td>{{$key+1}}</td>
                 <td style="display: none">{{$adsDatas->adsUserId}}</td>
                 <td style="display: none">{{$adsDatas->adstemplatesId}}</td>
                 @if($adsDatas->adsUserId==$adsDatas->userId) 
@@ -123,31 +127,33 @@
                   <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Detail">Detail</a>
                 </td>
 
-                <td class="center" >
-                  <i class="fa fa-pencil fa-fw"></i> 
-                  @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id)
-                    <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Edit">Edit</a>
-                  @else
-                    <span href="#" style="cursor: not-allowed;color: #cdcdcd" disabled>Edit</span>
-                  @endif
-                </td>
-                <td class="center">
-                  <form action="{{route('ads.destroy',$adsDatas->adsId)}}" method="POST">
-                    <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                    <input type="hidden" name="_method" value="DELETE">
-                    @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
-                      <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
-                      <i class="fa fa-trash-o fa-fw"></i>Delete
-                    </button>
+                @if(Auth::user()->level==1 || Auth::user()->level==0)
+                  {{--<td class="center" >
+                    <i class="fa fa-pencil fa-fw"></i>
+                    @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id)
+                      <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Edit">Edit</a>
                     @else
-                    <a style="cursor: not-allowed; " disabled>
-                      <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
+                      <span href="#" style="cursor: not-allowed;color: #cdcdcd" disabled>Edit</span>
+                    @endif
+                  </td>--}}
+                  <td class="center">
+                    <form action="{{route('ads.destroy',$adsDatas->adsId)}}" method="POST">
+                      <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                      <input type="hidden" name="_method" value="DELETE">
+                      @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
+                        <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
                         <i class="fa fa-trash-o fa-fw"></i>Delete
                       </button>
-                    </a>
-                    @endif
-                  </form>
-                </td> 
+                      @else
+                      <a style="cursor: not-allowed; " disabled>
+                        <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
+                          <i class="fa fa-trash-o fa-fw"></i>Delete
+                        </button>
+                      </a>
+                      @endif
+                    </form>
+                  </td>
+                @endif
               </tr>
             @endforeach
           </tbody>

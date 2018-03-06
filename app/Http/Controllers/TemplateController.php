@@ -52,7 +52,7 @@ class TemplateController extends Controller
         $template->config=$request->txtConfig;
         $template->name=$request->txtName;
         $template->user_id=Auth::user()->id;
-        $template->active=1;
+        $template->active=0;
         $template->created_at=Carbon::now('Asia/Ho_Chi_Minh');
         $template->updated_at=Carbon::now('Asia/Ho_Chi_Minh');
         $template->save();

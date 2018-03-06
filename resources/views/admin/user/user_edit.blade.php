@@ -68,6 +68,34 @@
                                     {{"checked"}}
                                 @endif>Member
                             </label>
+                            <label class="radio-inline">
+                            <input name="level" value="2" type="radio"
+                            @if($user->level==2)
+                                {{"checked"}}
+                                    @endif>Manager
+                            </label>
+                        </div>
+                    @elseif(Auth::check() && Auth::user()->level==2)
+                        <div class="form-group">
+                            <label>User Level*</label>
+                            <label class="radio-inline">
+                                <input name="level" value="1"  type="radio"
+                                @if($user->level==1)
+                                    {{"checked"}}
+                                        @endif>Admin
+                            </label>
+                            <label class="radio-inline">
+                                <input name="level" value="0" type="radio"
+                                @if($user->level==0)
+                                    {{"checked"}}
+                                        @endif>Member
+                            </label>
+                            <label class="radio-inline">
+                            <input name="level" value="2" checked="" type="radio"
+                            @if($user->level==2)
+                                {{"checked"}}
+                                    @endif>Manager
+                            </label>
                         </div>
                     @else
                         <div class="form-group" disabled>
@@ -83,6 +111,12 @@
                                 @if($user->level==0)
                                     {{"checked"}}
                                 @endif>Member
+                            </label>
+                            <label class="radio-inline">
+                                <input name="level" value="2" type="radio"
+                                @if($user->level==2)
+                                    {{"checked"}}
+                                        @endif>Manager
                             </label>
                         </div>
                     @endif

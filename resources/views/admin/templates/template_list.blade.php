@@ -43,68 +43,73 @@
         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
           <thead>
             <tr align="center" >
-            <th style="text-align: center;">Id</th>
+            <th style="text-align: center;">Stt</th>
             <th style="text-align: center;">User_Id</th>
             <th style="text-align: center;">Template Name</th>
             <th style="text-align: center;">Create At</th>
             <th style="text-align: center;">Updated At</th>
-            {{--<th style="text-align: center;">Review</th>--}}
-            <th style="text-align: center;">Active</th>
+            @if(Auth::user()->level==1 )
+              <th style="text-align: center;">Active</th>
+            @endif
             <th style="text-align: center;" >Detail</th>
-            <th style="text-align: center;" >Delete</th>
+            @if(Auth::user()->level==1 || Auth::user()->level==0)
+              <th style="text-align: center;" >Delete</th>
+            @endif
             </tr>
           </thead>
           <tbody>
           @for($i=0;$i<count($templates);$i++)
             <tr class="odd gradeX" align="center">
-              <td>{{$templates[$i]['id']}}</td>
+              <td>{{$i+1}}</td>
               <td>{{$templates[$i]['user_id']}}</td>
               <td>{{$templates[$i]['name']}}</td>
               <td>{{$templates[$i]['created_at']}}</td>
               <td>{{$templates[$i]['updated_at']}}</td>
-              
-            
-              <td>
-                @if($templates[$i]['active']==1)
-                  <i class="fa fa-unlock"></i>
-                  @if(Auth::user()->level==1 || Auth::user()->level==0)
-                    <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:green" 
-                    onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
-                      Acitive
-                    </a>
+              @if(Auth::user()->level==1)
+                <td>
+                  @if($templates[$i]['active']==1)
+                    <i class="fa fa-unlock"></i>
+                    @if(Auth::user()->level==1 || Auth::user()->level==0)
+                      <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:green"
+                      onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
+                        Acitive
+                      </a>
+                    @else
+                      <a disabled style="color: #cdcdcd;cursor: not-allowed">Acitive</a>
+                    @endif
                   @else
-                    <a disabled style="color: #cdcdcd;cursor: not-allowed">Acitive</a>
+                    <i class="fa fa-lock"></i>
+                    <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:red"
+                    onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
+                      Un-Active
+                    </a>
                   @endif
-                @else
-                  <i class="fa fa-lock"></i>
-                  <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:red" 
-                  onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
-                    Un-Active
-                  </a> 
-                @endif
-              </td>
+                </td>
+              @endif
 
               <td class="center"><i class="fa fa-pencil fa-fw"></i>
                 <a href="{{ route('template.show',$templates[$i]['id'])}}" title="Detail">Detail</a>
               </td>
 
-              <td class="center">
-                <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
-                  <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                  <input type="hidden" name="_method" value="DELETE">
-                  @if(Auth::user()->level==1 || Auth::user()->level==0)
-                    <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
-                    <i class="fa fa-trash-o fa-fw"></i>Delete
-                  </button>
-                  @else
-                  <a style="cursor: not-allowed;">
-                    <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
-                    <i class="fa fa-trash-o fa-fw"></i>Delete
+              @if(Auth::user()->level==1 || Auth::user()->level==0)
+                <td class="center">
+                  <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
+                    <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="_method" value="DELETE">
+                    @if(Auth::user()->level==0 && Auth::user()->id==$templates[$i]['user_id'])
+                      <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
+                      <i class="fa fa-trash-o fa-fw"></i>Delete
                     </button>
-                  </a>
-                  @endif
-                </form>
-              </td> 
+                    @else
+                    <a style="cursor: not-allowed;">
+                      <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
+                      <i class="fa fa-trash-o fa-fw"></i>Delete
+                      </button>
+                    </a>
+                    @endif
+                  </form>
+                </td>
+              @endif
             </tr>
           @endfor
 

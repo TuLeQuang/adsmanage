@@ -15,7 +15,7 @@ class Ads extends Model
     		->join('users', 'ads.users_id', '=', 'users.id')
     		->join('templates', 'ads.templates_id', '=', 'templates.id')
     		->select('users.name as userName','templates.name as templateName','ads.name as adsName','ads.id as adsId','ads.brand','ads.created_at','ads.updated_at','users.id as userId','templates.id as templatesId','ads.users_id as adsUserId','ads.templates_Id as adstemplatesId','templates.active')
-    		->orderBy('ads.id')
+    		->orderBy('ads.id','decs')
             ->get();
     }
 }

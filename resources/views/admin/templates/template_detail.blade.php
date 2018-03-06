@@ -62,7 +62,9 @@
                         <span style="color: red" v-if="errors.any()">\{\{ errors.all().join("*  ")\}\}</span>
                         <?php echo  $temData['template']?>
                         <div id="script-text" style="display: block;float: left; position: absolute;left: 475px;top: 0px;">
+                          @if(Auth::user()->level==1 || Auth::user()->level==0)
                             <button type="button" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary">Add ads</button>
+                          @endif
                         </div>
                       </div>
                     </div>`,

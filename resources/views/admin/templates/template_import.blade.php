@@ -1,7 +1,7 @@
 @extends('admin.layout.index')
 @section('title')
   <title>Import Template</title>
-  <meta id="csrf-token" name="csrf-token" value="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="{{asset('css/bootstrap-multiselect.css')}}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" rel="stylesheet">
 @endsection
@@ -19,25 +19,26 @@
         </div>
 
         <div id="import">
-          <div id="input-data" class="input-data">
+          <form id="input-data" class="input-data" method="" action="">
             <div id="checkBoxList">
               <select name="lstStates" id="lstStates" onchange="selectKey()" multiple style="display: none">
               </select>
             </div>
-            <div id="coreJs" style="display: none;margin-top: 10px;">
-                <select name="core" id="core" style="width: 200px;height: 32px" onchange="showDemo(this.value)">
-                    <option disabled selected> Chọn core load cùng</option>
+            <div id="coreJs" style="margin-top: 10px;">
+                <select name="core" id="core" style="width: 200px;height: 32px" {{--onchange="showDemo(this.value)"--}}>
+                    <option disabled selected> Chọn core load demo</option>
                     <option value="">Script bên ngoài</option>
                     <option value="1" >Admicro PC</option>
                     <option value="2" >Admicro Mobile</option>
                     <option value="3" >Video Vast</option>
                 </select>
             </div>
-           <span id="msg" style="color: red"></span><br>
-           <textarea type="text" id="scriptText" class="form-control" rows="10" placeholder="Nhập data dạng Json" style="width: 100%"></textarea><br>
-           <button id="btn-data" class="btn btn-info" onclick="getDataKey()">Get Form</button>
-           <button id="btn-script" onclick="runScript()" class="btn btn-info" style="margin-left: 25px" value="Run Script">Run Script</button>
-          </div>
+            <span id="msg" style="color: red"></span><br>
+            <textarea type="text" id="scriptText" class="form-control" rows="10" placeholder="Nhập data dạng Json" style="width: 100%"></textarea><br>
+            <button id="btn-data" type="button" class="btn btn-info" onclick="getDataKey()">Get Form</button>
+            <?php echo csrf_field() ?>
+            <button id="btn-script" type="button" onclick="runScript()" class="btn btn-info" style="margin-left: 25px" value="Run Script">Run Script</button>
+          </form>
           <div id="form-render">
           {{--<div id="run-script" style="width: 50%; float: left;display: inline-block">--}}
           </div>
@@ -65,11 +66,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/postscribe/2.0.8/postscribe.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
   <script src="{{asset('js/bootstrap-multiselect.js')}}"></script>
+  {{--<script src="{{asset('js/jsreload.js')}}"></script>--}}
+ {{-- <script src="{{asset('js/jsreload-bookmarklet.js')}}"></script>--}}
   <script type="text/javascript">
-    //var itemsKey=["image","link","title","domain","titlebox","title 1","desc","descr","content","color","src","slogan","logoBrand","descadv","sf_color",""];
     var itemsKey=[];
     var key=[];//data key in json
-    var data="";
 
     //parse data from textarea to json
     function getDataJson() {
@@ -331,22 +332,13 @@
     });*/
 
     function runScript(){
-        document.getElementById('coreJs').style.display="block";
-    }
-    
-    function showDemo(coreJs) {
-        $(document).ready(function() {
-            $('#btn_click').on('click', function() {
-                var url = 'reloaddiv.php';
-                $('#div1-wrapper').load(url + ' #div1');
-            });
-        });
         var adsScript=document.getElementById('scriptText').value;
         adsScript=adsScript.replace(/\//g,'\/');
         document.getElementById('msg').innerHTML="";
+        var coreJs=document.getElementById('core').value;
         if (adsScript!=""){
             if(coreJs=="1")
-                var core='<script src="//admicro1.vcmedia.vn/core/admicro_core_nld.js"><\/script><div style="height:0px; width:0px; overflow:hidden;"><\/div><script type="text/javascript" src="//media1.admicro.vn/cpc/ssvzone_default.js"><\/script><div id="_admDivFlashdt" style="visibility:hidden; height:1px; width:1px; position:absolute;bottom:0px; overflow:hidden; left:100px;"><\/div>';
+                var core='<script src="//admicro1.vcmedia.vn/core/admicro_core_nld.js"><\/script>';
             else if (coreJs=="2")
                 var core='<script src="//admicro1.vcmedia.vn/core/mb_core.js"><\/script>';
             else if (coreJs=="3")
@@ -354,18 +346,40 @@
             else
                 var core='';
 
-            document.getElementById('ads').innerHTML=core+adsScript;
-            //$( "#demo" ).load(window.location.href + ' #ads' );
-            postscribe('#demo', adsScript+core);
-            /*var req = new XMLHttpRequest();
-            req.open("get", "http://template.localhost/admin/import/", true);
-            req.onreadystatechange = function () {
-                if (req.readyState != 4 || req.status != 200) return;
-                document.getElementById('demo').innerHTML=req.responseText;
-            };*/
+            //document.getElementById('demo').innerHTML="";
+            var demoAds=document.getElementById('demo');
+            while (demoAds.hasChildNodes()) {
+                demoAds.removeChild(demoAds.firstChild);
+            }
+
+            postscribe('#demo', core+adsScript);
+
+
+            /* $.ajaxSetup({ headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')} });
+             var token = $('input[name=_token]').val();
+             $.ajax({
+                 type: "POST",
+                 url: "ads/run-script",
+                 data: {"adsData":adsScript,"adsCore":core},
+                 dataType: 'json',
+                 success: function (response) {
+                     //console.log(response);
+                    var urlf=response.adsCore+response.adsData;
+                     $.getScript( urlf, function() {
+                         document.getElementById('demo').innerHTML=response.adsCore+response.adsData;
+                     });
+                 },
+                 error: function (response) {
+                     console.log('Error:', response);
+                 }
+             });*/
+
         }
         else
             document.getElementById('msg').innerHTML="Chưa nhập Script";
+    }
+    
+    function showDemo(coreJs) {
     }
   </script>
 @endsection
