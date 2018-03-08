@@ -108,7 +108,9 @@
                   responsive: true
           });
         });
+
         $("div.alert").delay(2500).slideUp();
+
         function xacnhan(msg){
             if(window.confirm(msg))
             {

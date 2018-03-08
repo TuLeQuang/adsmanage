@@ -112,11 +112,25 @@
       document.getElementById('ads_brand').value=js_adsBrand;
 
       (function checkUser() {
-          if(js_adsUserId!=js_userLogin){
+          if(js_adsUserId!=js_userLogin &&js_userLvLogin!=1  || js_userLvLogin==2){
               document.getElementById('ads_name').disabled = true;
               document.getElementById('ads_brand').disabled = true;
               document.getElementById('btnModal').style.display = "none";
               document.getElementById('save-ads').style.display = "none";
+              document.getElementById('clone-ads').style.display = "block";
+          }
+          else if(js_adsUserId==js_userLogin){
+              document.getElementById('ads_name').disabled = false;
+              document.getElementById('ads_brand').disabled = false;
+              document.getElementById('btnModal').style.display = "block";
+              document.getElementById('save-ads').style.display = "block";
+              document.getElementById('clone-ads').style.display = "none";
+          }
+          else if(js_userLvLogin==1 && js_adsUserId!=js_userLogin ){
+              document.getElementById('ads_name').disabled = false;
+              document.getElementById('ads_brand').disabled = false;
+              document.getElementById('btnModal').style.display = "block";
+              document.getElementById('save-ads').style.display = "block";
               document.getElementById('clone-ads').style.display = "block";
           }
       })();

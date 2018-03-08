@@ -88,18 +88,14 @@
                 <a href="{{ route('template.show',$templates[$i]['id'])}}" title="Detail">Detail</a>
               </td>
 
-              <td class="center">
-                <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
-                  <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                  <input type="hidden" name="_method" value="DELETE">
-                  @if(Auth::user()->level==1 || Auth::user()->level==0)
-                    <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
-                    <i class="fa fa-trash-o fa-fw"></i>Delete
-                  </button>
-                  @else
-                  <a style="cursor: not-allowed;">
-                    <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
-                    <i class="fa fa-trash-o fa-fw"></i>Delete
+              @if(Auth::user()->level==1 || Auth::user()->level==0)
+                <td class="center">
+                  <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
+                    <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="_method" value="DELETE">
+                    @if(Auth::user()->level==1 || Auth::user()->id==$templates[$i]['user_id'])
+                      <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
+                      <i class="fa fa-trash-o fa-fw"></i>Delete
                     </button>
                   </a>
                   @endif
@@ -120,9 +116,9 @@
 @endsection
 
 @section('script')
-  <script> 
-
+  <script>
     $("div.alert").delay(2000).slideUp();
+
     function xacnhan(msg)
     {
       if(window.confirm(msg))
@@ -131,6 +127,7 @@
       }
       return false;
     }
+
     $(document).ready(function() {
       $('#dataTables-example').DataTable({
               responsive: true

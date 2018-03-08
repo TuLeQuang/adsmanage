@@ -143,6 +143,7 @@ class UserController extends Controller
     {
     	return view('admin.layout.login');
     }
+
     public function postLogin(Request $request)
     {
     	$this->validate($request,
@@ -165,10 +166,11 @@ class UserController extends Controller
             }
             return redirect('admin/template');
         }
+        elseif (Auth::attempt(['email'=>$request->email,'password'=>$request->password,'active' => $request->active!=1]))
+            return redirect('admin/login')->with('thongbao','Tài khoản đã bị khóa');
         else
-        {
             return redirect('admin/login')->with('error','Email hoặc Password không đúng');
-        }
+
     }
 
     public function getLogout()
