@@ -40,7 +40,13 @@
                                 @endforeach
                             </div>
                         @endif
-                        
+
+                        @if(session('error'))
+                           <div class="alert alert-danger">
+                               {{session('error')}}
+                           </div>
+                        @endif
+
                         @if(session('thongbao'))
                             <div class="alert alert-danger">
                                 {{session('thongbao')}}

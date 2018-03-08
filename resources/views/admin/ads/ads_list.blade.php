@@ -37,10 +37,10 @@
         </div>
         <div style="float: right;margin-bottom: 5px; display: inline-block">
           @if(Auth::user()->level==1 || Auth::user()->level==0)
-            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">&#43; Add Ads</button>
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal1">&#43; Add Ads</button>
           @endif
           <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal fade" id="myModal1" role="dialog">
             <div class="modal-dialog">
             
               <!-- Modal content-->
@@ -62,7 +62,6 @@
 
                     <tbody>
                       @foreach($templateData as $templateDatas)
-                      
                         <tr class="odd gradeX" align="center">
                           <td>{{$templateDatas->id}}</td>
                           <td>{{$templateDatas->name}}</td>
@@ -73,7 +72,6 @@
                             <a href="{{route('ads.show',$templateDatas->id)}}" title="Chọn Template">Chọn</a>
                           </td> 
                         </tr>
-                        
                       @endforeach
                     </tbody>
                   </table>
@@ -167,14 +165,15 @@
 @endsection
 
 @section('script')
-  <script src="admin_asset/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script>
     $("div.alert").delay(2000).slideUp();
+
     $(document).ready(function() {
       $('#dataTables-examples').DataTable({
               responsive: true
       });
     });
+
     function xacnhan(msg)
     {
       if(window.confirm(msg))
@@ -183,20 +182,13 @@
       }
       return false;
     }
-    $(document).ready(function(){  
+
+/*    $(document).ready(function(){
       $("select option").val(function(i,v){
       $(this).siblings("[value='"+ v +"']").remove();
       });
     });
-    function myfunction(){
-        var x = document.getElementById("mySelect").value;
-
-    }  
-  
+    */
   </script>
-  
-
-
-
 @endsection
 

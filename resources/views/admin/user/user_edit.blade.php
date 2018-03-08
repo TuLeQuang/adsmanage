@@ -57,13 +57,13 @@
                         <div class="form-group">
                             <label>User Level*</label>
                             <label class="radio-inline">
-                                <input name="level" value="1"  type="radio"
+                                <input name="level" value="1" checked="" type="radio"
                                 @if($user->level==1)
                                     {{"checked"}}
                                 @endif>Admin
                             </label>
                             <label class="radio-inline">
-                                <input name="level" value="0" checked="" type="radio"
+                                <input name="level" value="0" type="radio"
                                 @if($user->level==0)
                                     {{"checked"}}
                                 @endif>Member
