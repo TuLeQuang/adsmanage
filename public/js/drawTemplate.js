@@ -1,15 +1,15 @@
 function drawAds(data,id) {
     var tem="";
     var div=document.createElement('div');
-    div.id="app";
+    div.id="run-ads";
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            tem = this.responseText;
-           document.getElementById('template-layout').appendChild(div);
+           document.getElementById('ads').appendChild(div);
            var app = new Vue({
-                el:'#app',
+                el:'#run-ads',
                 data() {
                     return data;
                 },

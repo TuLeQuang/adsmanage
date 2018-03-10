@@ -39,8 +39,7 @@
           @endif
         </div>
         <div id="app"></div>
-
-        {{--<div id="ads" style="float: right;width: 67%;word-wrap: break-word;padding-top: 10px"></div>--}}
+        <div id="ads" style="float: right;width: 67%;word-wrap: break-word;padding-top: 10px"></div>
       </div>
       <!-- /.row -->
     </div>
@@ -64,6 +63,7 @@
           $ads_data= json_decode($adsData,true);
           echo "var js_data = ".$ads_data['data'].";\n";
           echo "var js_template='".$template['template']."';\n";
+          echo "var js_templateId='".$template['id']."';\n";
           echo "var js_config='".$template['config']."';\n";
           echo "var js_id='".$adsData['id']."';\n";
           echo "var js_adsName='".$adsData['name']."';\n";
@@ -131,12 +131,16 @@
                         @if(Auth::user()->level==1 || Auth::user()->level==0)
                             <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button>
                         @endif
-                     </div>
-                  </div>`,
+                            <button @click="exportScript()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: inline-block">Get Script</button>
+                        </div>
+                     </div>`,
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(ads_data);
                   document.getElementById('ads_data').value=myJSON;
+                  document.getElementById('ads').textContent='<script src="http://template.localhost/js/drawTemplate.js"><\/script>'+
+                                                                '<script src="http://template.localhost/js/vue.js"><\/script>'+
+                                                                '<script>drawAds('+myJSON+','+js_templateId+');<\/script>';
               },
               cloneAds: function () {
                   if(js_adsUserId!=js_userLogin){

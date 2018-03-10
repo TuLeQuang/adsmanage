@@ -19,6 +19,9 @@
             <li>
                 <a href="{{asset('admin/import')}}" title="Import"><i class="fa fa-edit fa-fw"></i>Import</a>
             </li>
+            <li>
+                <a href="{{asset('admin/demo/')}}" title="Demo Ads" target="_blank"><i class="fa fa-edit fa-fw"></i>Demo Ads</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

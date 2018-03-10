@@ -16,6 +16,12 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	Route::get('ads/clone/{adsId}/{templateId}', 'AdsController@cloneAds')->name('adsClone');
 	Route::get('import','TemplateController@getImport');
 	Route::get('active-tem/{id}','TemplateController@getActive');
+
+    Route::group(['prefix'=>'demo'],function(){
+        Route::get('/', 'AdsDemoController@index');
+        Route::post('getTemplateWeb','AdsDemoController@getTemplateWeb');
+    });
+
 	Route::group(['prefix'=>'user'],function(){
 			Route::get('user_list','UserController@getUser_List');
 			Route::get('user_list_member/{id}','UserController@getListMember');
@@ -29,14 +35,11 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	});
 });
     Route::any('ads/run-script', 'AdsController@adsDemo');
+    Route::post('demo/get-link-demo','AdsDemoController@getLinkDemo')->name('get-link-demo');
 
 Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate' );
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
-Route::get ( '/vueitems', 'TemplateController@readItems' );
-Route::get ( '/templates', 'TemplateController@getAllTem' );
-Route::get('/testVue', function(){
-   return view('vue');
-});
+
 

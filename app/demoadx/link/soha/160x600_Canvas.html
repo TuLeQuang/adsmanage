@@ -1,0 +1,75 @@
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>160x600</title>
+<!-- write your code here -->
+
+
+<script src="http://media1.admicro.vn/core/easeljs-0.8.1.min.js"></script>
+<script src="http://media1.admicro.vn/core/tweenjs-0.6.1.min.js"></script>
+<script src="http://media1.admicro.vn/core/movieclip-0.8.1.min.js"></script>
+<script src="http://media1.admicro.vn/core/preloadjs-0.6.1.min.js"></script>
+<script src="160x600_Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot;
+function init() {
+	// --- write your JS code here ---
+	
+	canvas = document.getElementById("canvas");
+	images = images||{};
+
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(lib.properties.manifest);
+}
+
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete(evt) {
+	exportRoot = new lib._160x600_Canvas();
+
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.update();
+
+	createjs.Ticker.setFPS(lib.properties.fps);
+	createjs.Ticker.addEventListener("tick", stage);
+}
+
+</script>
+
+<!-- write your code here -->
+
+</head>
+<body onload="init();" style="background-color:#D4D4D4;margin:0; padding:0;">
+	<canvas id="canvas" width="160" height="600" style="background-color:#FFFFFF"></canvas>
+<script>
+		var getQuery = function(a) {
+		var v = '';
+		if (a = (new RegExp('[?&]' + encodeURIComponent(a) + '=([^&]*)')).exec(location.search)) {
+		 v = decodeURIComponent(a[1]);
+		}
+		return v;
+	   };
+	   window.URLAdm=getQuery('url');
+	   window.URLAdm = window.URLAdm || "about:blank";
+	   var Stage = document.getElementById("canvas");
+	   Stage.style.cursor = "pointer";
+	   Stage.addEventListener("click", openWindow);
+	   function openWindow() {
+			window.open(window.URLAdm);
+	   }
+	</script>
+</body>
+</html>

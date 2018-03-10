@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>test speed iframe</title>
+</head>
+
+<body>
+<div id="abc"><iframe id="frmScript" width="500" style="width:500px; height:500px; position:fixed; bottom:0; right:0;" scrolling="no" frameborder="0"></iframe></div>
+<script>
+var img;
+function _tracking(){
+	var img =new Image();
+	img.src='http://demo.admicro.vn/sleep.php';
+}
+function _stopTracking(){
+	delete(img);
+}
+
+var html1='<sc'+'ript src="http:\/\/bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=11998717&PluID=64&w=1&h=1&ord=[timestamp]"><\/scr'+'ipt>';
+//<img src="http:\/\/demo.admicro.vn/sleep.php" \/>
+var d=document.getElementById('frmScript');
+var io=d.contentWindow ? d.contentWindow.document : d.contentDocument ? d.contentDocument : d.document;
+io.write('<html><head></head><body>'+html1+'</body></html>');
+io.close();
+function discard(){
+	io.body.innerHTML='';
+	io.write('<html><head></head><body>Stop Request</body></html>');
+	io.close();
+	var id=document.getElementById('abc');
+	id.innerHTML='';
+}
+</script>
+<input type="button" value="Stop request" onclick="discard()" />
+<input type="button" value="Load Image Tracking 3rd" onclick="_tracking();" />
+<input type="button" value="Stop load Tracking" onclick="_stopTracking();" />
+</body>
+</html>

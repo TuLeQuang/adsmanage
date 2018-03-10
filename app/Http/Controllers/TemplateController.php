@@ -10,15 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class TemplateController extends Controller
 {
-    public function readItems() {
-        $data = User::all();
-        return $data;
-    }
-
-    public function getAllTem() {
-        return Template::all();
-    }
-
     public function getTemplate($id){
         $template=Template::find($id)->template;
         return $template;
