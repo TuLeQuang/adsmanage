@@ -137,4 +137,10 @@ class AdsController extends Controller
     public function adsDemo(Request $request){
         return $request->all();
     }
+
+    public function getAdsScript($id){
+        $ads= Ads::find($id);
+        $template=Template::find($ads->templates_id);
+        return $template->template;
+    }
 }

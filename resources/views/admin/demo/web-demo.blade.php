@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>create demo Adx</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jquery-2.1.4.min.js')}}"></script>
     <script src=" {{asset('js/angular.min.js')}}"></script>
     <style>
         #choseLayout{
@@ -201,7 +201,7 @@
             type: "POST",
             data: {chose:$('#chosetemp').val(),lst:JSON.stringify(arrDataInput)}
         }).done(function(result) {
-            console.log('tra ve la :'+result);
+            //console.log('tra ve la :'+result);
             arrDataInput={};
             $('#allcontent').html('');
             if(result=='error not temp'){
@@ -234,6 +234,7 @@
         }
 
         $('#admzone_ban'+admZone).html('<div id="adnzone_'+admZone+'"></div>');
+
         var data = {
             "type": "7k",
             "size": arrDataInput[admZone].size,
@@ -274,7 +275,7 @@
         admZone=i;
         $('#admoverlay').show();
         $.ajax({
-            url: "../template/form.html",
+            url: "/template/form.html",
             context: document.body
         }).done(function(html) {
             $('#adminputShow').html(html);
@@ -285,25 +286,23 @@
         $('#urlexport').html('');
         dmchose=arradmTemp[t].domain;
         $.ajax({
-            url: "../template/"+arradmTemp[t].temp,
+            url: "/template/"+arradmTemp[t].temp,
             context: document.body
         }).done(function(html) {
             $('#admshowInput').show();
             $('#allcontent').html(html);
 
             for(var i in arrDefine[dmchose]){
-                console.log(arrDefine[dmchose][i]);
+                //console.log(arrDefine[dmchose][i]);
                 $('#adszone_'+i).addClass('ban'+arrDefine[dmchose][i].size);
-                $('#adszone_'+i).html('<div id="admzone_ban'+i+'"></div><a class="setting" href="javascript:showInput('+i+')"><img width="30" height="30" src="{{asset('images/settings-icon.png')}}" /></a>');
+                $('#adszone_'+i).html('<div id="admzone_ban'+i+'"></div><a class="setting" href="javascript:showInput('+i+')"><img width="30" height="30" src="../images/settings-icon.png" /></a>');
             }
-
-
         });
     }
     function choseTemplateInput(){
         for(var i in arrDefine[dmchose]){
             $('#adszone_'+i).addClass('ban'+arrDefine[dmchose][i].size);
-            $('#adszone_'+i).html('<div id="admzone_ban'+i+'"></div><a class="setting" href="javascript:showInput('+i+')"><img width="30" height="30" src="{{asset('images/settings-icon.png')}}" /></a>');
+            $('#adszone_'+i).html('<div id="admzone_ban'+i+'"></div><a class="setting" href="javascript:showInput('+i+')"><img width="30" height="30" src="../images/settings-icon.png" /></a>');
         }
     }
 </script>

@@ -140,7 +140,7 @@
                   document.getElementById('ads_data').value=myJSON;
                   document.getElementById('ads').textContent='<script src="http://template.localhost/js/drawTemplate.js"><\/script>'+
                                                                 '<script src="http://template.localhost/js/vue.js"><\/script>'+
-                                                                '<script>drawAds('+myJSON+','+js_templateId+');<\/script>';
+                                                                '<script>drawAds('+myJSON+','+js_id+');<\/script>';
               },
               cloneAds: function () {
                   if(js_adsUserId!=js_userLogin){

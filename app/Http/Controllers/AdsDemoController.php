@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\demoadx\includes\defined;
+use App\demoadx\includes\defined_mb;
 class AdsDemoController extends Controller
 {
     public function index(){
@@ -12,6 +13,13 @@ class AdsDemoController extends Controller
         $arrTemplate=json_decode($defined->arrayTemplate(),true);
         $arrDefined=json_decode($defined->arrayDefined(),true);
         return view('admin.demo.web-demo',compact(['arrTemplate','arrDefined']));
+    }
+
+    public function indexMobi(){
+        $defined_mb= new defined_mb();
+        $arrTemplate=json_decode($defined_mb->arrayTemplate(),true);
+        $arrDefined=json_decode($defined_mb->arrayDefined(),true);
+        return view('admin.demo.web-mb-demo',compact(['arrTemplate','arrDefined']));
     }
 
     public function getTemplateWeb(Request $request){
@@ -73,10 +81,12 @@ class AdsDemoController extends Controller
 window["adnzone'.$k.'"].show(data);})();</script><script>
  AdmonDomReady(function () { advScroll("Sticky", 600, ["adm_sticky_footer", 680]); admaddEventListener(window, "scroll", function () { advScroll("Sticky", 600, ["adm_sticky_footer", 680]); }); }); 
 </script>',$filecontent);
+
                     }
                     else{
                         $filecontent=str_replace('<div id="adszone_'.$k.'"></div>','<div id="adszone_'.$k.'" style="position:relative; z-index:99999;"><div id="adnzone_'.$k.'"></div></div><script>(function(){var data='.json_encode($arrreplace).';window["adnzone'.$k.'"] = new cpmzone('.$k.');
 window["adnzone'.$k.'"].show(data);})();</script>',$filecontent);
+
                     }
                 }
                 foreach($arrDefined[$domain] as $k=>$v){
@@ -87,9 +97,107 @@ window["adnzone'.$k.'"].show(data);})();</script>',$filecontent);
                 $filecontent=str_replace('<div id="admoverlaypage"></div>','<div id="admoverlaypage" style="position:fixed; top:0; left:0; width:100%; height:2000px; opacity:0.3; background:#000;z-index:9999;"></div>',$filecontent);
                 $tm=time();
                 $url=str_replace('.html','-'.$tm.'.html',$url);
-
                 file_put_contents('link/'.$url,$filecontent,LOCK_EX);
                echo 'link/'.$url;
             }
     }
+
+    public function getLinkDemoMobi(Request $request){
+        if(isset($request) && $request->chose!='') {
+            $defined_mb = new defined();
+            $arrTemplate = json_decode($defined_mb->arrayTemplate(), true);
+            $arrDefined = json_decode($defined_mb->arrayDefined(), true);
+
+            $arr=json_decode( $request->lst);
+            $chose=(int)$request->chose;
+            $domain=$arrTemplate[$chose]['domain'];
+            $url=$arrTemplate[$chose]['temp'];
+
+            if (!file_exists('template/' . $arrTemplate[$chose]['temp'])) die('error not temp');
+            $filecontent = file_get_contents('template/' . $arrTemplate[$chose]['temp']);
+
+            $arrzone = array();
+            if (!empty($arr)) {
+                $arr->type = preg_replace('/^<\?php(.*)(\?>)?$/s', '$1', $arr->type);
+                $arr->src = preg_replace('/^<\?php(.*)(\?>)?$/s', '$1', $arr->src);
+                $arr->src = str_replace('http:', '', $arr->src);
+                $arr->src = str_replace('https:', '', $arr->src);
+
+                $type = $arr->type;
+
+                $arrreplace = array(
+                    "html" => "",
+                    "css" => "",
+                    "type" => $arr->type,
+                    "is_db" => 0,
+                    "df" => array(),
+                    "os" => 1
+                );
+                $databanner = array(
+                    "cpc" => array(),
+                    "cpm" => array(
+                        array(
+
+                            "ret" => "0",
+                            "statustext" => "",
+                            "os_v" => "",
+                            "moblocation" => "0",
+                            "htmlcode1" => "",
+                            "br_v" => "",
+                            "terms" => null,
+                            "link" => $arr->url,
+                            "download" => 0,
+                            "type" => $arr->type,
+                            "htmlcode" => "",
+                            "id" => rand(1, 1000000),
+                            "blogo" => "",
+                            "title" => "vespa-big-0401",
+                            "cpa" => "0",
+                            "src" => $arr->src,
+                            "kw" => "",
+                            "os" => "",
+                            "dv_m" => "",
+                            "dv_t" => "",
+                            "rich" => "0",
+                            "star" => 0,
+                            "l" => "",
+                            "provider" => "",
+                            "ispopup" => "0",
+                            "cid" => rand(1, 1000000),
+                            "clk_call" => "",
+                            "bname" => "",
+                            "content" => "",
+                            "buttonnote" => "89317",
+                            "link3rd" => "",
+                            "color" => "",
+                            "la" => "",
+                            "auto" => "",
+                            "view" => "0",
+                            "srcVideo" => "",
+                            "pr" => 1908915645
+
+                        )
+                    )
+                );
+
+                $filecontent = str_replace('<div id="adm_zone' . $type . '"></div>', '<script>(function(){var data=' . json_encode($arrreplace) . ',databanner=' . json_encode($databanner) . ';window["mbzone' . $type . '"] = new zoneM(' . $type . ',data);
+window["mbzone' . $type . '"].addBanners(databanner);})();</script>', $filecontent);
+
+            }
+            /*foreach($arrDefined[$domain] as $k=>$v){
+                if(!in_array($k,$arrzone)){
+                    $filecontent=str_replace('<div id="admzone_'.$k.'"></div>','<script src="//admicro1.vcmedia.vn/ads_codes/ads_box_'.$k.'.ads"></script>',$filecontent);
+                }
+            }*/
+            /*$filecontent=str_replace('<div id="admoverlaypage"></div>','<div id="admoverlaypage" style="position:fixed; top:0; left:0; width:100%; height:2000px; opacity:0.3; background:#000;z-index:9999;"></div>',$filecontent);*/
+            $tm = time();
+            $url = str_replace('.html', '-' . $tm . '.html', $url);
+
+            file_put_contents('link/' . $url, $filecontent, LOCK_EX);
+            $url = str_replace('ï»¿', '', $url);
+            $url = str_replace('ï»¿', '', $url);
+            echo $url;
+        }
+    }
+
 }

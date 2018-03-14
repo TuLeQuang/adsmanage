@@ -12,13 +12,14 @@
 */
 Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	Route::resource('template', 'TemplateController');
-	Route::resource('ads', 'AdsController');
+	Route::resource('ads','AdsController');
 	Route::get('ads/clone/{adsId}/{templateId}', 'AdsController@cloneAds')->name('adsClone');
 	Route::get('import','TemplateController@getImport');
 	Route::get('active-tem/{id}','TemplateController@getActive');
 
     Route::group(['prefix'=>'demo'],function(){
         Route::get('/', 'AdsDemoController@index');
+        Route::get('mb', 'AdsDemoController@indexMobi');
         Route::post('getTemplateWeb','AdsDemoController@getTemplateWeb');
     });
 
@@ -36,8 +37,10 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 });
     Route::any('ads/run-script', 'AdsController@adsDemo');
     Route::post('demo/get-link-demo','AdsDemoController@getLinkDemo')->name('get-link-demo');
+    Route::post('demo/get-link-demo-mb','AdsDemoController@getLinkDemoMobi')->name('get-link-demo-mb');
+    Route::get('ads/getAdsScript/{adsId}', 'AdsController@getAdsScript')->name('adsScript');
 
-Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate' );
+Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate');
 Route::get('admin/login','UserController@getLogin');
 Route::post('admin/login','UserController@postLogin');
 Route::get('admin/logout','UserController@getLogout');
