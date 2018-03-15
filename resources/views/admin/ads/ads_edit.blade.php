@@ -132,8 +132,46 @@
                             <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button>
                         @endif
                             <button @click="exportScript()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: inline-block">Get Script</button>
-                        </div>
-                     </div>`,
+                     </div>
+
+
+                   <div id="listLink" style="display: inline-block;margin-top: 15px;margin-left: 50px;">
+                     <table class="table table-striped table-bordered table-hover" >
+                       <thead>
+                         <tr align="center" >
+                           <th style="text-align: center;">Stt</th>
+                           <th style="text-align: center;">Link Name</th>
+                           <th style="text-align: center;">Link</th>
+                           <th style="text-align: center;">Create At</th>
+                           @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
+                             <th style="text-align: center;">Action</th>
+                           @endif
+                         </tr>
+                       </thead>
+                       <tbody>
+                         @foreach($adsLinks as $index=> $adsLink)
+                           <tr class="odd gradeX" align="center">
+                             <td >{{$index +1}}</td>
+                             <td>{{$adsLink->linkName}}</td>
+                             <td><a href="{{$adsLink->link}}" target="__blank">{{$adsLink->link}}</a></td>
+                             <td>{{$adsLink->create_at}}</td>
+                             <td class="center">
+                               <form action="{{route('link.destroy',$adsLink->linkId)}}" method="POST">
+                                 <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                                 <input type="hidden" name="_method" value="DELETE">
+                                 @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
+                                   <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
+                                        <i class="fa fa-trash-o fa-fw"></i>Delete
+                                   </button>
+                                 @endif
+                               </form>
+                             </td>
+                           </tr>
+                         @endforeach
+                       </tbody>
+                     </table>
+                   </div>
+                </div>`,
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(ads_data);

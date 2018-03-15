@@ -7,6 +7,7 @@ use App\User;
 use DB;
 use App\Template;
 use App\Ads;
+use App\Link;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\Response;
@@ -92,7 +93,9 @@ class AdsController extends Controller
     {
         $adsData= Ads::find($id);
         $template=Template::find($adsData->templates_id);
-        return view('admin.ads.ads_edit',compact(['adsData','template']));
+        $link= new Link();
+        $adsLinks=$link->getLink($id);
+        return view('admin.ads.ads_edit',compact(['adsData','template','adsLinks']));
     }
 
     /**
@@ -237,8 +240,8 @@ window["adnzone'.$k.'"].show(data);})();</script>',$filecontent);
             $filecontent=str_replace('<div id="admoverlaypage"></div>','<div id="admoverlaypage" style="position:fixed; top:0; left:0; width:100%; height:2000px; opacity:0.3; background:#000;z-index:9999;"></div>',$filecontent);
             $tm=time();
             $url=str_replace('.html','-'.$tm.'.html',$url);
-            file_put_contents('link/'.$url,$filecontent,LOCK_EX);
-            echo 'link/'.$url;
+            file_put_contents('links/'.$url,$filecontent,LOCK_EX);
+            echo 'links/'.$url;
         }
     }
 
@@ -333,7 +336,7 @@ window["mbzone' . $type . '"].addBanners(databanner);})();</script>', $fileconte
             $tm = time();
             $url = str_replace('.html', '-' . $tm . '.html', $url);
 
-            file_put_contents('link/' . $url, $filecontent, LOCK_EX);
+            file_put_contents('links/' . $url, $filecontent, LOCK_EX);
             $url = str_replace('ï»¿', '', $url);
             $url = str_replace('ï»¿', '', $url);
             echo $url;

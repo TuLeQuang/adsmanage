@@ -21,7 +21,7 @@
             width:980px;
             margin: 10px auto;
         }
-        #choseLayout input{
+        #choseLayout .inputchoseLayout{
             padding:5px;
             background:#960;
             color:#fff;
@@ -124,6 +124,7 @@
             font-weight:bold;
             color:#fff;
         }
+
         .iplink{
             border:1px solid #999 !important;
         }
@@ -134,6 +135,12 @@
 </div>
 <div id="admoverlay"></div>
 <div id="choseLayout">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+    @endif
+
     <label>Chọn template làm demo</label>
     <select id="chosetemp">
         <?php
@@ -143,14 +150,14 @@
         ?>
     </select>
     <?php echo csrf_field() ?>
-    <input type="button" onClick="choseTemplate($('#chosetemp').val())" value="Chọn Mẫu giao diện" />
-    <input type="button" id="admshowInput" onClick="choseTemplateInput()" style="display:none;" value="Hiển thị vị trí nhập" />
+    <input class="inputchoseLayout" type="button" onClick="choseTemplate($('#chosetemp').val())" value="Chọn Mẫu giao diện" />
+    <input class="inputchoseLayout" type="button" id="admshowInput" onClick="choseTemplateInput()" style="display:none;" value="Hiển thị vị trí nhập" />
     <br />
-    <div id="urlexport">
-    </div>
+    <form id="urlexport" action="{{route('link.store')}}" method="POST">
+    </form>
 </div>
 <div id="adminputShow">
-    @include('admin.demo.parts.form');
+    @include('admin.demo.parts.form')
 </div>
 <script>
     <?php echo 'var adsList='.($adsList ? $adsList: '""'); ?>;
@@ -215,7 +222,7 @@
             }else{
                 result=result+'';
                 var url=(location.protocol+location.port+'//'+location.hostname+'/'+result);
-                $('#urlexport').html('<a href="'+url+'" target="_blank">'+url+'</a>');
+                $('#urlexport').html('<a href="'+url+'" target="_blank">'+url+'</a><input name="_token" type="hidden" value="{{{ csrf_token() }}}" /><br><input id="ads_id" name="adsId" style="display:none" value="'+ $('#adsSelect').val()+'" /><br><input type="text" placeholder="Tên Link" id="name" name="name" class="form-control" required/><br><input type="text" id="link" name="link" style="display:block;" value="'+ url+'" readonly/><input type="submit" class="btn btn-info"/> ');
             }
         });
     }
@@ -298,7 +305,6 @@
         }).done(function(html) {
             $('#admshowInput').show();
             $('#allcontent').html(html);
-
             for(var i in arrDefine[dmchose]){
                 //console.log(arrDefine[dmchose][i]);
                 $('#adszone_'+i).addClass('ban'+arrDefine[dmchose][i].size);
@@ -324,9 +330,11 @@
         var url=location.protocol+location.port+'//'+location.hostname+'/';
         script= '<script src="'+url+'js/drawTemplate.js"><\/script>'+
                 '<script  src="'+url+'js/vue.js"><\/script>'+
-                '<script>drawAds('+adsData+','+adsId+');<\/script>';
+                '<script>drawAds('+adsData+','+adsId+')<\/script>';
         $('#adscript').val(script);
     }
+
+    $("div.alert").delay(2000).slideUp();
 </script>
 <div class="exportLink">
     <input type="button" value="Xuất link" onClick="exportLink();" />
