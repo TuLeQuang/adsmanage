@@ -150,8 +150,10 @@
     </div>
 </div>
 <div id="adminputShow">
+    @include('admin.demo.parts.form');
 </div>
 <script>
+    <?php echo 'var adsList='.($adsList ? $adsList: '""'); ?>;
     <?php echo 'var arrDefine= '.json_encode($arrDefined);?>;
    <?php echo  'var arradmTemp='.json_encode($arrTemplate);?>;
     var dmchose='dantri';
@@ -164,12 +166,16 @@
         }else{
             $('#admgroupFile').hide();
             $('#admscript').show();
+            $('#adsSelect').show();
         }
         $('.admForm').css({'top':($(window).height()/2-$('.admForm').height()/2)+'px','left':($(window).width()/2-$('.admForm').width()/2)+'px'});
     }
     function admhideForm(){
+        $('#adscript').val("");
+        $("adsSelect select").val("");
         $('#admoverlay').hide();
-        $('#adminputShow').html('');
+        $('.admForm').hide();
+        /* $('#adminputShow').html('');*/
     }
     function admdelete(){
         arrDataInput[admZone]={};
@@ -274,19 +280,20 @@
     function showInput(i){
         admZone=i;
         $('#admoverlay').show();
-        $.ajax({
-            url: "/template/form.html",
+      /*  $.ajax({
+            url: "\{\{asset('template/form.html')}}",
             context: document.body
         }).done(function(html) {
             $('#adminputShow').html(html);
             $('.admForm').css({'top':($(window).height()/2-$('.admForm').height()/2)+'px','left':($(window).width()/2-$('.admForm').width()/2)+'px'});
-        });
+        });*/
+        $('.admForm').css({'top':($(window).height()/2-$('.admForm').height()/2)+'px','left':($(window).width()/2-$('.admForm').width()/2)+'px','display':'block'});
     }
     function choseTemplate(t){
         $('#urlexport').html('');
         dmchose=arradmTemp[t].domain;
         $.ajax({
-            url: "/template/"+arradmTemp[t].temp,
+            url: "{{asset('template/')}}"+"/"+arradmTemp[t].temp,
             context: document.body
         }).done(function(html) {
             $('#admshowInput').show();
@@ -304,6 +311,21 @@
             $('#adszone_'+i).addClass('ban'+arrDefine[dmchose][i].size);
             $('#adszone_'+i).html('<div id="admzone_ban'+i+'"></div><a class="setting" href="javascript:showInput('+i+')"><img width="30" height="30" src="../images/settings-icon.png" /></a>');
         }
+    }
+    
+    function getAdsScript() {
+        var script="";
+        var adsId=$('#adsSelect').val();
+        //console.log(adsList);
+        for( var i in adsList)
+            if(adsList[i].id==adsId)
+                var adsData=adsList[i].data;
+
+        var url=location.protocol+location.port+'//'+location.hostname+'/';
+        script= '<script src="'+url+'js/drawTemplate.js"><\/script>'+
+                '<script  src="'+url+'js/vue.js"><\/script>'+
+                '<script>drawAds('+adsData+','+adsId+');<\/script>';
+        $('#adscript').val(script);
     }
 </script>
 <div class="exportLink">

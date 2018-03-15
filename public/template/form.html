@@ -28,7 +28,9 @@ width:180px;
 .admForm .button{
 	padding:2px 15px;
 }
-
+#adsSelect{
+    width: 100px;
+}
 </style>
 <div class="admForm">
 	<div>
@@ -38,6 +40,11 @@ width:180px;
     	<select name="admselecttype" onChange="admchangeType()" id="admselecttype">
         	<option value="1">Banner Ảnh hoặc Flash</option>
             <option value="2">Banner Script</option>
+        </select>
+    </div>
+    <div class="admstep1">
+        <select name="adsSelect" id="adsSelect" onchange="getAdsScript()">
+            <option value="">Chọn Ads đã có</option>
         </select>
     </div>
     <div id="admstep2">

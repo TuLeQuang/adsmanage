@@ -97,7 +97,7 @@
                     <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                     <input type="hidden" name="_method" value="DELETE">
                     @if(Auth::user()->level==1 || Auth::user()->id==$templates[$i]['user_id'])
-                      <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
+                      <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
                       <i class="fa fa-trash-o fa-fw"></i>Delete
                     </button>
                     @else
@@ -144,6 +144,4 @@
     });
   </script>
 
-   
-    
 @endsection

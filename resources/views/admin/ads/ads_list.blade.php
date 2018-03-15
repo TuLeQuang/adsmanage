@@ -139,12 +139,12 @@
                       <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                       <input type="hidden" name="_method" value="DELETE">
                       @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
-                        <button type="submit" class="btn btn-danger" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
+                        <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
                         <i class="fa fa-trash-o fa-fw"></i>Delete
                       </button>
                       @else
                       <a style="cursor: not-allowed; " disabled>
-                        <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
+                        <button type="submit" class="button-delete" style="cursor: not-allowed;color: #cdcdcd" disabled>
                           <i class="fa fa-trash-o fa-fw"></i>Delete
                         </button>
                       </a>

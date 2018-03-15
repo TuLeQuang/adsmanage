@@ -18,9 +18,9 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 	Route::get('active-tem/{id}','TemplateController@getActive');
 
     Route::group(['prefix'=>'demo'],function(){
-        Route::get('/', 'AdsDemoController@index');
-        Route::get('mb', 'AdsDemoController@indexMobi');
-        Route::post('getTemplateWeb','AdsDemoController@getTemplateWeb');
+        Route::get('/', 'AdsController@indexDemo');
+        Route::get('mb', 'AdsController@indexDemoMobi');
+        //Route::post('getTemplateWeb','AdsController@getTemplateDemoWeb');
     });
 
 	Route::group(['prefix'=>'user'],function(){
@@ -35,9 +35,9 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
 			Route::get('delete/{id}','UserController@getDelete');
 	});
 });
-    Route::any('ads/run-script', 'AdsController@adsDemo');
-    Route::post('demo/get-link-demo','AdsDemoController@getLinkDemo')->name('get-link-demo');
-    Route::post('demo/get-link-demo-mb','AdsDemoController@getLinkDemoMobi')->name('get-link-demo-mb');
+   // Route::any('ads/run-script', 'AdsController@adsDemo');
+    Route::post('demo/get-link-demo','AdsController@getLinkDemo')->name('get-link-demo');
+    Route::post('demo/get-link-demo-mb','AdsController@getLinkDemoMobi')->name('get-link-demo-mb');
     Route::get('ads/getAdsScript/{adsId}', 'AdsController@getAdsScript')->name('adsScript');
 
 Route::get ( 'template/getTem/{id}', 'TemplateController@getTemplate');

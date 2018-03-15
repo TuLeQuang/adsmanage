@@ -273,5 +273,14 @@ select {
 select:hover{
 	color:black;
 }
-
 /*end editor*/
+
+/*lists- user, template, ads*/
+.button-delete {
+	top:0px;
+	left:0;
+	background: transparent;
+	border: none !important;
+	width:auto;
+}
+/*end*/

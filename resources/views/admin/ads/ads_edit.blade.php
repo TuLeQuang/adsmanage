@@ -137,16 +137,16 @@
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(ads_data);
+                  var url=location.protocol+location.port+'//'+location.hostname+'/';
                   document.getElementById('ads_data').value=myJSON;
-                  document.getElementById('ads').textContent='<script src="http://template.localhost/js/drawTemplate.js"><\/script>'+
-                                                                '<script src="http://template.localhost/js/vue.js"><\/script>'+
+                  document.getElementById('ads').textContent='<script src="'+url+'js/drawTemplate.js"><\/script>'+
+                                                                '<script  src="'+url+'js/vue.js"><\/script>'+
                                                                 '<script>drawAds('+myJSON+','+js_id+');<\/script>';
               },
               cloneAds: function () {
                   if(js_adsUserId!=js_userLogin){
                       window.location.href =js_adsCloneLink;
                   }
-
               }
           },
       });
@@ -159,21 +159,21 @@
               document.getElementById('ads_brand').disabled = true;
               document.getElementById('btnModal').style.display = "none";
               document.getElementById('save-ads').style.display = "none";
-              document.getElementById('clone-ads').style.display = "block";
+              document.getElementById('clone-ads').style.display = "inline-block";
           }
           else if(js_adsUserId==js_userLogin){
               document.getElementById('ads_name').disabled = false;
               document.getElementById('ads_brand').disabled = false;
               document.getElementById('btnModal').style.display = "block";
-              document.getElementById('save-ads').style.display = "block";
+              document.getElementById('save-ads').style.display = "inline-block";
               document.getElementById('clone-ads').style.display = "none";
           }
           else if(js_userLvLogin==1 && js_adsUserId!=js_userLogin ){
               document.getElementById('ads_name').disabled = false;
               document.getElementById('ads_brand').disabled = false;
               document.getElementById('btnModal').style.display = "block";
-              document.getElementById('save-ads').style.display = "block";
-              document.getElementById('clone-ads').style.display = "block";
+              document.getElementById('save-ads').style.display = "inline-block";
+              document.getElementById('clone-ads').style.display = "inline-block";
           }
       })();
   </script>
