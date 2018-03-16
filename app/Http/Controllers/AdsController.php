@@ -17,11 +17,10 @@ class AdsController extends Controller
 {
     public function index(){
         $ads=new Ads();
-        $adsData=$ads->getAdsInfo();
+        $adsDatas=$ads->getAdsInfo();
         $template= new Template();
-        $templateData=$template->getTemplateList();
-        // dd($adsData);
-        return view('admin.ads.ads_list',compact(['adsData','templateData']));
+        $templateDatas=$template->getTemplateListAdd();
+        return view('admin.ads.ads_list',compact(['adsDatas','templateDatas']));
     }
 /*    public function show($id)
     {
@@ -31,10 +30,6 @@ class AdsController extends Controller
 
     public function destroy($id){
         $ads=Ads::find($id);
-        if(Auth::user()->level!=1 && ($ads[' '] == 1 || ($ads['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $ads['level']==1 &&(Auth::user()->id!=$id)))
-        {
-            return redirect('admin/ads')->with('error','Bạn không thể xóa mục này'); 
-        }
         $ads::destroy($id);
         return redirect('admin/ads')->with('success','Xóa thành công');
     } 
@@ -83,6 +78,13 @@ class AdsController extends Controller
         return view('admin.ads.ads_add',compact('temData'));
     }
 
+    public function cloneAds($adsId,$templateId){
+        $temData= Template::find($templateId);
+        $adsClone= Ads::find($adsId);
+        $adsData=$adsClone->data;
+        return view('admin.ads.ads_add',compact(['temData','adsData']));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -108,7 +110,6 @@ class AdsController extends Controller
     public function update(Request $request, $id)
     {
         $ads = Ads::find($id);
-
         $adsNames=DB::table('ads')->select('name')->where('id','<>',$id)->get();
         foreach ($adsNames as $adsName){
             if($request->txtAdsName==$adsName->name){
@@ -130,13 +131,6 @@ class AdsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function cloneAds($adsId,$templateId){
-        $temData= Template::find($templateId);
-        $adsClone= Ads::find($adsId);
-        $adsData=$adsClone->data;
-        return view('admin.ads.ads_add',compact(['temData','adsData']));
-    }
 
     //run script demo in template import
    /* public function adsDemo(Request $request){

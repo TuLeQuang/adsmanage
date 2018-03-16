@@ -21,7 +21,9 @@ class TemplateController extends Controller
     }
 
     public function index(){
-        $templates= Template::orderBy('id', 'desc')->paginate(20);
+        //$templates= Template::orderBy('id', 'desc');
+        $tem= new Template();
+        $templates= $tem->templateList();
         return view('admin.templates.template_list',compact('templates'));
     }
  
@@ -67,10 +69,6 @@ class TemplateController extends Controller
     }
     public function destroy($id){
         $template=Template::find($id);
-        if(Auth::user()->level!=1 && ($template['level'] == 1 || ($template['level']!=1 && (Auth::user()->id!=$id))) ||(Auth::user()->level==1 && $template['level']==1 &&(Auth::user()->id!=$id)))
-        {
-            return redirect('admin/template')->with('error','Bạn không được quyền xóa template'); 
-        }
         $template::destroy($id);
         return redirect()->route('template.index')->with('success','Xóa template thành công');
     }

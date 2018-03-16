@@ -136,7 +136,7 @@
 <div id="admoverlay"></div>
 <div id="choseLayout">
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success" style="color: green;font-weight: bold">
             {{session('success')}}
         </div>
     @endif

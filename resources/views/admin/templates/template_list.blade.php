@@ -44,9 +44,9 @@
           <thead>
             <tr align="center" >
             <th style="text-align: center;">Stt</th>
-            <th style="text-align: center;">User_Id</th>
+            <th style="text-align: center;">User Name</th>
             <th style="text-align: center;">Template Name</th>
-            <th style="text-align: center;">Create At</th>
+            <th style="text-align: center;">Created At</th>
             <th style="text-align: center;">Updated At</th>
             @if(Auth::user()->level==1 )
               <th style="text-align: center;">Active</th>
@@ -58,19 +58,19 @@
             </tr>
           </thead>
           <tbody>
-          @for($i=0;$i<count($templates);$i++)
+          @foreach($templates as $index=> $template)
             <tr class="odd gradeX" align="center">
-              <td>{{$i+1}}</td>
-              <td>{{$templates[$i]['user_id']}}</td>
-              <td>{{$templates[$i]['name']}}</td>
-              <td>{{$templates[$i]['created_at']}}</td>
-              <td>{{$templates[$i]['updated_at']}}</td>
+              <td>{{$index+1}}</td>
+              <td>{{$template->userName}}</td>
+              <td>{{$template->templateName}}</td>
+              <td>{{$template->templateCreate}}</td>
+              <td>{{$template->templateUpdate}}</td>
               @if(Auth::user()->level==1)
                 <td>
-                  @if($templates[$i]['active']==1)
+                  @if($template->templateActive==1)
                     <i class="fa fa-unlock"></i>
                     @if(Auth::user()->level==1 || Auth::user()->level==0)
-                      <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:green"
+                      <a href="admin/active-tem/{{$template->templateId}}" style="color:green"
                       onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Active">
                         Acitive
                       </a>
@@ -79,7 +79,7 @@
                     @endif
                   @else
                     <i class="fa fa-lock"></i>
-                    <a href="admin/active-tem/{{$templates[$i]['id']}}" style="color:red"
+                    <a href="admin/active-tem/{{$template->templateId}}" style="color:red"
                     onclick="return xacnhan('Bạn có muốn thay đổi trạng thái hay không ?')" title="Un-Active">
                       Un-Active
                     </a>
@@ -88,21 +88,21 @@
               @endif
 
               <td class="center"><i class="fa fa-pencil fa-fw"></i>
-                <a href="{{ route('template.show',$templates[$i]['id'])}}" title="Detail">Detail</a>
+                <a href="{{ route('template.show',$template->templateId)}}" title="Detail">Detail</a>
               </td>
 
               @if(Auth::user()->level==1 || Auth::user()->level==0)
                 <td class="center">
-                  <form action="{{route('template.destroy',$templates[$i]['id'])}}" method="POST">
+                  <form action="{{route('template.destroy',$template->templateId)}}" method="POST">
                     <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                     <input type="hidden" name="_method" value="DELETE">
-                    @if(Auth::user()->level==1 || Auth::user()->id==$templates[$i]['user_id'])
+                    @if(Auth::user()->level==1 || Auth::user()->id==$template->userId)
                       <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa không ?')" title="Delete Template">
                       <i class="fa fa-trash-o fa-fw"></i>Delete
                     </button>
                     @else
                     <a style="cursor: not-allowed;">
-                      <button type="submit" class="btn btn-danger" style="cursor: not-allowed;color: #cdcdcd" disabled>
+                      <button type="submit" class="button-delete" style="cursor: not-allowed;color: #cdcdcd" disabled>
                       <i class="fa fa-trash-o fa-fw"></i>Delete
                       </button>
                     </a>
@@ -111,7 +111,7 @@
                 </td>
               @endif
             </tr>
-          @endfor
+          @endforeach
 
           </tbody>
         </table>

@@ -33,7 +33,7 @@
                     <div class="alert alert-danger">
                         {{session('error')}}
                     </div>
-                @endif
+          @endif
         </div>
         <div style="float: right;margin-bottom: 5px; display: inline-block">
           @if(Auth::user()->level==1 || Auth::user()->level==0)
@@ -61,15 +61,15 @@
                     </thead>
 
                     <tbody>
-                      @foreach($templateData as $templateDatas)
+                      @foreach($templateDatas as $templateData)
                         <tr class="odd gradeX" align="center">
-                          <td>{{$templateDatas->id}}</td>
-                          <td>{{$templateDatas->name}}</td>
+                          <td>{{$templateData->id}}</td>
+                          <td>{{$templateData->name}}</td>
                           <td class="center"><i class="fa fa-pencil fa-fw"></i>
-                            <a href="{{route('template.show',$templateDatas->id)}}" title="Detail">Detail</a>
+                            <a href="{{route('template.show',$templateData->id)}}" title="Detail">Detail</a>
                           </td>
                           <td class="center"><i class="fa fa-edit fa-fw"></i>
-                            <a href="{{route('ads.show',$templateDatas->id)}}" title="Chọn Template">Chọn</a>
+                            <a href="{{route('ads.show',$templateData->id)}}" title="Chọn Template">Chọn</a>
                           </td> 
                         </tr>
                       @endforeach
@@ -89,14 +89,11 @@
           <thead>
             <tr align="center" >
               <th style="text-align: center;">Stt</th>
-              <th style="text-align: center;display: none">User Id</th>
-              <th style="text-align: center;display: none">Template Id</th>
-              <th style="text-align: center;">User</th>
-              <th style="text-align: center;">Template</th>
-              <th style="text-align: center;">Ads</th>
-              <th style="text-align: center;">Brand</th>
-              <th style="text-align: center;">Create</th>
-              <th style="text-align: center;">Updated</th>
+              <th style="text-align: center;">Người Tạo</th>
+              <th style="text-align: center;">Mẫu Template</th>
+              <th style="text-align: center;">Tên Ads</th>
+              <th style="text-align: center;">Nhãn Hàng</th>
+              <th style="text-align: center;">Ngày Tạo</th>
               <th style="text-align: center;">Detail</th>
               @if(Auth::user()->level==1 || Auth::user()->level==0)
                {{-- <th style="text-align: center;">Edit</th>--}}
@@ -106,23 +103,22 @@
             </tr>
           </thead>
           <tbody id="dataTables">
-            @foreach($adsData as $key=>$adsDatas)
+            @foreach($adsDatas as $key=>$adsData)
               <tr class="odd gradeX" align="center">
                 <td>{{$key+1}}</td>
-                <td style="display: none">{{$adsDatas->adsUserId}}</td>
-                <td style="display: none">{{$adsDatas->adstemplatesId}}</td>
-                @if($adsDatas->adsUserId==$adsDatas->userId) 
-                  <td>{{$adsDatas->userName}}</td>
+               {{-- <td style="display: none">{{$adsDatas->adsUserId}}</td>
+                <td style="display: none">{{$adsDatas->adstemplatesId}}</td>--}}
+                @if($adsData->adsUserId==$adsData->userId)
+                  <td>{{$adsData->userName}}</td>
                 @endif 
-                @if($adsDatas->adstemplatesId==$adsDatas->templatesId) 
-                  <td>{{$adsDatas->templateName}}</td>
+                @if($adsData->adstemplatesId==$adsData->templatesId)
+                  <td>{{$adsData->templateName}}</td>
                 @endif
-                <td>{{$adsDatas->adsName}}</td>
-                <td>{{$adsDatas->brand}}</td>
-                <td>{{$adsDatas->created_at}}</td>
-                <td>{{$adsDatas->updated_at}}</td>
+                <td>{{$adsData->adsName}}</td>
+                <td>{{$adsData->brand}}</td>
+                <td>{{$adsData->created_at}}</td>
                 <td class="center"><i class="fa fa-pencil fa-fw"></i>
-                  <a href="{{route('ads.edit',$adsDatas->adsId)}}" title="Detail">Detail</a>
+                  <a href="{{route('ads.edit',$adsData->adsId)}}" title="Detail">Detail</a>
                 </td>
 
                 @if(Auth::user()->level==1 || Auth::user()->level==0)
@@ -135,10 +131,10 @@
                     @endif
                   </td>--}}
                   <td class="center">
-                    <form action="{{route('ads.destroy',$adsDatas->adsId)}}" method="POST">
+                    <form action="{{route('ads.destroy',$adsData->adsId)}}" method="POST">
                       <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                       <input type="hidden" name="_method" value="DELETE">
-                      @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
+                      @if(Auth::user()->level==1 || $adsData->adsUserId == Auth::user()->id )
                         <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
                         <i class="fa fa-trash-o fa-fw"></i>Delete
                       </button>

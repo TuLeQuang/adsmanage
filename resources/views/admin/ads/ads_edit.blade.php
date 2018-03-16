@@ -73,15 +73,13 @@
           echo "var js_userLvLogin='".Auth::user()->level."';\n";
           echo "var js_adsCloneLink='".route('adsClone',[$adsData['id'],$template['id']])."';\n";
       ?>
-
-      var ads_data=js_data;
       //console.log(tem_data);
 
       //render template
       var vm = new Vue({
           el:'#app',
           data() {
-              return ads_data;
+              return js_data;
           },
           template:`<div style="display: inline-block;width:100%">
                      <button type="button" style="display: block" class="btn btn-info" data-toggle="modal" data-target="#myModal" id="btnModal">Change Image</button>
@@ -119,23 +117,35 @@
                            <table>
                               <tr>
                                  <td><label for="">Ads Name: </label></td>
-                                 <td><input type="text" id="ads_name" name="txtAdsName" class="input-item form-control" required></td>
+                                 <td><input type="text" id="ads_name" name="txtAdsName" class="input-item form-control" value="{{$adsData['name']}}" required></td>
                               </tr>
                               <tr>
                                  <td><label for="">Ads Brand: </label></td>
-                                 <td><input type="text" id="ads_brand" name="txtAdsBrand" class="input-item form-control" required></td>
+                                 <td><input type="text" id="ads_brand" name="txtAdsBrand" class="input-item form-control" value="{{$adsData['brand']}}" required></td>
+                              </tr>
+                              <tr>
+                                 <td><label for="">Created At: </label></td>
+                                 <td><input type="text" id="ads_createdAt" class="input-item form-control" value="{{$adsData['created_at']}}" readonly></td>
+                              </tr>
+                              <tr>
+                                 <td><label for="">Update At: </label></td>
+                                 <td><input type="text" id="ads_updatedAt" class="input-item form-control" value="{{$adsData['updated_at']}}" readonly></td>
                               </tr>
                            </table>
-                           <input type="text" id="ads_data" name="txtAdsData" style="display: none"><input type="submit" id="save-ads" @click="exportScript()" :disabled="errors.any()" class="btn btn-primary" value="Save Ads" style="margin-left: 130px;margin-top: 10px"/>
+                           <input type="text" id="ads_data" name="txtAdsData" style="display: none">
+                           <input type="submit" id="save-ads" @click="editAds()" :disabled="errors.any()" class="btn btn-primary" value="Edit Ads" style="margin-left: 130px;margin-top: 10px"/>
                         </form>
                         @if(Auth::user()->level==1 || Auth::user()->level==0)
-                            <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: none">Clone Ads</button>
+                            <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-top: 10px;display: none">Clone Ads</button>
                         @endif
-                            <button @click="exportScript()" class="btn btn-primary" style="margin-left: 130px;margin-top: 10px;display: inline-block">Get Script</button>
+                            <button @click="exportScript()" class="btn btn-primary" style="margin-top: 10px;display: inline-block">Get Script</button>
                      </div>
 
+                     <textarea id="script" style="display:none;width:500px;margin-left:20px;word-break:break-word;float:right;height:160px;" class="form-control">
+                     </textarea >
 
                    <div id="listLink" style="display: inline-block;margin-top: 15px;margin-left: 50px;">
+                     @if(isset($adsLinks) && count($adsLinks)!=0)
                      <table class="table table-striped table-bordered table-hover" >
                        <thead>
                          <tr align="center" >
@@ -143,7 +153,7 @@
                            <th style="text-align: center;">Link Name</th>
                            <th style="text-align: center;">Link</th>
                            <th style="text-align: center;">Create At</th>
-                           @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
+                           @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
                              <th style="text-align: center;">Action</th>
                            @endif
                          </tr>
@@ -155,31 +165,34 @@
                              <td>{{$adsLink->linkName}}</td>
                              <td><a href="{{$adsLink->link}}" target="__blank">{{$adsLink->link}}</a></td>
                              <td>{{$adsLink->create_at}}</td>
+                            @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
                              <td class="center">
                                <form action="{{route('link.destroy',$adsLink->linkId)}}" method="POST">
                                  <input name="_token" type="hidden" value="{{ csrf_token() }}" />
                                  <input type="hidden" name="_method" value="DELETE">
-                                 @if(Auth::user()->level==1 || $adsDatas->adsUserId == Auth::user()->id )
                                    <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
-                                        <i class="fa fa-trash-o fa-fw"></i>Delete
+                                     <i class="fa fa-trash-o fa-fw"></i>Delete
                                    </button>
-                                 @endif
+                            @endif
                                </form>
                              </td>
                            </tr>
                          @endforeach
                        </tbody>
                      </table>
+                     @endif
                    </div>
                 </div>`,
           methods:{
               exportScript: function () {
-                  var myJSON = JSON.stringify(ads_data);
+                  var myJSON = JSON.stringify(js_data);
                   var url=location.protocol+location.port+'//'+location.hostname+'/';
+                  document.getElementById('script').style.display="inline-block";
+                  $('#script').val('<script src="'+url+'js/drawTemplate.js"><\/script><script  src="'+url+'js/vue.js"><\/script><script>drawAds('+myJSON+','+js_id+');<\/script>');
+              },
+              editAds:function () {
+                  var myJSON = JSON.stringify(js_data);
                   document.getElementById('ads_data').value=myJSON;
-                  document.getElementById('ads').textContent='<script src="'+url+'js/drawTemplate.js"><\/script>'+
-                                                                '<script  src="'+url+'js/vue.js"><\/script>'+
-                                                                '<script>drawAds('+myJSON+','+js_id+');<\/script>';
               },
               cloneAds: function () {
                   if(js_adsUserId!=js_userLogin){
@@ -188,8 +201,6 @@
               }
           },
       });
-      document.getElementById('ads_name').value=js_adsName;
-      document.getElementById('ads_brand').value=js_adsBrand;
 
       (function checkUser() {
           if(js_adsUserId!=js_userLogin &&js_userLvLogin!=1  || js_userLvLogin==2){

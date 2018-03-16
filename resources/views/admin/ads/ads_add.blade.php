@@ -87,7 +87,7 @@
             if(isset($adsData))
               echo "var js_data = ".$adsData.";\n";
             else
-              echo "var js_data = ".$tem_data['data'].";\n";
+              echo "var js_data = ".$temData['data'].";\n";
           ?>
 
       var tem_data=js_data;
