@@ -139,50 +139,47 @@
                             <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-top: 10px;display: none; position: absolute;bottom: 0px;left: 100px;">Clone Ads</button>
                         @endif
                             <button @click="exportScript()" class="btn btn-primary" style="margin-top: 10px;display: inline-block;bottom: 0px;right: 0px;position: absolute">Get Script</button>
-                     </div>
-
-                     <textarea id="script" readonly style="display:none;width:500px;margin-left:20px;word-break:break-word;float:right;height:160px;" class="form-control">
-                     </textarea >
-
-                   <div id="listLink" style="display: inline-block;margin-top: 15px;margin-left: 50px; bottom: -85px;position: absolute;">
-                     @if(isset($adsLinks) && count($adsLinks)!=0)
-                     <table class="table table-striped table-bordered table-hover" >
-                       <thead>
-                         <tr align="center" >
-                           <th style="text-align: center;">Stt</th>
-                           <th style="text-align: center;">Link Name</th>
-                           <th style="text-align: center;">Link</th>
-                           <th style="text-align: center;">Create At</th>
-                           @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
-                             <th style="text-align: center;">Action</th>
-                           @endif
-                         </tr>
-                       </thead>
-                       <tbody>
-                         @foreach($adsLinks as $index=> $adsLink)
-                           <tr class="odd gradeX" align="center">
-                             <td >{{$index +1}}</td>
-                             <td>{{$adsLink->linkName}}</td>
-                             <td><a href="{{$adsLink->link}}" target="__blank">{{$adsLink->link}}</a></td>
-                             <td>{{$adsLink->create_at}}</td>
-                            @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
-                             <td class="center">
-                               <form action="{{route('link.destroy',$adsLink->linkId)}}" method="POST">
-                                 <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                                 <input type="hidden" name="_method" value="DELETE">
-                                   <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
-                                     <i class="fa fa-trash-o fa-fw"></i>Delete
-                                   </button>
+                        <div id="listLink" style="bottom: -130px;position: absolute;width:850px;">
+                            @if(isset($adsLinks) && count($adsLinks)!=0)
+                              <table class="table table-striped table-bordered table-hover" >
+                                <thead>
+                                  <tr align="center" >
+                                    <th style="text-align: center;">Stt</th>
+                                    <th style="text-align: center;">Link Name</th>
+                                    <th style="text-align: center;">Link</th>
+                                    <th style="text-align: center;">Create At</th>
+                                    @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
+                                      <th style="text-align: center;">Action</th>
+                                    @endif
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($adsLinks as $index=> $adsLink)
+                                  <tr class="odd gradeX" align="center">
+                                    <td >{{$index +1}}</td>
+                                    <td>{{$adsLink->linkName}}</td>
+                                    <td><a href="{{$adsLink->link}}" target="__blank">{{$adsLink->link}}</a></td>
+                                    <td>{{$adsLink->create_at}}</td>
+                                    @if(Auth::user()->level==1 || $adsData['user_id'] == Auth::user()->id )
+                                    <td class="center">
+                                      <form action="{{route('link.destroy',$adsLink->linkId)}}" method="POST">
+                                        <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="button-delete" onclick="return xacnhan('Bạn có chắc chắn muốn xóa hay không ?')" title="Delete">
+                                          <i class="fa fa-trash-o fa-fw"></i>Delete
+                                        </button>
+                                    @endif
+                                      </form>
+                                    </td>
+                                  </tr>
+                                @endforeach
+                                </tbody>
+                              </table>
                             @endif
-                               </form>
-                             </td>
-                           </tr>
-                         @endforeach
-                       </tbody>
-                     </table>
-                     @endif
-                   </div>
-                </div>`,
+                        </div>
+                     </div>
+                     <textarea id="script" readonly style="display:none;width:500px;margin-left:20px;word-break:break-word;float:right;height:160px;" class="form-control"></textarea >
+                    </div>`,
           methods:{
               exportScript: function () {
                   var myJSON = JSON.stringify(js_data);
