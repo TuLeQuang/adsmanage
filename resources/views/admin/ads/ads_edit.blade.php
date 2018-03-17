@@ -110,7 +110,7 @@
 
                      <div style="height: auto; display: inline-block;position: relative;float: left"><span style="color: red" v-if="errors.any()">\{\{errors.all().join("*  ")\}\}</span><?php echo ($adsData['users_id']!=Auth::user()->id)?$template['template']:$template['config']; ?></div>
 
-                     <div id="ads" style="display:inline-block;margin-left: 50px;">
+                     <div id="ads" style="display:inline-block;margin-left: 50px;position: absolute;">
                         <form action="<?php echo route('ads.update',$adsData['id']) ?>" method="post">
                            <?php echo csrf_field()?>
                            <input name="_method" type="hidden" value="PUT"/><label style="color: red;display: none ;margin-left: 30px"  id="errorsMessages"></label>
@@ -133,18 +133,18 @@
                               </tr>
                            </table>
                            <input type="text" id="ads_data" name="txtAdsData" style="display: none">
-                           <input type="submit" id="save-ads" @click="editAds()" :disabled="errors.any()" class="btn btn-primary" value="Edit Ads" style="margin-left: 130px;margin-top: 10px"/>
+                           <input type="submit" id="save-ads" @click="editAds()" :disabled="errors.any()" class="btn btn-primary" value="Edit Ads" style="margin-top: 10px"/>
                         </form>
                         @if(Auth::user()->level==1 || Auth::user()->level==0)
-                            <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-top: 10px;display: none">Clone Ads</button>
+                            <button id="clone-ads" @click="cloneAds()" class="btn btn-primary" style="margin-top: 10px;display: none; position: absolute;bottom: 0px;left: 100px;">Clone Ads</button>
                         @endif
-                            <button @click="exportScript()" class="btn btn-primary" style="margin-top: 10px;display: inline-block">Get Script</button>
+                            <button @click="exportScript()" class="btn btn-primary" style="margin-top: 10px;display: inline-block;bottom: 0px;right: 0px;position: absolute">Get Script</button>
                      </div>
 
-                     <textarea id="script" style="display:none;width:500px;margin-left:20px;word-break:break-word;float:right;height:160px;" class="form-control">
+                     <textarea id="script" readonly style="display:none;width:500px;margin-left:20px;word-break:break-word;float:right;height:160px;" class="form-control">
                      </textarea >
 
-                   <div id="listLink" style="display: inline-block;margin-top: 15px;margin-left: 50px;">
+                   <div id="listLink" style="display: inline-block;margin-top: 15px;margin-left: 50px; bottom: -85px;position: absolute;">
                      @if(isset($adsLinks) && count($adsLinks)!=0)
                      <table class="table table-striped table-bordered table-hover" >
                        <thead>
@@ -225,5 +225,16 @@
               document.getElementById('clone-ads').style.display = "inline-block";
           }
       })();
+
+      function xacnhan(msg)
+      {
+          if(window.confirm(msg))
+          {
+              return true;
+          }
+          return false;
+      }
+
+      $("div.alert").delay(2000).slideUp();
   </script>
 @endsection

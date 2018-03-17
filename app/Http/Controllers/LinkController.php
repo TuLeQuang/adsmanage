@@ -46,6 +46,9 @@ class LinkController extends Controller
 
     public function destroy($id)
     {
-        //
+        $link = Link::find($id);
+        $link::destroy($id);
+        return with('success','Xóa thành công');
+
     }
 }
